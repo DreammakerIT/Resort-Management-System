@@ -1,0 +1,97 @@
+﻿@model LuxuryResort.Models.AvailabilityViewModel
+@using Microsoft.AspNetCore.Identity
+@using LuxuryResort.Areas.Identity.Data 
+@inject SignInManager<LuxuryResortUser> SignInManager
+
+@{
+    ViewData["Title"] = "Các phòng trống";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/availability-royal.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+}
+
+<main class="royal-availability-page">
+    <div class="container">
+        <div class="search-summary">
+            <h1>Kết quả tìm kiếm</h1>
+            <p>
+                Phòng trống cho <strong>@Model.Adults người lớn & @Model.Children trẻ em</strong> trong <strong>@Model.TotalNights đêm</strong> <br />
+                Từ ngày <strong>@Model.CheckInDate.ToString("dd/MM/yyyy")</strong> đến ngày <strong>@Model.CheckOutDate.ToString("dd/MM/yyyy")</strong>
+            </p>
+        </div>
+
+        <div class="rooms-showcase-list">
+            @if (Model.AvailableRooms.Any())
+            {
+                @foreach (var room in Model.AvailableRooms)
+                {
+                    <article class="room-showcase-item">
+                        <figure class="room-showcase-image">
+                            <img src="@room.ImageUrl" alt="@room.RoomType">
+                        </figure>
+                        <div class="room-showcase-content">
+                            <h2 class="room-title">@room.RoomType</h2>
+                            <p class="room-description">@room.Description</p>
+                            <div class="room-meta">
+                                <span><i class="fas fa-ruler-combined"></i> 55 m²</span>
+                                <span><i class="fas fa-user-friends"></i> Tối đa @room.MaxOccupancy khách</span>
+                                <span><i class="fas fa-bed"></i> Giường King</span>
+                            </div>
+                            <div class="room-availability">
+                                @if (room.AvailableRooms > 0)
+                                {
+                                    <span class="availability-badge available">
+                                        <i class="fas fa-check-circle"></i>
+                                        Còn @room.AvailableRooms phòng trống
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="availability-badge unavailable">
+                                        <i class="fas fa-times-circle"></i>
+                                        Đã kín phòng
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                        <div class="room-showcase-action">
+                            <div class="price-info">
+                                <span class="price-total">@room.TotalPrice.ToString("N0") VNĐ</span>
+                                <span class="price-nights">cho @Model.TotalNights đêm</span>
+                            </div>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <a asp-controller="Booking"
+                                   asp-action="Create"
+                                   asp-route-roomId="@room.RoomId"
+                                   asp-route-checkin="@Model.CheckInDate.ToString("yyyy-MM-dd")"
+                                   asp-route-checkout="@Model.CheckOutDate.ToString("yyyy-MM-dd")"
+                                   class="btn-book">Chọn Phòng</a>
+                            }
+                            else
+                            {
+                                var returnUrl = $"/Booking?roomId={room.RoomId}&checkin={Model.CheckInDate:yyyy-MM-dd}&checkout={Model.CheckOutDate:yyyy-MM-dd}";
+                                <a onclick="alert('Vui lòng đăng nhập để tiếp tục chọn phòng!');" class="btn-book">Chọn Phòng</a>
+							}
+                        </div>
+                    </article>
+                }
+            }
+            else
+            {
+                <div class="no-results-panel">
+                    <i class="fas fa-search"></i>
+                    <h2>Không tìm thấy phòng phù hợp</h2>
+                    <p>Rất tiếc, không có phòng nào còn trống với lựa chọn của bạn. <br> Vui lòng thử một ngày khác hoặc liên hệ với chúng tôi để được hỗ trợ trực tiếp.</p>
+                    <a href="/" class="btn-back">Quay lại tìm kiếm</a>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</main>

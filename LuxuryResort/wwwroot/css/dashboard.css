@@ -1,0 +1,229 @@
+﻿/* ======================================= */
+/* ===         CSS CHO DASHBOARD         === */
+/* ======================================= */
+
+.dashboard-header {
+    margin-bottom: 30px;
+}
+
+    .dashboard-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0 0 5px 0;
+    }
+
+    .dashboard-header .subtitle {
+        font-size: 1rem;
+        color: #7f8c8d;
+    }
+
+/* Dãy thẻ thống kê */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+}
+
+.stat-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+    .stat-icon-wrapper i {
+        font-size: 1.5rem;
+    }
+
+.stat-info .stat-title {
+    display: block;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.stat-info .stat-value {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+/* Bố cục chính */
+.dashboard-main-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 25px;
+}
+
+/* Panel chung */
+.dashboard-panel {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+}
+
+.panel-header {
+    padding: 20px;
+    border-bottom: 1px solid #ecf0f1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .panel-header h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #2c3e50;
+    }
+
+    .panel-header a {
+        color: var(--sidebar-active);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+.panel-body {
+    padding: 20px;
+}
+
+/* Giả lập biểu đồ */
+.chart-placeholder {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+/* Bảng dữ liệu */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .data-table th, .data-table td {
+        padding: 15px 10px;
+        text-align: left;
+        border-bottom: 1px solid #ecf0f1;
+    }
+
+    .data-table th {
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        text-transform: uppercase;
+    }
+
+    .data-table td {
+        color: #34495e;
+    }
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+    .status-badge.status-confirmed {
+        background-color: #eaf5ff;
+        color: #3498db;
+    }
+
+    .status-badge.status-checked-in {
+        background-color: #e8f7f0;
+        color: #2ecc71;
+    }
+
+    .status-badge.status-checked-out {
+        background-color: #f5f5f5;
+        color: #95a5a6;
+    }
+
+    .status-badge.status-cancelled {
+        background-color: #fdeeee;
+        color: #e74c3c;
+    }
+
+/* Tình trạng phòng */
+.room-status-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .room-status-list li {
+        display: flex;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #ecf0f1;
+    }
+
+        .room-status-list li:last-child {
+            border-bottom: none;
+        }
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+    .status-dot.available {
+        background-color: #2ecc71;
+    }
+
+    .status-dot.occupied {
+        background-color: #e74c3c;
+    }
+
+    .status-dot.cleaning {
+        background-color: #f39c12;
+    }
+
+    .status-dot.maintenance {
+        background-color: #95a5a6;
+    }
+
+.status-count {
+    margin-left: auto;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

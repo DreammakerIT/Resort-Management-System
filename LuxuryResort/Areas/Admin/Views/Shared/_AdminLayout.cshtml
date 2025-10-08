@@ -1,0 +1,80 @@
+﻿@using LuxuryResort.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<LuxuryResortUser> SignInManager
+@inject UserManager<LuxuryResortUser> UserManager
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentUser = await UserManager.GetUserAsync(User);
+    var userFullName = currentUser?.FullName ?? User.Identity.Name;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+
+    <link rel="stylesheet" href="~/css/admin-layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-management.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div class="admin-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>MXR Admin</h3>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="nav-item @(currentController == "Dashboard" ? "active" : "")">
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+                </li>
+                <li class="nav-item @(currentController == "Bookings" ? "active" : "")">
+                    <a asp-area="Admin" asp-controller="Bookings" asp-action="Index"><i class="fas fa-calendar-check"></i><span>Quản lý Đặt phòng</span></a>
+                </li>
+                <li class="nav-item @(currentController == "RoomTypes" ? "active" : "")">
+                    <a asp-area="Admin" asp-controller="RoomTypes" asp-action="Index"><i class="fas fa-bed"></i><span>Quản lý Hạng phòng</span></a>
+                </li>          
+                <li class="nav-item @(currentController == "RoomInstances" ? "active" : "")">
+                    <a asp-area="Admin" asp-controller="RoomInstances" asp-action="Index"><i class="fas fa-door-open"></i><span>Quản lý Phòng</span></a>
+                </li>
+                @if (User.IsInRole("Quản lý"))
+                {
+                    <li class="nav-item @(currentController == "Staff" ? "active" : "")">
+                        <a asp-area="Admin" asp-controller="Staff" asp-action="Index"><i class="fas fa-user-shield"></i><span>Quản lý Nhân viên</span></a>
+                    </li>
+                }
+                <li class="nav-item @(currentController == "Customers" ? "active" : "")">
+                    <a asp-area="Admin" asp-controller="Customers" asp-action="Index"><i class="fas fa-users"></i><span>Quản lý Khách hàng</span></a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="user-info">
+                    <span>Chào, @userFullName!</span>
+                    <form asp-area="Identity" asp-page="/Account/Logout" method="post">
+                        @Html.AntiForgeryToken() <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </button>
+                    </form>
+                </div>
+            </header>
+            <div class="content-body">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

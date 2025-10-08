@@ -1,0 +1,191 @@
+﻿/* --- Thiết lập chung --- */
+body {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    color: #333;
+    background-color: #fdfdfd;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* --- 1. Phần Hero (Ảnh bìa) --- */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    /* Thay đổi URL hình ảnh của bạn tại đây */
+    background: url('https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+}
+
+    .hero::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4); /* Lớp phủ tối để chữ dễ đọc */
+    }
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+.hero p {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+/* --- 2. Phần Giới thiệu & Thông số --- */
+.intro-section {
+    background-color: #F8F5F0; /* Màu be cát */
+}
+
+.intro-grid {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.intro-text {
+    flex: 2;
+}
+
+    .intro-text h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        color: #005A8D; /* Xanh biển sâu */
+    }
+
+    .intro-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #555;
+    }
+
+.intro-features {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-left: 40px;
+    border-left: 2px solid #e0dace;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+    .feature-item .icon {
+        font-size: 2.5rem;
+        color: #005A8D;
+    }
+
+    .feature-item .text h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .feature-item .text p {
+        margin: 0;
+        color: #777;
+    }
+
+/* --- 3. Phần Thư viện ảnh --- */
+.gallery-section h2 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #005A8D;
+}
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+    .image-gallery img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .image-gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+/* --- 4. Phần Kêu gọi hành động (CTA) --- */
+.cta-section {
+    background-color: #F8F5F0;
+    text-align: center;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #005A8D;
+    color: white;
+    padding: 18px 40px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    .cta-button:hover {
+        background-color: #003e6b;
+    }
+
+/* --- Responsive cho thiết bị di động --- */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .intro-grid {
+        flex-direction: column;
+    }
+
+    .intro-features {
+        border-left: none;
+        padding-left: 0;
+        margin-top: 30px;
+    }
+
+    .image-gallery {
+        grid-template-columns: 1fr;
+    }
+}

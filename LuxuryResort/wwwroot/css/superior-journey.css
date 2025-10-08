@@ -1,0 +1,249 @@
+﻿:root {
+    --font-serif-elegant: 'Cormorant Garamond', serif;
+    --font-sans-clean: 'Poppins', sans-serif;
+    --color-text-light: #fff;
+    --color-accent: #C39B6F;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Container chính cho hiệu ứng cuộn */
+.journey-container {
+    height: 100vh;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+}
+
+/* Mỗi cảnh trong hành trình */
+.journey-section {
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+
+    /* Lớp phủ làm tối ảnh nền */
+    .journey-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+    }
+
+/* Thanh điều hướng bên cạnh */
+.journey-nav {
+    position: fixed;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nav-dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+    .nav-dot.active, .nav-dot:hover {
+        background-color: #fff;
+        transform: scale(1.2);
+    }
+
+/* Nội dung trên mỗi cảnh */
+.section-content {
+    position: relative;
+    z-index: 2;
+    color: var(--color-text-light);
+    width: 100%;
+    padding: 0 10%;
+}
+
+    .section-content.left {
+        text-align: left;
+    }
+
+    .section-content.right {
+        text-align: right;
+    }
+
+    .section-content.center {
+        text-align: center;
+    }
+
+.pre-title {
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+}
+
+.main-title {
+    font-family: var(--font-serif-elegant);
+    font-size: 6rem;
+    line-height: 1;
+    margin: 10px 0;
+}
+
+.section-title {
+    font-family: var(--font-serif-elegant);
+    font-size: 4rem;
+    line-height: 1.1;
+}
+
+.section-content p {
+    font-size: 1.1rem;
+    max-width: 450px;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+.section-content.right p {
+    margin-left: auto;
+}
+
+.section-content.center p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Chi tiết phòng */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 30px;
+    max-width: 500px;
+    margin-left: auto;
+}
+
+.detail-item strong {
+    display: block;
+    font-size: 1.2rem;
+}
+
+.detail-item span {
+    opacity: 0.8;
+}
+
+/* Phần đặt phòng cuối cùng */
+.booking-final {
+    background-color: #f1f1f1;
+}
+
+    .booking-final::before {
+        background: none;
+    }
+
+.booking-form {
+    color: #333;
+}
+
+    .booking-form .section-title {
+        color: var(--primary-color);
+    }
+
+.price-from {
+    font-size: 1.2rem;
+    display: block;
+    margin: 20px 0;
+}
+
+    .price-from strong {
+        font-size: 1.8rem;
+        color: var(--primary-color);
+    }
+
+.simple-booking-form {
+    max-width: 500px;
+    margin: 30px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+    .simple-booking-form .form-group {
+        text-align: left;
+    }
+
+    .simple-booking-form label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .simple-booking-form input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+.btn-journey-book {
+    grid-column: 1 / -1; /* Nút chiếm trọn 2 cột */
+    padding: 15px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .btn-journey-book:hover {
+        background-color: var(--color-accent);
+    }
+
+/* Room Availability Styles */
+.room-availability-info {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.availability-badge.available {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 2px solid rgba(34, 197, 94, 0.4);
+}
+
+.availability-badge.unavailable {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 2px solid rgba(239, 68, 68, 0.4);
+}
+
+.availability-badge i {
+    font-size: 1.1rem;
+}

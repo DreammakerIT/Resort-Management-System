@@ -1,0 +1,217 @@
+﻿/* ======================================= */
+/* === CSS CHO TRANG LIÊN HỆ (CONTACT) === */
+/* ======================================= */
+
+.contact-section {
+    padding: 80px 0;
+    background-color: #fcfcfc;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Chia 2 cột bằng nhau */
+    gap: 60px; /* Khoảng cách giữa 2 cột */
+}
+
+/* Cột thông tin bên trái */
+.contact-info, .contact-form-wrapper {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.07);
+}
+
+.contact-heading {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.contact-info p {
+    font-family: var(--font-body);
+    color: var(--text-color-light);
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+}
+
+    .info-list li {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 25px;
+    }
+
+    .info-list i {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-right: 20px;
+        width: 25px; /* Cố định chiều rộng để các dòng text thẳng hàng */
+        text-align: center;
+    }
+
+    .info-list div strong {
+        font-weight: 700;
+        color: var(--primary-color);
+        display: block;
+    }
+
+    .info-list div p {
+        margin: 5px 0 0 0;
+        color: var(--text-color-light);
+    }
+
+.map-container {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+/* Cột form bên phải */
+.contact-form-wrapper .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form-wrapper label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color-dark);
+}
+
+.contact-form-wrapper input,
+.contact-form-wrapper textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+    .contact-form-wrapper input:focus,
+    .contact-form-wrapper textarea:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 3px rgba(195, 155, 111, 0.2);
+    }
+
+.contact-form-wrapper textarea {
+    resize: vertical;
+}
+
+.contact-form-wrapper .submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+    .contact-form-wrapper .submit-btn:hover {
+        background-color: #07223a;
+        transform: translateY(-2px);
+    }
+
+/* Responsive */
+@media (max-width: 992px) {
+    .contact-grid {
+        grid-template-columns: 1fr; /* Chuyển thành 1 cột */
+    }
+}
+
+/* ======================================= */
+/* === CSS CHO TRANG LIÊN HỆ (CONTACT) === */
+/* ======================================= */
+
+/* BỎ HẾT CSS CŨ CỦA .page-hero, .hero-overlay, .hero-title, .hero-subtitle
+   VÀ THAY BẰNG TOÀN BỘ ĐOẠN DƯỚI ĐÂY */
+
+.contact-hero-split {
+    display: flex;
+    min-height: 80vh; /* Chiều cao tối thiểu là 80% màn hình */
+    background-color: #f8f9fa; /* Màu nền nhẹ cho panel text */
+}
+
+/* Nửa bên trái chứa text */
+.hero-text-panel {
+    flex: 1; /* Chiếm 1 nửa không gian */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+
+.hero-content-wrapper {
+    max-width: 500px;
+}
+
+.hero-preheading {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--secondary-color); /* Màu vàng gold */
+    margin-bottom: 15px;
+    display: block;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--text-color-light);
+    line-height: 1.8;
+}
+
+/* Nửa bên phải chứa ảnh */
+.hero-image-panel {
+    flex: 1; /* Chiếm 1 nửa không gian còn lại */
+    background-size: cover;
+    background-position: center;
+    min-height: 400px; /* Chiều cao tối thiểu trên mobile */
+}
+
+
+/* ... (Phần CSS cho .contact-section và các phần khác giữ nguyên) ... */
+
+
+/* Responsive cho bố cục split-screen */
+@media (max-width: 992px) {
+    .contact-hero-split {
+        flex-direction: column; /* Chuyển thành layout dọc */
+    }
+
+    .hero-text-panel {
+        order: 2; /* Đưa text xuống dưới */
+        padding: 50px 30px;
+        text-align: center;
+    }
+
+    .hero-image-panel {
+        order: 1; /* Đưa ảnh lên trên */
+        flex-basis: 400px; /* Cố định chiều cao ảnh */
+    }
+
+    .hero-title {
+        font-size: 2.8rem;
+    }
+}

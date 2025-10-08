@@ -1,0 +1,233 @@
+﻿@model LuxuryResort.Models.BookingViewModel
+@{
+    ViewData["Title"] = "Xác nhận & Đặt phòng";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
+}
+
+<div class="booking-container">
+    <div class="booking-header">
+        <h1>Xác nhận & Đặt phòng</h1>
+        <div class="stepper">
+            <div class="step active"><span>1</span> Chi tiết</div>
+            <div class="step"><span>2</span> Thông tin</div>
+            <div class="step"><span>3</span> Hoàn tất</div>
+        </div>
+    </div>
+
+    <form asp-controller="Booking" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        @if (TempData["PaymentError"] != null)
+        {
+            <div class="alert alert-danger" role="alert">@TempData["PaymentError"]</div>
+        }
+        @* This validation summary shows errors not tied to a specific property *@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @* Hidden fields to post essential data back to the server *@
+        <input type="hidden" asp-for="SelectedRoomId" />
+
+        <div class="booking-grid">
+            <div class="left-column">
+
+                <div class="form-section">
+                    <h3>Chi tiết kỳ nghỉ của bạn</h3>
+                    <div class="form-group">
+                        <label>Loại phòng</label>
+                        <input type="text" class="form-control" value="@Model.SelectedRoom.Type" readonly />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ngày nhận phòng</label>
+                            <div class="form-control" style="background:#f8f9fa;">@Model.CheckInDate.ToString("dd/MM/yyyy")</div>
+                            <input type="hidden" name="CheckInDate" value="@Model.CheckInDate.ToString("yyyy-MM-dd")" />
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày trả phòng</label>
+                            <div class="form-control" style="background:#f8f9fa;">@Model.CheckOutDate.ToString("dd/MM/yyyy")</div>
+                            <input type="hidden" name="CheckOutDate" value="@Model.CheckOutDate.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Người lớn</label>
+                            <div class="form-control" style="background:#f8f9fa;">@Model.Adults</div>
+                            <input type="hidden" asp-for="Adults" />
+                        </div>
+                        <div class="form-group">
+                            <label>Trẻ em</label>
+                            <div class="form-control" style="background:#f8f9fa;">@Model.Children</div>
+                            <input type="hidden" asp-for="Children" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Thông tin của bạn</h3>
+                    <div class="form-group">
+                        <label asp-for="FullName">Họ và Tên</label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Phone">Số điện thoại</label>
+                            <input asp-for="Phone" class="form-control" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Yêu cầu đặc biệt & Dịch vụ bổ sung</h3>
+                    <div class="form-group">
+                        <label asp-for="SpecialRequest">Yêu cầu đặc biệt (tùy chọn)</label>
+                        <textarea asp-for="SpecialRequest" class="form-control" rows="4" placeholder="Ví dụ: phòng tầng cao..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Phương thức thanh toán</h3>
+                    <div class="payment-options">
+                        <label>
+                            <input asp-for="PaymentMethod" type="radio" value="payment_code" checked> 
+                            <span class="payment-option">
+                                <strong>Mã code thanh toán</strong>
+                                <small>Nhận mã code 6 chữ số để thanh toán sau</small>
+                            </span>
+                        </label>
+                        <label>
+                            <input asp-for="PaymentMethod" type="radio" value="hotel"> 
+                            <span class="payment-option">
+                                <strong>Thanh toán tại nơi nghỉ</strong>
+                                <small>Thanh toán khi nhận phòng</small>
+                            </span>
+                        </label>
+                    </div>
+                    <div id="payment-code-info" class="payment-info">
+                        <div class="form-group">
+                            <p>Bạn sẽ nhận được mã code 6 chữ số để thanh toán sau. Mã code có hiệu lực trong 24 giờ.</p>
+                            <div class="payment-code-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Bảo mật cao</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Hết hạn sau 24h</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Thanh toán linh hoạt</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="hotel-info" class="payment-info" style="display: none;">
+                        <div class="form-group">
+                            <p>Bạn sẽ thanh toán trực tiếp khi nhận phòng tại khách sạn.</p>
+                            <div class="hotel-payment-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-hotel"></i>
+                                    <span>Thanh toán tại khách sạn</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-cash-register"></i>
+                                    <span>Tiền mặt hoặc thẻ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <p>Bằng việc nhấn nút "Hoàn tất đặt phòng", bạn đồng ý với các <a href="#">Điều khoản & Điều kiện</a>.</p>
+                    <button type="submit" class="cta-button">Hoàn Tất Đặt Phòng</button>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="summary-box">
+                    <img src="@Model.SelectedRoom.ImageUrl" alt="@Model.SelectedRoom.Type" class="room-image">
+                    <div class="summary-content">
+                        <h3>@Model.SelectedRoom.Type</h3>
+                        <ul class="amenities-list">
+                            <li>📏 @Model.SelectedRoom.Area m²</li>
+                            <li>🛌 @Model.SelectedRoom.BedType</li>
+                            <li>🌊 @Model.SelectedRoom.ViewType</li>
+                        </ul>
+
+                        <div class="summary-section">
+                            <h4>Tóm tắt kỳ nghỉ</h4>
+                            <p><strong>Nhận phòng:</strong> @Model.CheckInDate.ToString("dd/MM/yyyy")</p>
+                            <p><strong>Trả phòng:</strong> @Model.CheckOutDate.ToString("dd/MM/yyyy")</p>
+                            @{
+                                var numberOfNights = (int)(Model.CheckOutDate - Model.CheckInDate).TotalDays;
+                                if (numberOfNights <= 0) { numberOfNights = 1; } // Avoid zero or negative nights
+                            }
+                            <p><strong>Thời gian ở:</strong> @numberOfNights đêm</p>
+                            <p><strong>Khách:</strong> @Model.Adults người lớn, @Model.Children trẻ em</p>
+                        </div>
+
+                        <div class="summary-section">
+                            <h4>Chi tiết chi phí</h4>
+                            @{
+                                var totalAmount = Model.SelectedRoom.PricePerNight * numberOfNights;
+                            }
+                            <div class="cost-item">
+                                <span>Giá phòng (@numberOfNights đêm)</span>
+                                <span>@totalAmount.ToString("N0") ₫</span>
+                            </div>
+                            <div class="cost-total">
+                                <span>Tổng cộng</span>
+                                <span>@totalAmount.ToString("N0") ₫</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const paymentRadios = document.querySelectorAll('input[name="PaymentMethod"]');
+            const paymentCodeInfo = document.getElementById('payment-code-info');
+            const hotelInfo = document.getElementById('hotel-info');
+
+            function togglePaymentInfo() {
+                const selectedValue = document.querySelector('input[name="PaymentMethod"]:checked').value;
+                
+                // Ẩn tất cả thông tin thanh toán
+                paymentCodeInfo.style.display = 'none';
+                hotelInfo.style.display = 'none';
+                
+                // Hiển thị thông tin tương ứng
+                if (selectedValue === 'payment_code') {
+                    paymentCodeInfo.style.display = 'block';
+                } else if (selectedValue === 'hotel') {
+                    hotelInfo.style.display = 'block';
+                }
+            }
+
+            paymentRadios.forEach(radio => {
+                radio.addEventListener('change', togglePaymentInfo);
+            });
+
+            // Initial check on page load
+            togglePaymentInfo();
+        });
+    </script>
+}

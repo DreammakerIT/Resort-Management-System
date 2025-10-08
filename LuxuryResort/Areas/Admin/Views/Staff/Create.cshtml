@@ -1,0 +1,84 @@
+﻿@model LuxuryResort.Areas.Admin.Models.CreateStaffViewModel
+
+@{
+    ViewData["Title"] = "Tạo tài khoản Nhân viên mới";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1>@ViewData["Title"]</h1>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>
+
+<div class="create-staff-container">
+    <div class="info-panel">
+        <h3>Tạo hồ sơ nhân viên</h3>
+        <p>Điền các thông tin cơ bản để tạo một tài khoản mới. Mật khẩu mặc định cần được nhân viên đổi lại sau lần đăng nhập đầu tiên.</p>
+        <div class="role-info">
+            <i class="fas fa-user-shield"></i>
+            <div>
+                <strong>Quản lý:</strong>
+                <span>Có toàn quyền truy cập vào hệ thống.</span>
+            </div>
+        </div>
+        <div class="role-info">
+            <i class="fas fa-user-cog"></i>
+            <div>
+                <strong>Nhân viên:</strong>
+                <span>Chỉ có quyền truy cập các chức năng được chỉ định.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-panel">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="FullName"></label>
+                <input asp-for="FullName" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder="vi.du@email.com" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="09xxxxxx00" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Role"></label>
+                <select asp-for="Role" asp-items="@(new SelectList(ViewBag.Roles))" class="form-control">
+                    <option value="">-- Chọn vai trò --</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Tạo mới
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

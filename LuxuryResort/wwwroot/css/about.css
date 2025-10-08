@@ -1,0 +1,153 @@
+﻿.page-hero {
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 45, 77, 0.5); /* Dùng màu --primary-color với độ trong suốt */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-hero h1 {
+    font-size: 3.5rem;
+    color: white;
+    font-weight: 700;
+}
+
+/* Các khu vực nội dung chung */
+.content-section {
+    padding: 80px 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.bg-light {
+    background-color: #f8f9fa; /* Màu nền sáng */
+}
+
+.container-narrow {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.content-section h2 {
+    font-size: 2.8rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.content-section h3 {
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+.lead-text {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Layout 2 cột */
+.two-column-layout {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+    .two-column-layout .column-text,
+    .two-column-layout .column-image {
+        flex: 1;
+    }
+
+        .two-column-layout .column-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+    /* Đảo ngược thứ tự cột cho đa dạng layout */
+    .two-column-layout.reverse {
+        flex-direction: row-reverse;
+    }
+
+/* Grid các tiện ích (Ẩm thực) */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.feature-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+    .feature-card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .feature-card h4 {
+        font-size: 1.4rem;
+        color: var(--primary-color);
+        margin: 20px;
+    }
+
+    .feature-card p {
+        padding: 0 20px 20px;
+        color: #666;
+    }
+
+/* Danh sách trong mục Spa */
+.column-text ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+    .column-text ul li {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+        .column-text ul li i {
+            color: var(--secondary-color);
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+/* Khu vực Kêu gọi hành động (CTA) */
+.cta-section {
+    padding: 80px 0;
+    background-color: var(--primary-color);
+}
+
+    .cta-section h2 {
+        color: white;
+    }
+
+    .cta-section .cta-button {
+        margin-top: 20px;
+    }

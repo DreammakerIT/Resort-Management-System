@@ -1,0 +1,46 @@
+﻿@model LuxuryResort.Areas.Admin.Models.RoomInstance
+
+@{
+    ViewData["Title"] = "Chỉnh sửa phòng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Chỉnh sửa Phòng: @Model.RoomNumber</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="RoomNumber" class="control-label"></label>
+                    <input asp-for="RoomNumber" class="form-control" />
+                    <span asp-validation-for="RoomNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="RoomId" class="control-label">Hạng phòng</label>
+                    <select asp-for="RoomId" class="form-control" asp-items="ViewBag.RoomId"></select>
+                    <span asp-validation-for="RoomId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Tình trạng</label>
+                    <select asp-for="Status" class="form-control">
+                        <option value="Available">Có sẵn</option>
+                        <option value="Occupied">Đã thuê</option>
+                        <option value="Cleaning">Đang dọn</option>
+                        <option value="OutOfOrder">Hỏng</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

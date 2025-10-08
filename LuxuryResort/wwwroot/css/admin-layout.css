@@ -1,0 +1,102 @@
+﻿/* CSS cho Admin Layout */
+:root {
+    --admin-bg: #f4f7fa;
+    --sidebar-bg: #2c3e50;
+    --sidebar-text: #ecf0f1;
+    --sidebar-active: #3498db;
+    --topbar-bg: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--admin-bg);
+}
+
+.admin-wrapper {
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    min-height: 100vh;
+    position: fixed;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #34495e;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .sidebar-nav .nav-item a {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        color: var(--sidebar-text);
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+        .sidebar-nav .nav-item a:hover {
+            background-color: #34495e;
+        }
+
+    .sidebar-nav .nav-item.active a {
+        background-color: var(--sidebar-active);
+    }
+
+    .sidebar-nav .nav-item i {
+        width: 30px;
+        font-size: 1.1rem;
+        margin-right: 10px;
+    }
+
+/* Main Content */
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+.topbar {
+    background-color: var(--topbar-bg);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+    .logout-btn i {
+        margin-right: 5px;
+    }
+
+
+.content-body {
+    padding: 30px;
+}

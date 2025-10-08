@@ -1,0 +1,56 @@
+﻿/* ======================================= */
+/* === CSS CHO TRANG KHÔNG CÓ KẾT QUẢ  === */
+/* ======================================= */
+
+.no-results-container {
+    text-align: center;
+    padding: 80px 40px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+    margin-bottom: 80px;
+}
+
+.no-results-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 30px;
+    background-color: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .no-results-icon i {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+    }
+
+.no-results-container h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.no-results-container p {
+    color: var(--text-color-light);
+    max-width: 500px;
+    margin: 15px auto 30px;
+    line-height: 1.7;
+}
+
+/* Gợi ý các phòng khác */
+.other-rooms-suggestion {
+    padding-top: 40px;
+    border-top: 1px solid #eee;
+}
+
+.suggestion-title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+}
+/* Tái sử dụng .room-gallery và .room-card từ trang chủ */
+/* (Bạn nên chuyển style của 2 class này sang file site.css để dùng chung) */

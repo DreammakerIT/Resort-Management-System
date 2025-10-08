@@ -1,0 +1,96 @@
+﻿@model LuxuryResort.Models.Room
+@{
+    ViewData["Title"] = "Garden View Bungalow"; // Sửa tiêu đề
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/bungalow-details.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+}
+
+<main class="suite-page">
+    <section class="suite-hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="preheading">Hòa Mình Cùng Thiên Nhiên</span>
+                <h1>Garden View Bungalow</h1>
+                <p>Một không gian nghỉ dưỡng biệt lập, ẩn mình giữa những khu vườn nhiệt đới xanh mướt. Garden View Bungalow mang đến sự yên tĩnh và cảm giác thư thái tuyệt đối.</p>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.pexels.com/photos/2034335/pexels-photo-2034335.jpeg" alt="Không gian ngoài trời của Garden View Bungalow">
+            </div>
+        </div>
+    </section>
+
+    <section class="suite-gallery">
+        <div class="container">
+            <div class="gallery-grid">
+                <img src="https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg" alt="Phòng ngủ ấm cúng" class="gallery-item-1">
+                <img src="https://images.pexels.com/photos/271753/pexels-photo-271753.jpeg" alt="Sân hiên riêng" class="gallery-item-2">
+                <img src="https://images.pexels.com/photos/5998136/pexels-photo-5998136.jpeg" alt="Phòng tắm với vật liệu tự nhiên" class="gallery-item-3">
+            </div>
+        </div>
+    </section>
+
+    <section class="suite-amenities">
+        <div class="container-narrow">
+            <h2 class="section-title">Không Gian Yên Tĩnh & Riêng Tư</h2>
+            <div class="tabs-container">
+                <div class="tab-links">
+                    <button class="tab-link active" data-tab="tab-1">Tổng quan</button>
+                    <button class="tab-link" data-tab="tab-2">Tiện nghi</button>
+                    <button class="tab-link" data-tab="tab-3">Dịch vụ</button>
+                </div>
+                <div class="tab-content active" id="tab-1">
+                    <p>Mỗi Bungalow là một căn nhà nhỏ biệt lập, sử dụng các vật liệu tự nhiên như gỗ, tre và đá, mang lại cảm giác ấm cúng và gần gũi với thiên nhiên xung quanh.</p>
+                </div>
+                <div class="tab-content" id="tab-2">
+                    <ul>
+                        <li>Sân hiên riêng với ghế và võng</li>
+                        <li>Vách kính lớn nhìn thẳng ra vườn cây</li>
+                        <li>Phòng tắm ngoài trời với vòi sen nhiệt đới</li>
+                        <li>Nội thất gỗ thủ công mộc mạc</li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="tab-3">
+                    <ul>
+                        <li>Giỏ trái cây nhiệt đới chào mừng khi nhận phòng</li>
+                        <li>Dịch vụ phục vụ bữa sáng tại phòng</li>
+                        <li>Miễn phí thuê xe đạp khám phá resort</li>
+                        <li>Dịch vụ phòng 24/7</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="suite-booking-cta">
+        <div class="container text-center">
+            <h2 class="cta-title">Tìm Về Chốn Yên Bình</h2>
+            <p class="cta-price">Tận hưởng không gian của riêng bạn với giá từ <strong>7.800.000 VNĐ</strong> / đêm</p>
+            <a href="/Booking" class="cta-button">Đặt Ngay</a>
+        </div>
+    </section>
+
+</main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const tabId = link.getAttribute('data-tab');
+
+                    tabLinks.forEach(item => item.classList.remove('active'));
+                    tabContents.forEach(item => item.classList.remove('active'));
+
+                    link.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+}

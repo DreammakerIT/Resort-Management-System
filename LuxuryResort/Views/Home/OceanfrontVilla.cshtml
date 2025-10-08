@@ -1,0 +1,71 @@
+﻿@model LuxuryResort.Models.Room
+
+@{
+    ViewData["Title"] = "Oceanfront Residence Villa";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/villa.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+}
+
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Oceanfront Residence Villa</h1>
+        <p>Chạm Đến Đại Dương</p>
+    </div>
+</section>
+
+<section class="intro-section">
+    <div class="container intro-grid">
+        <div class="intro-text">
+            <h2>Trải Nghiệm Độc Bản</h2>
+            <p>
+                Oceanfront Residence Villa là không gian nghỉ dưỡng sang trọng bậc nhất, nơi bạn chỉ cách những con sóng vài bước chân. Tận hưởng hồ bơi vô cực riêng tư chan hòa với biển cả và lắng nghe bản giao hưởng của đại dương ngay từ phòng ngủ của bạn.
+            </p>
+        </div>
+        <div class="intro-features">
+            <div class="feature-item">
+                <div class="icon">📏</div>
+                <div class="text">
+                    <h3>300 m²</h3>
+                    <p>Không gian rộng rãi</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="icon">👥</div>
+                <div class="text">
+                    <h3>4 Người Lớn & 2 Trẻ em</h3>
+                    <p>Sức chứa tối đa</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="icon">🏊</div>
+                <div class="text">
+                    <h3>Hồ bơi vô cực riêng</h3>
+                    <p>Điểm nhấn đẳng cấp</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="gallery-section">
+    <div class="container">
+        <h2>Khám Phá Không Gian Biệt Thự</h2>
+        <div class="image-gallery">
+            <img src="/lib/bed.png" alt="Phòng ngủ view biển">
+            <img src="/lib/livingroom.png" alt="Không gian phòng khách">
+            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=1949&auto=format&fit=crop" alt="Hồ bơi riêng tư">
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <a href="/Availability/Results" class="cta-button">ĐẶT PHÒNG NGAY</a>
+    </div>
+</section>
+
+</main>

@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Momo Payment Simulation";
+    Layout = null; // Trang này không cần layout chung
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        h1 {
+            color: #a50064;
+        }
+        /* Màu của MoMo */
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cổng Thanh Toán Giả Lập</h1>
+        <p>Đây là trang mô phỏng cổng thanh toán MoMo cho mục đích kiểm thử.</p>
+        <p><strong>Nội dung:</strong> @ViewBag.OrderInfo</p>
+        <div class="amount">@string.Format("{0:N0} ₫", decimal.Parse(ViewBag.Amount))</div>
+        <p>Bạn muốn mô phỏng kết quả nào?</p>
+
+        <div class="btn-group">
+            <form action="@ViewBag.RedirectUrl" method="get">
+                <input type="hidden" name="partnerCode" value="@ViewBag.PartnerCode" />
+                <input type="hidden" name="orderId" value="@ViewBag.OrderId" />
+                <input type="hidden" name="requestId" value="@ViewBag.OrderId" />
+                <input type="hidden" name="amount" value="@ViewBag.Amount" />
+                <input type="hidden" name="orderInfo" value="@ViewBag.OrderInfo" />
+                <input type="hidden" name="orderType" value="momo_wallet" />
+                <input type="hidden" name="transId" value="123456789" />
+                <input type="hidden" name="resultCode" value="0" /> <input type="hidden" name="message" value="Success" />
+                <input type="hidden" name="payType" value="qr" />
+                <input type="hidden" name="responseTime" value="@DateTime.UtcNow.Ticks" />
+                <input type="hidden" name="signature" value="generated_signature" />
+                <button type="submit" class="btn btn-success">Thanh toán thành công</button>
+            </form>
+
+            <form action="@ViewBag.RedirectUrl" method="get">
+                <input type="hidden" name="resultCode" value="1006" /> <input type="hidden" name="message" value="Transaction denied by user." />
+                <button type="submit" class="btn btn-danger">Hủy thanh toán</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

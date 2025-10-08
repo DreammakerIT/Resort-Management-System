@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "Tiện Ích & Dịch Vụ";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/facilities.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+    <partial name ="_Header" />
+
+    <section class="page-hero" style="background-image: url('https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg');">
+        <div class="hero-overlay">
+            <h1 class="hero-title">Tiện Ích Đẳng Cấp</h1>
+            <p class="hero-subtitle">Nơi mọi trải nghiệm đều được nâng tầm</p>
+        </div>
+    </section>
+
+    <main class="facilities-page">
+        <section class="intro-section">
+            <div class="container-narrow text-center">
+                <h2 style="text-align: center" class="section-heading">Thiên Đường Của Sự Tiện Nghi</h2>
+                <p class="section-description">Tại Manchester Luxury Resort, mỗi tiện ích đều được thiết kế để nâng tầm trải nghiệm nghỉ dưỡng của bạn. Từ hồ bơi vô cực hòa mình với biển trời đến không gian spa yên tĩnh, chúng tôi mang đến một thế giới của sự thư giãn và giải trí, phù hợp với mọi lứa tuổi và sở thích.</p>
+            </div>
+        </section>
+
+        <section class="individual-facility-section">
+            <div class="container">
+
+                <article class="facility-item">
+                    <div class="facility-content">
+                        <span class="facility-subtitle">Bơi Lội & Thư Giãn</span>
+                        <h3 class="facility-title">Hồ Bơi Vô Cực</h3>
+                        <p>Đắm mình trong làn nước mát lạnh của hồ bơi vô cực, nơi có tầm nhìn ngoạn mục ra đại dương bao la. Hồ bơi được thiết kế liền mạch với đường chân trời, tạo cảm giác hòa mình vào thiên nhiên, là địa điểm lý tưởng để thư giãn và ghi lại những khoảnh khắc khó quên.</p>
+                        <ul class="facility-features">
+                            <li><i class="fas fa-water"></i> Giờ mở cửa: 6:00 - 19:00</li>
+                            <li><i class="fas fa-ruler-horizontal"></i> Độ sâu: 1.4m</li>
+                            <li><i class="fas fa-cocktail"></i> Poolside Bar phục vụ đồ uống</li>
+                        </ul>
+                        <a href="#" class="btn-primary-outline">Tìm Hiểu Thêm</a>
+                    </div>
+                    <figure class="facility-image">
+                        <img src="~/lib/pool.png" alt="Hồ bơi vô cực">
+                    </figure>
+                </article>
+
+                <article class="facility-item reverse">
+                    <div class="facility-content">
+                        <span class="facility-subtitle">Tái Tạo Năng Lượng</span>
+                        <h3 class="facility-title">Serenity Spa</h3>
+                        <p>Tìm lại sự cân bằng cho cơ thể và tâm hồn tại ốc đảo yên bình của chúng tôi. Serenity Spa cung cấp các liệu pháp trị liệu cao cấp kết hợp y học cổ truyền và hiện đại, sử dụng tinh dầu và thảo dược tự nhiên của địa phương để mang lại trải nghiệm thư giãn tối đa.</p>
+                        <ul class="facility-features">
+                            <li><i class="fas fa-leaf"></i> Liệu pháp massage đá nóng, thảo dược</li>
+                            <li><i class="fas fa-hot-tub"></i> Bể sục Jacuzzi & Phòng xông hơi</li>
+                            <li><i class="fas fa-calendar-alt"></i> Đặt lịch trước: Bắt buộc</li>
+                        </ul>
+                        <a href="#" class="btn-primary-outline">Xem Các Liệu Pháp</a>
+                    </div>
+                    <figure class="facility-image">
+                        <img src="~/lib/sspa.png" alt="Serenity Spa">
+                    </figure>
+                </article>
+
+                <article class="facility-item">
+                    <div class="facility-content">
+                        <span class="facility-subtitle">Sức Khỏe & Thể Chất</span>
+                        <h3 class="facility-title">Fitness Center</h3>
+                        <p>Duy trì thói quen luyện tập với hệ thống máy móc hiện đại nhất từ Technogym, được đặt trong không gian rộng rãi với tầm nhìn ra vườn nhiệt đới. Các lớp học Yoga, Zumba cũng được tổ chức hàng ngày để tăng cường sự dẻo dai và sức khỏe.</p>
+                        <ul class="facility-features">
+                            <li><i class="fas fa-clock"></i> Mở cửa: 24/7</li>
+                            <li><i class="fas fa-user-circle"></i> Có huấn luyện viên cá nhân theo yêu cầu</li>
+                            <li><i class="fas fa-dumbbell"></i> Trang thiết bị hiện đại</li>
+                        </ul>
+                        <a href="#" class="btn-primary-outline">Xem Lịch Tập</a>
+                    </div>
+                    <figure class="facility-image">
+                        <img src="~/lib/gym.png" alt="Trung tâm thể hình">
+                    </figure>
+                </article>
+
+                <article class="facility-item reverse">
+                    <div class="facility-content">
+                        <span class="facility-subtitle">Vui Chơi Cho Bé</span>
+                        <h3 class="facility-title">The Little Explorers</h3>
+                        <p>Câu lạc bộ trẻ em "The Little Explorers" là một không gian vui chơi an toàn và sáng tạo, với nhiều hoạt động trong nhà và ngoài trời được giám sát bởi đội ngũ nhân viên chuyên nghiệp. Bé yêu sẽ có những giờ phút khám phá và học hỏi thú vị.</p>
+                        <ul class="facility-features">
+                            <li><i class="fas fa-child"></i> Độ tuổi: 4 - 12 tuổi</li>
+                            <li><i class="fas fa-tags"></i> Miễn phí cho khách lưu trú</li>
+                            <li><i class="fas fa-paint-brush"></i> Hoạt động nghệ thuật, kể chuyện</li>
+                        </ul>
+                        <a href="#" class="btn-primary-outline">Tìm Hiểu Thêm</a>
+                    </div>
+                    <figure class="facility-image">
+                        <img src="~/lib/child.png" alt="Câu lạc bộ trẻ em">
+                    </figure>
+                </article>
+
+                <article class="facility-item">
+                    <div class="facility-content">
+                        <span class="facility-subtitle">Hoạt Động Giải Trí</span>
+                        <h3 class="facility-title">Thể Thao Dưới Nước</h3>
+                        <p>Tận hưởng vẻ đẹp của Vịnh Cam Ranh với đa dạng các hoạt động thể thao dưới nước thú vị. Từ lặn biển ngắm san hô, chèo thuyền kayak, lướt ván đứng (SUP) đến các trò chơi cảm giác mạnh, chúng tôi có mọi thứ để thỏa mãn niềm đam mê khám phá của bạn.</p>
+                        <ul class="facility-features">
+                            <li><i class="fas fa-ship"></i> Chèo thuyền Kayak, SUP</li>
+                            <li><i class="fas fa-water"></i> Lặn biển, lặn ống thở</li>
+                            <li><i class="fas fa-wind"></i> Lướt ván (theo mùa)</li>
+                        </ul>
+                        <a href="#" class="btn-primary-outline">Xem Hoạt Động</a>
+                    </div>
+                    <figure class="facility-image">
+                        <img src="~/lib/beachresort.png" alt="Thể thao dưới nước">
+                    </figure>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="cta-section bg-light">
+            <div class="container text-center">
+                <h2 class="cta-title">Sẵn Sàng Khám Phá?</h2>
+                <p class="cta-description">Trải nghiệm những tiện ích hàng đầu và biến kỳ nghỉ của bạn thành một chuyến đi đáng nhớ.</p>
+                <a href="/Home/Rooms" class="cta-button">Đặt Phòng Ngay</a>
+            </div>
+        </section>
+</main>
+
+</body>
+</html>

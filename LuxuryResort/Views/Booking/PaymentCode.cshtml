@@ -1,0 +1,154 @@
+@model LuxuryResort.Models.Booking
+
+@{
+    ViewData["Title"] = "Mã Code Thanh Toán";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/payment-code.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+}
+
+<div class="payment-code-container">
+    <div class="container">
+        <div class="payment-code-header">
+            <h1>Mã Code Thanh Toán</h1>
+            <p>Vui lòng sử dụng mã code này để thanh toán cho đặt phòng của bạn</p>
+        </div>
+
+        <div class="payment-code-card">
+            <div class="code-section">
+                <h2>Mã Code Thanh Toán</h2>
+                <div class="payment-code-display">
+                    <span class="code-number">@Model.PaymentCode</span>
+                </div>
+                <p class="code-instructions">
+                    Mã code này có hiệu lực trong <strong>24 giờ</strong> kể từ lúc tạo.
+                    Hết hạn lúc: <strong>@Model.PaymentCodeExpiry?.ToString("dd/MM/yyyy HH:mm")</strong>
+                </p>
+            </div>
+
+            <div class="booking-details">
+                <h3>Chi tiết đặt phòng</h3>
+                <div class="detail-item">
+                    <span class="label">Hạng phòng:</span>
+                    <span class="value">@Model.RoomInstance.Room.Type</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Số phòng:</span>
+                    <span class="value">@Model.RoomInstance.RoomNumber</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Ngày nhận phòng:</span>
+                    <span class="value">@Model.CheckInDate.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Ngày trả phòng:</span>
+                    <span class="value">@Model.CheckOutDate.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Tổng tiền:</span>
+                    <span class="value total-amount">@Model.TotalAmount.ToString("N0") VNĐ</span>
+                </div>
+            </div>
+
+            <div class="payment-actions">
+                <form asp-action="ConfirmPayment" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn-confirm-payment">
+                        <i class="fas fa-check-circle"></i>
+                        Đã Thanh Toán
+                    </button>
+                </form>
+                
+                <form asp-action="CancelPayment" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn-cancel-payment" onclick="return confirm('Bạn có chắc chắn muốn hủy thanh toán?')">
+                        <i class="fas fa-times-circle"></i>
+                        Hủy Thanh Toán
+                    </button>
+                </form>
+            </div>
+
+            @if (Model.Status == "Confirmed")
+            {
+                <div class="complete-booking-section">
+                    <div class="complete-notice">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Thanh toán đã được xác nhận! Bạn có thể hoàn tất đặt phòng ngay bây giờ.</span>
+                    </div>
+                    
+                    <form asp-action="CompleteBooking" method="post" style="display: inline;">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="btn-complete-booking">
+                            <i class="fas fa-check-double"></i>
+                            Hoàn Tất Đặt Phòng
+                        </button>
+                    </form>
+                </div>
+            }
+
+            <div class="payment-instructions">
+                <h4>Cách sử dụng mã code:</h4>
+                <ol>
+                    <li>Lưu lại mã code <strong>@Model.PaymentCode</strong></li>
+                    <li>Liên hệ với khách sạn để thanh toán</li>
+                    <li>Cung cấp mã code khi thanh toán</li>
+                    <li>Nhấn "Đã Thanh Toán" sau khi hoàn tất</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h4>Cần hỗ trợ?</h4>
+            <p>Nếu bạn gặp vấn đề với mã code thanh toán, vui lòng liên hệ:</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Hotline: 1900 1234</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email: support@luxuryresort.com</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Auto refresh countdown timer
+        function updateCountdown() {
+            const expiryTime = new Date('@Model.PaymentCodeExpiry?.ToString("yyyy-MM-ddTHH:mm:ss")');
+            const now = new Date();
+            const timeLeft = expiryTime - now;
+            
+            if (timeLeft > 0) {
+                const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                const countdownElement = document.querySelector('.code-instructions');
+                if (countdownElement) {
+                    countdownElement.innerHTML = `
+                        Mã code này có hiệu lực trong <strong>24 giờ</strong> kể từ lúc tạo.
+                        Còn lại: <strong>${hours}h ${minutes}m ${seconds}s</strong>
+                    `;
+                }
+            } else {
+                const countdownElement = document.querySelector('.code-instructions');
+                if (countdownElement) {
+                    countdownElement.innerHTML = '<strong style="color: #dc2626;">Mã code đã hết hạn!</strong>';
+                }
+            }
+        }
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
+    </script>
+}
+
+
+

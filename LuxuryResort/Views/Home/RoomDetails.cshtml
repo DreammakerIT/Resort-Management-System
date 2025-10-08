@@ -1,0 +1,175 @@
+﻿@{
+    ViewData["Title"] = "Deluxe Ocean View";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/room-details.css" asp-append-version="true" />
+}
+
+<main class="room-details-page-new">
+
+    <section class="room-carousel-section">
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <div class="carousel-slide"><img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg" alt="Deluxe Ocean View 1"></div>
+                <div class="carousel-slide"><img src="https://images.pexels.com/photos/1457847/pexels-photo-1457847.jpeg" alt="Deluxe Ocean View 2"></div>
+                <div class="carousel-slide"><img src="~/lib/r.png" alt="Deluxe Ocean View 3"></div>
+                <div class="carousel-slide"><img src="https://images.pexels.com/photos/6585741/pexels-photo-6585741.jpeg" alt="Phòng tắm"></div>
+            </div>
+            <button class="carousel-button prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-button next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="room-content-grid">
+            <div class="room-description-details">
+                <div class="room-intro">
+                    <span class="room-preheading">Hạng Phòng Sang Trọng</span>
+                    <h1 class="room-title">Deluxe Ocean View</h1>
+                    <p class="room-summary">
+                        Trải nghiệm sự xa hoa tuyệt đối với tầm nhìn vô tận ra đại dương. Căn phòng là sự giao thoa giữa thiết kế tinh tế và tiện nghi hiện đại, mang đến một không gian nghỉ dưỡng hoàn hảo.
+                    </p>
+                </div>
+
+                <div class="key-features">
+                    <span><i class="fas fa-ruler-combined"></i> 55 m²</span>
+                    <span><i class="fas fa-user-friends"></i> 2 người lớn & 1 trẻ em</span>
+                    <span><i class="fas fa-bed"></i> 1 giường King</span>
+                    <span><i class="fas fa-wind"></i> Ban công riêng</span>
+                </div>
+
+                <div class="amenities-section">
+                    <h3>Tiện nghi nổi bật</h3>
+                    <ul class="amenities-list">
+                        <li><i class="fas fa-check"></i> Wifi tốc độ cao miễn phí</li>
+                        <li><i class="fas fa-check"></i> TV Màn hình phẳng 55-inch</li>
+                        <li><i class="fas fa-check"></i> Máy pha cà phê Nespresso</li>
+                        <li><i class="fas fa-check"></i> Bồn tắm nằm và vòi sen đứng</li>
+                        <li><i class="fas fa-check"></i> Quầy bar mini</li>
+                        <li><i class="fas fa-check"></i> Dịch vụ phòng 24/7</li>
+                    </ul>
+                </div>
+            </div>
+
+            <aside class="room-sidebar">
+                <div class="booking-widget-card">
+                    <div class="price-display">
+                        <span class="price-label">Giá từ</span>
+                        <span class="price-amount">5.500.000 VNĐ</span>
+                        <span class="price-period">/ đêm</span>
+                    </div>
+                    <form action="#">
+                        <div class="form-group">
+                            <label for="checkin-detail">Ngày nhận phòng</label>
+                            <input type="date" id="checkin-detail" name="checkin">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-detail">Ngày trả phòng</label>
+                            <input type="date" id="checkout-detail" name="checkout">
+                        </div>
+                        <a href="/Booking?roomId=@Model.Id" class="submit-btn">Yêu Cầu Đặt Phòng</a>
+                        <p class="booking-note">Giá cuối cùng có thể thay đổi tùy vào thời điểm và ưu đãi.</p>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <section class="other-rooms-section">
+        <div class="container">
+            <h2 class="section-heading text-center">Khám Phá Các Hạng Phòng Khác</h2>
+            <div class="room-gallery">
+                <div class="room-card">
+                    <img src="~/lib/PrivatePool.png" alt="Private Pool Villa">
+                    <div class="room-info">
+                        <h3>Private Pool Villa</h3>
+                        <a href="/Home/PrivatePoolVilla">Xem Chi Tiết</a>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <img src="~/lib/PresidentialSuite.png" alt="Presidential Suite">
+                    <div class="room-info">
+                        <h3>Presidential Suite</h3>
+                        <a href="/Home/PresidentialSuite">Xem Chi Tiết</a>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <img src="https://images.pexels.com/photos/2034335/pexels-photo-2034335.jpeg" alt="Garden Bungalow">
+                    <div class="room-info">
+                        <h3>Garden Bungalow</h3>
+                        <a href="/Home/BungalowGarden">Xem Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // --- LOGIC RÀNG BUỘC LỊCH ĐẶT PHÒNG ---
+            const checkinInput = document.getElementById('checkin-detail');
+            const checkoutInput = document.getElementById('checkout-detail');
+
+            if (checkinInput && checkoutInput) {
+                const today = new Date().toISOString().split('T')[0];
+                checkinInput.setAttribute('min', today);
+                checkoutInput.disabled = true;
+
+                checkinInput.addEventListener('change', function() {
+                    if (this.value) {
+                        checkoutInput.disabled = false;
+                        const checkinDate = new Date(this.value);
+                        checkinDate.setDate(checkinDate.getDate() + 1);
+                        const minCheckoutDate = checkinDate.toISOString().split('T')[0];
+                        checkoutInput.setAttribute('min', minCheckoutDate);
+                        if (checkoutInput.value && checkoutInput.value <= this.value) {
+                            checkoutInput.value = '';
+                        }
+                    } else {
+                        checkoutInput.disabled = true;
+                        checkoutInput.value = '';
+                    }
+                });
+            }
+
+            // --- LOGIC CAROUSEL ẢNH ---
+            const track = document.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const nextButton = document.querySelector('.carousel-button.next');
+            const prevButton = document.querySelector('.carousel-button.prev');
+
+            if(track) {
+                const slideWidth = slides[0].getBoundingClientRect().width;
+                let currentIndex = 0;
+
+                const moveToSlide = (targetIndex) => {
+                    track.style.transform = 'translateX(-' + slideWidth * targetIndex + 'px)';
+                    currentIndex = targetIndex;
+                }
+
+                nextButton.addEventListener('click', e => {
+                    const nextIndex = (currentIndex + 1) % slides.length;
+                    moveToSlide(nextIndex);
+                });
+
+                prevButton.addEventListener('click', e => {
+                    let prevIndex = currentIndex - 1;
+                    if (prevIndex < 0) {
+                        prevIndex = slides.length - 1;
+                    }
+                    moveToSlide(prevIndex);
+                });
+
+                // Tự động chuyển slide sau mỗi 5 giây
+                setInterval(() => {
+                    const nextIndex = (currentIndex + 1) % slides.length;
+                    moveToSlide(nextIndex);
+                }, 5000);
+            }
+        });
+    </script>
+}

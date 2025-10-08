@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Trang Chủ - Manchester Luxury Resort";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/homepage-luxe.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+}
+
+<section class="hero-luxe">
+    <video autoplay muted loop playsinline class="hero-video">
+        <source src="~/lib/23011-332483109_small.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <h1>Thiên Đường Nghỉ Dưỡng</h1>
+            <p>Nơi sự sang trọng hòa quyện cùng vẻ đẹp bất tận của thiên nhiên.</p>
+        </div>
+
+        <div class="booking-bar-luxe">
+            <form asp-controller="Availability" asp-action="Results" method="get">
+                <div class="form-group">
+                    <label>Nhận phòng</label>
+                    <input type="date" name="checkin" id="checkin" required>
+                </div>
+                <div class="form-group">
+                    <label>Trả phòng</label>
+                    <input type="date" name="checkout" id="checkout" required>
+                </div>
+                <div class="form-group">
+                    <label>Người lớn</label>
+                    <select name="adults">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Trẻ em</label>
+                    <select name="children">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-check">Kiểm Tra</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<main class="page-content">
+    <section class="intro-luxe animate-on-scroll">
+        <div class="container-narrow">
+            <span class="pre-title">Chào Mừng Đến Manchester</span>
+            <h2 class="section-title">Một Câu Chuyện Về Sự Tinh Tế</h2>
+            <p>Ẩn mình bên vịnh biển riêng tư, Manchester Luxury Resort là một tuyệt tác kiến trúc, nơi mỗi chi tiết đều được tạo ra để tôn vinh vẻ đẹp của thiên nhiên và mang đến những trải nghiệm cá nhân hóa sâu sắc. Hãy để chúng tôi đưa bạn vào một hành trình của sự thư thái và tái tạo năng lượng.</p>
+            <a href="/Home/TimHieuThem" class="btn-link">Khám phá câu chuyện <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <section class="experiences-luxe animate-on-scroll">
+        <div class="container">
+            <div class="text-center">
+                <span class="pre-title">Trải nghiệm</span>
+                <h2 class="section-title">Dấu Ấn Độc Quyền</h2>
+            </div>
+            <div class="experiences-grid">
+                <a href="/Home/Dining" class="experience-card">
+                    <img src="https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg" alt="Ẩm thực">
+                    <div class="card-overlay"><h3>Ẩm thực Tinh hoa</h3></div>
+                </a>
+                <a href="/Home/Facilities" class="experience-card">
+                    <img src="~/lib/sspa.png" alt="Spa & Wellness">
+                    <div class="card-overlay"><h3>Spa & Trị liệu</h3></div>
+                </a>
+                <a href="/Home/Rooms" class="experience-card">
+                    <img src="https://images.pexels.com/photos/1743231/pexels-photo-1743231.jpeg" alt="Biệt thự riêng tư">
+                    <div class="card-overlay"><h3>Biệt thự Riêng tư</h3></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="parallax-cta animate-on-scroll" style="background-image: url('https://images.pexels.com/photos/1078981/pexels-photo-1078981.jpeg')">
+        <div class="parallax-content">
+            <h2>Không Gian Cho Mọi Cảm Xúc</h2>
+            <p>Từ những căn phòng hướng biển đến các biệt thự biệt lập, hãy tìm cho mình một không gian hoàn hảo.</p>
+            <a href="/Home/Rooms" class="cta-button-outline">Xem Tất Cả Các Phòng</a>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- RÀNG BUỘC NGÀY THÁNG CHO THANH BOOKING ---
+            const checkinInput = document.getElementById('checkin');
+            const checkoutInput = document.getElementById('checkout');
+            if (checkinInput && checkoutInput) {
+                const today = new Date().toISOString().split('T')[0];
+                checkinInput.setAttribute('min', today);
+                checkinInput.addEventListener('change', function() {
+                    if (this.value) {
+                        const nextDay = new Date(this.value);
+                        nextDay.setDate(nextDay.getDate() + 1);
+                        checkoutInput.setAttribute('min', nextDay.toISOString().split('T')[0]);
+                    }
+                });
+            }
+
+            // --- HIỆU ỨNG KHI CUỘN TRANG ---
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+}

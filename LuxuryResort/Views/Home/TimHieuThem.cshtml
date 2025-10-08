@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Về Chúng Tôi - Manchester Luxury Resort";
+    Layout = null; // Chúng ta vẫn tự quản lý header và footer
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+    <partial name="_Header" />
+
+    <section class="page-hero" style="background-image: url('https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg');">
+        <div class="hero-overlay">
+            <h1>Câu Chuyện Của Chúng Tôi</h1>
+        </div>
+    </section>
+
+    <main>
+        <section class="content-section text-center">
+            <div class="container-narrow">
+                <h2>Nơi Sự Tinh Tế Gặp Gỡ Thiên Nhiên</h2>
+                <p class="lead-text">Tại Manchester Luxury Resort, chúng tôi tin rằng sự sang trọng đích thực đến từ những trải nghiệm chân thật. Mỗi góc kiến trúc, mỗi món ăn, mỗi dịch vụ đều được tạo ra không chỉ để làm hài lòng, mà còn để kết nối quý khách với vẻ đẹp nguyên sơ của biển cả và sự ấm áp của lòng hiếu khách Việt Nam.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container two-column-layout">
+                <div class="column-text">
+                    <h3>Kiến Trúc Giao Hòa</h3>
+                    <p>Lấy cảm hứng từ những con sóng mềm mại và vẻ đẹp hùng vĩ của Vịnh Cam Ranh, kiến trúc sư nổi tiếng Johnathan Reed đã kiến tạo nên một không gian mở, giao hòa tối đa với ánh sáng tự nhiên và gió biển. Chúng tôi ưu tiên sử dụng các vật liệu địa phương bền vững như đá granite, gỗ tự nhiên và tre, tạo nên một tổng thể vừa hiện đại, sang trọng, vừa gần gũi với môi trường.</p>
+                </div>
+                <div class="column-image">
+                    <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg" alt="Kiến trúc resort">
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section bg-light">
+            <div class="container text-center">
+                <h2>Hành Trình Khám Phá Vị Giác</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <img src="https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg" alt="Nhà hàng The Cove">
+                        <h4>Nhà hàng The Moon</h4>
+                        <p>Thưởng thức tinh hoa ẩm thực Á-Âu trong một không gian sang trọng với tầm nhìn hướng biển tuyệt đẹp.</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="https://images.pexels.com/photos/67468/pexels-photo-67468.jpeg" alt="Nhà hàng hải sản The Shore">
+                        <h4>The Shore</h4>
+                        <p>Trải nghiệm hải sản tươi ngon nhất được đánh bắt trong ngày và chế biến ngay trên bãi biển.</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg" alt="Quầy bar The Horizon">
+                        <h4>The Manchester Bar</h4>
+                        <p>Ngắm hoàng hôn huyền ảo trên biển cùng ly cocktail đặc trưng tại quầy bar tầng thượng của chúng tôi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container two-column-layout reverse">
+                <div class="column-text">
+                    <h3>Tái Tạo Năng Lượng & Nuôi Dưỡng Tâm Hồn</h3>
+                    <p>Serenity Spa là một ốc đảo yên bình, nơi các liệu pháp trị liệu truyền thống kết hợp cùng những sản phẩm hữu cơ cao cấp. Hãy để các chuyên gia của chúng tôi chăm sóc và đánh thức mọi giác quan của bạn, mang lại sự cân bằng hoàn hảo cho cơ thể và tâm trí.</p>
+                    <ul>
+                        <li><i class="fas fa-leaf"></i> Liệu pháp massage đá nóng, thảo dược.</li>
+                        <li><i class="fas fa-water"></i> Bể sục Jacuzzi và phòng xông hơi.</li>
+                        <li><i class="fas fa-spa"></i> Lớp học Yoga và Thiền định mỗi sáng.</li>
+                    </ul>
+                </div>
+                <div class="column-image">
+                    <img src="~/lib/spa.png" alt="Spa & Wellness">
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container text-center">
+                <h2>Hãy Để Chúng Tôi Kiến Tạo Kỳ Nghỉ Trong Mơ Của Bạn</h2>
+                <br />
+                <a href="/Home/Rooms" class="cta-button">Khám Phá Các Hạng Phòng</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+    </footer>
+
+</body>
+</html>

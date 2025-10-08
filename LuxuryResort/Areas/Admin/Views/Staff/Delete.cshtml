@@ -1,0 +1,29 @@
+﻿@using LuxuryResort.Areas.Identity.Data
+@model LuxuryResortUser
+@{
+    ViewData["Title"] = "Xác nhận Xóa Nhân viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="delete-container">
+    <div class="delete-icon">
+        <i class="fas fa-trash-alt"></i>
+    </div>
+
+    <h1 class="delete-title">Bạn có chắc chắn?</h1>
+    <p class="delete-subtitle">
+        Hành động này sẽ xóa vĩnh viễn tài khoản của nhân viên <br><strong>@Model.FullName</strong>.
+        <br>
+        Bạn sẽ không thể hoàn tác hành động này.
+    </p>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="delete-actions">
+            <a asp-action="Index" class="btn btn-secondary-outline">Hủy Bỏ</a>
+            <button type="submit" class="btn btn-danger-solid">Tôi hiểu, Xóa tài khoản</button>
+        </div>
+    </form>
+</div>

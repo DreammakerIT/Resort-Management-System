@@ -1,0 +1,258 @@
+﻿/* =============================================== */
+/* === CSS NÂNG CẤP - TRANG PRIVATE POOL VILLA === */
+/* =============================================== */
+
+/* --- HERO VIDEO SECTION --- */
+.hero-video-section {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.hero-video-section .hero-overlay {
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.hero-content .preheading {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.8;
+}
+
+.hero-content h1 {
+    font-size: 5rem;
+    font-weight: 700;
+    margin: 10px 0;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+/* --- SECTIONS CHUNG --- */
+.villa-intro-section, .villa-feature-section, .villa-perks-section, .villa-booking-cta {
+    padding: 100px 0;
+}
+
+.container-narrow {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.8rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.section-lead {
+    font-size: 1.2rem;
+    color: var(--text-color-light);
+    line-height: 1.8;
+}
+
+/* --- FEATURE SECTION (Không gian sống) --- */
+.feature-layout {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.feature-image {
+    flex: 1.1;
+}
+
+    .feature-image img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    }
+
+.feature-content {
+    flex: 1;
+}
+
+    .feature-content h3 {
+        font-size: 2rem;
+        color: var(--secondary-color);
+        margin-bottom: 20px;
+    }
+
+    .feature-content p {
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .feature-content ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+        .feature-content ul li {
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+            .feature-content ul li::before {
+                content: '\f00c'; /* Font Awesome check icon */
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+                color: var(--secondary-color);
+                position: absolute;
+                left: 0;
+            }
+
+/* --- PARALLAX SECTION (Hồ bơi) --- */
+.villa-parallax-section {
+    padding: 150px 0;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+    .villa-parallax-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(10, 45, 77, 0.6);
+    }
+
+.parallax-content {
+    position: relative;
+    z-index: 1;
+}
+
+    .parallax-content h2 {
+        font-size: 3rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .parallax-content p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 20px auto 0;
+        opacity: 0.9;
+    }
+
+/* --- PERKS SECTION (Đặc quyền) --- */
+.villa-perks-section {
+    background-color: #ffffff;
+}
+
+.perks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.perk-item {
+    text-align: center;
+    padding: 30px;
+}
+
+    .perk-item i {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 25px;
+    }
+
+    .perk-item h4 {
+        font-size: 1.4rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+    }
+
+    .perk-item p {
+        color: var(--text-color-light);
+        line-height: 1.7;
+    }
+
+/* --- BOOKING CTA --- */
+.villa-booking-cta {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.cta-price {
+    font-size: 1.5rem;
+    margin: 20px 0 30px;
+    font-weight: 300;
+}
+
+    .cta-price strong {
+        font-weight: 700;
+        color: var(--secondary-color);
+    }
+
+.cta-button { /* Kế thừa style từ file khác hoặc định nghĩa lại */
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 18px 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+    .cta-button:hover {
+        background-color: #fff;
+        transform: translateY(-3px);
+    }
+
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+    .feature-layout {
+        flex-direction: column;
+    }
+
+    .perks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content h1 {
+        font-size: 4rem;
+    }
+}

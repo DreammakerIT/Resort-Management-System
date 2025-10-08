@@ -1,0 +1,52 @@
+﻿@model LuxuryResort.Areas.Admin.Models.RoomInstance
+
+@{
+    ViewData["Title"] = "Chi tiết phòng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Chi tiết Phòng: @Model.RoomNumber</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Số phòng
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.RoomNumber)
+                </dd>
+                <dt class="col-sm-3">
+                    Hạng phòng
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Room.Type)
+                </dd>
+                <dt class="col-sm-3">
+                    Tình trạng
+                </dt>
+                <dd class="col-sm-9">
+                    @{ var s = Model.Status ?? "Available"; var cls = "status-badge status-available"; var txt = "Có sẵn"; if (s == "Occupied") { cls = "status-badge status-occupied"; txt = "Đã thuê"; } else if (s == "Cleaning") { cls = "status-badge status-cleaning"; txt = "Đang dọn"; } else if (s == "OutOfOrder") { cls = "status-badge status-outoforder"; txt = "Hỏng"; } }
+                    <span class="@cls">@txt</span>
+                </dd>
+                <dt class="col-sm-3">
+                    Giá / Đêm
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Room.PricePerNight.ToString("N0") VNĐ
+                </dd>
+                <dt class="col-sm-3">
+                    Sức chứa
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Room.MaxOccupancy người lớn, @Model.Room.MaxChildren trẻ em
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Chỉnh sửa</a>
+            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+    </div>
+</div>

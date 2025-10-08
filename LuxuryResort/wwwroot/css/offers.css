@@ -1,0 +1,283 @@
+﻿/* =================================== */
+/* === CSS CHO TRANG ƯU ĐÃI (OFFERS) === */
+/* =================================== */
+
+.offers-page .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.offer-section {
+    padding: 80px 0;
+}
+
+.loyalty-section {
+    background-color: var(--bg-light); /* Màu nền khác biệt cho khách thân thiết */
+}
+
+/* Lưới ưu đãi */
+.offer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 40px;
+}
+
+/* Thẻ ưu đãi */
+.offer-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .offer-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+    }
+
+/* Hình ảnh ưu đãi */
+.offer-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+    .offer-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+.offer-card:hover .offer-image img {
+    transform: scale(1.1);
+}
+
+.offer-tag {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Nội dung ưu đãi */
+.offer-content {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Giúp các thẻ trong 1 hàng có chiều cao bằng nhau */
+}
+
+    .offer-content h3 {
+        font-family: var(--font-heading);
+        font-size: 1.6rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+    }
+
+    .offer-content p {
+        font-family: var(--font-body);
+        color: var(--text-color-light);
+        line-height: 1.7;
+        margin-bottom: 20px;
+        flex-grow: 1; /* Đẩy nút xuống dưới cùng */
+    }
+
+    .offer-content ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 30px;
+    }
+
+        .offer-content ul li {
+            font-family: var(--font-body);
+            color: var(--text-color-dark);
+            margin-bottom: 10px;
+        }
+
+            .offer-content ul li i {
+                color: var(--secondary-color);
+                margin-right: 10px;
+            }
+
+/* Sử dụng lại style nút từ dining.css nếu bạn đã chuyển nó sang site.css */
+.btn-primary-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 12px 35px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-align: center;
+    align-self: flex-start; /* Nút nằm ở đầu khu vực của nó */
+}
+
+    .btn-primary-outline:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+/* Style cho tiền tiêu đề mới */
+.section-preheading {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--secondary-color); /* Dùng màu vàng gold làm điểm nhấn */
+    margin-bottom: 10px;
+}
+
+/* Tinh chỉnh lại tiêu đề chính */
+.section-heading {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin: 0 0 25px 0; /* Bỏ margin-top, giảm margin-bottom */
+    padding-bottom: 15px;
+    position: relative;
+}
+
+    /* Giữ nguyên gạch chân */
+    .section-heading::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: var(--secondary-color);
+        border-radius: 2px;
+    }
+
+.section-description {
+    font-family: var(--font-body);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-color-light);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* --- PAGE HERO (Banner đầu trang) --- */
+.page-hero {
+    height: 70vh; /* Tăng chiều cao lên một chút để ấn tượng hơn */
+    background-size: cover;
+    background-position: center bottom; /* Hoặc center center, tùy ảnh */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden; /* Quan trọng để hình ảnh không tràn ra khi có parallax */
+}
+
+    /* Thêm hiệu ứng parallax nhẹ cho hình ảnh nền */
+    .page-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: inherit; /* Kế thừa ảnh nền từ .page-hero */
+        background-size: cover;
+        background-position: center bottom;
+        transform: translateZ(-1px) scale(1.05); /* Hiệu ứng parallax nhẹ */
+        filter: brightness(0.9); /* Làm ảnh nền tối đi một chút */
+        z-index: -1;
+    }
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradient overlay đẹp hơn */
+    background: linear-gradient(to bottom, rgba(10, 45, 77, 0.75) 0%, rgba(10, 45, 77, 0.5) 50%, rgba(10, 45, 77, 0.75) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 0; /* Đảm bảo overlay nằm trên ảnh nhưng dưới text */
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 5.5rem; /* Kích thước lớn hơn rất nhiều */
+    color: white;
+    font-weight: 700;
+    margin-bottom: 20px; /* Tăng khoảng cách dưới */
+    letter-spacing: 2px; /* Tăng khoảng cách chữ */
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.4); /* Đổ bóng mạnh hơn cho chữ */
+    line-height: 1.1;
+}
+
+.hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.8rem; /* Lớn hơn */
+    color: rgba(255, 255, 255, 0.95); /* Sáng hơn một chút */
+    font-weight: 300;
+    max-width: 800px;
+    margin: 0 auto;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+}
+
+/* Responsive cho banner */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 4rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .page-hero {
+        height: 55vh;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .page-hero {
+        height: 50vh;
+    }
+}

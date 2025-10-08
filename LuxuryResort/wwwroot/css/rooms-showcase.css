@@ -1,0 +1,170 @@
+﻿/* ======================================================== */
+/* ===    CSS PHONG CÁCH TẠP CHÍ - TRANG CÁC HẠNG PHÒNG   === */
+/* ======================================================== */
+
+:root {
+    --font-serif-display: 'Playfair Display', serif;
+    --font-sans-body: 'Poppins', sans-serif;
+    --color-text-light: #f1f1f1;
+    --color-accent: #D4AF37; /* Màu vàng gold sáng */
+}
+body {
+    font-family: var(--font-main);
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: var(--white-color);
+    /* THÊM DÒNG NÀY VÀO */
+    /* Đẩy toàn bộ nội dung xuống dưới header một khoảng 90px */
+    padding-top: 90px;
+}
+
+.showcase-page {
+    /* Không cần padding hay margin vì các section sẽ tự xử lý */
+}
+
+.room-showcase-section {
+    min-height: 80vh; /* Chiều cao tối thiểu cho mỗi section */
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Hiệu ứng Parallax */
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+}
+
+.showcase-overlay {
+    background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Layout cho các section chẵn (text bên phải) */
+.room-showcase-section.layout-right .showcase-overlay {
+    background: linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+}
+
+.room-showcase-section.layout-right .showcase-content {
+    margin-left: auto;
+    text-align: right;
+}
+
+.showcase-content {
+    position: relative;
+    z-index: 2;
+    color: var(--color-text-light);
+    max-width: 550px;
+    font-family: var(--font-sans-body);
+}
+
+.room-category {
+    font-size: 1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--color-accent);
+}
+
+.room-title {
+    font-family: var(--font-serif-display);
+    font-size: 4rem;
+    color: #fff;
+    margin: 10px 0 20px;
+    line-height: 1.1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.room-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.room-price {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+    .room-price strong {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--color-accent);
+    }
+
+.room-availability {
+    margin-bottom: 30px;
+}
+
+.availability-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.availability-text.available {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.availability-text.unavailable {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.availability-text i {
+    font-size: 1rem;
+}
+
+.btn-explore {
+    background-color: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 14px 35px;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+    .btn-explore:hover {
+        background-color: var(--color-accent);
+        color: #000;
+        transform: translateY(-3px);
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .room-showcase-section,
+    .room-showcase-section.layout-right {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .showcase-overlay {
+        background: rgba(0,0,0,0.6);
+    }
+
+    .showcase-content {
+        margin: 0;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .room-title {
+        font-size: 3rem;
+    }
+}

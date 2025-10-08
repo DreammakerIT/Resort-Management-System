@@ -1,0 +1,198 @@
+﻿@using LuxuryResort.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<LuxuryResortUser> SignInManager
+@inject UserManager<LuxuryResortUser> UserManager
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Manchester Luxury Resort</title>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+    <partial name="_Header" />
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <partial name="_Footer" />
+
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <div class="modal-overlay" id="authModal">
+            <div class="modal-content">
+                <div class="modal-image-panel">
+                    <h3>Chào mừng đến Manchester</h3>
+                    <p>Đăng nhập hoặc đăng ký để nhận những ưu đãi độc quyền dành cho thành viên.</p>
+                </div>
+
+                <div class="modal-form-panel">
+                    <button class="close-modal" id="closeModalBtn">&times;</button>
+                    <div class="modal-tabs">
+                        <button class="tab-button active" data-tab="login">Đăng Nhập</button>
+                        <button class="tab-button" data-tab="register">Đăng Ký</button>
+                    </div>
+
+                    <div class="tab-content active" id="login">
+                        <h2>Đăng Nhập Tài Khoản</h2>
+                        <div id="loginNotification" class="notification"></div>
+                        <form id="loginForm" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="Input.Email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mật khẩu</label>
+                                <input type="password" name="Input.Password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="submit-btn">Đăng Nhập</button>
+                        </form>
+                    </div>
+
+                    <div class="tab-content" id="register">
+                        <h2>Tạo Tài Khoản Mới</h2>
+                        <div id="notification" class="notification"></div>
+                        <form id="registerForm" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label>Họ và Tên</label>
+                                <input type="text" name="Input.FullName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="Input.Email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Số Điện Thoại</label>
+                                <input type="text" name="Input.PhoneNumber" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mật khẩu</label>
+                                <input type="password" name="Input.Password" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Xác nhận mật khẩu</label>
+                                <input type="password" name="Input.ConfirmPassword" class="form-control" required>
+                            </div>
+                            <button type="submit" class="submit-btn">Đăng Ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const accountBtn = document.getElementById('accountBtn');
+        const authModal = document.getElementById('authModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const notificationArea = document.getElementById('notification');
+        const loginNotificationArea = document.getElementById('loginNotification');      
+
+        if(accountBtn) {
+            accountBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(authModal) authModal.style.display = 'flex';
+            });
+        }
+        if(closeModalBtn) closeModalBtn.addEventListener('click', () => authModal.style.display = 'none');
+        if(authModal) authModal.addEventListener('click', (e) => { if (e.target === authModal) authModal.style.display = 'none'; });
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Xử lý form Đăng ký
+        if(registerForm) {
+            registerForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(registerForm);
+                const verificationToken = registerForm.querySelector('input[name="__RequestVerificationToken"]').value;
+                fetch('/Identity/Account/Register', {
+                    method: 'POST', credentials: 'same-origin',
+                    headers: { "RequestVerificationToken": verificationToken },
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        showNotification(data.message, true);
+                        setTimeout(() => {
+                           document.querySelector('.tab-button[data-tab="login"]').click();
+                        }, 2000);
+                    } else {
+                        showNotification(data.errors.join('<br>'), false);
+                    }
+                });
+            });
+        }
+
+        // Xử lý form Đăng nhập
+        if(loginForm) {
+            loginForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(loginForm);
+                const verificationToken = loginForm.querySelector('input[name="__RequestVerificationToken"]').value;
+                fetch('/Identity/Account/Login', {
+                    method: 'POST', credentials: 'same-origin',
+                    headers: { "RequestVerificationToken": verificationToken, "X-Requested-With": "XMLHttpRequest" },
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        showLoginNotification('Đăng nhập thành công! Đang tải lại trang...', true);
+                        setTimeout(() => window.location.reload(), 1500);
+                    } else {
+                        showLoginNotification(data.message, false);
+                    }
+                });
+            });
+        }
+
+        function showNotification(message, isSuccess) {
+            notificationArea.innerHTML = message;
+            notificationArea.className = `notification ${isSuccess ? 'success' : 'error'}`;
+            notificationArea.style.display = 'block';
+        }
+        function showLoginNotification(message, isSuccess) {
+            loginNotificationArea.innerHTML = message;
+            loginNotificationArea.className = `notification ${isSuccess ? 'success' : 'error'}`;
+            loginNotificationArea.style.display = 'block';
+        }
+
+    });
+</script>
+</html>

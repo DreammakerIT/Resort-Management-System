@@ -1,0 +1,311 @@
+/* Payment Code Page Styles */
+.payment-code-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 40px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.payment-code-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.payment-code-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.payment-code-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.payment-code-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.code-section {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 15px;
+    border: 2px dashed #cbd5e0;
+}
+
+.code-section h2 {
+    color: #2d3748;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.payment-code-display {
+    margin: 30px 0;
+}
+
+.code-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2d3748;
+    background: white;
+    padding: 20px 40px;
+    border-radius: 15px;
+    border: 3px solid #4299e1;
+    letter-spacing: 8px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-family: 'Courier New', monospace;
+}
+
+.code-instructions {
+    color: #4a5568;
+    font-size: 1rem;
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+.booking-details {
+    margin-bottom: 40px;
+    padding: 30px;
+    background: #f7fafc;
+    border-radius: 15px;
+}
+
+.booking-details h3 {
+    color: #2d3748;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item .label {
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.detail-item .value {
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.total-amount {
+    color: #e53e3e;
+    font-size: 1.2rem;
+}
+
+.payment-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.btn-confirm-payment,
+.btn-cancel-payment {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 180px;
+    justify-content: center;
+}
+
+.btn-confirm-payment {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+
+.btn-confirm-payment:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+}
+
+.btn-cancel-payment {
+    background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+}
+
+.btn-cancel-payment:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 101, 101, 0.4);
+}
+
+/* Complete Booking Section */
+.complete-booking-section {
+    background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+    border: 2px solid #4fd1c7;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.complete-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #065f46;
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.complete-notice i {
+    color: #10b981;
+    font-size: 1.2rem;
+}
+
+.btn-complete-booking {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 200px;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-complete-booking:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.payment-instructions {
+    background: #edf2f7;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.payment-instructions h4 {
+    color: #2d3748;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.payment-instructions ol {
+    color: #4a5568;
+    line-height: 1.8;
+    padding-left: 20px;
+}
+
+.payment-instructions li {
+    margin-bottom: 8px;
+}
+
+.help-section {
+    text-align: center;
+    color: #4a5568;
+}
+
+.help-section h4 {
+    color: #2d3748;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #4a5568;
+}
+
+.contact-item i {
+    color: #4299e1;
+    font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .payment-code-container {
+        padding: 20px 0;
+    }
+    
+    .payment-code-card {
+        padding: 20px;
+        margin: 0 10px;
+    }
+    
+    .code-number {
+        font-size: 2rem;
+        letter-spacing: 4px;
+        padding: 15px 20px;
+    }
+    
+    .payment-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-confirm-payment,
+    .btn-cancel-payment {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .contact-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+
+

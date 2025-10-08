@@ -1,0 +1,77 @@
+﻿@model IEnumerable<LuxuryResort.Areas.Admin.Models.BookingAdminViewModel>
+@{
+    ViewData["Title"] = "Quản lý Đặt phòng"; Layout = "_AdminLayout";
+}
+
+<div class="page-header">
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+<div class="dashboard-panel">
+    <div class="panel-body">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Mã ĐP</th>
+                    <th>Khách hàng</th>
+                    <th>Hạng phòng</th>
+                    <th>Số phòng</th>
+                    <th>Nhận/Trả phòng</th>
+                    <th>Phương thức TT</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày đặt</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>#@item.Id.ToString("D6")</strong></td>
+                        <td>@item.GuestName</td>
+                        <td>@item.RoomType</td>
+                        <td><strong>@item.RoomNumber</strong></td>
+                        <td>@item.CheckInDate.ToString("dd/MM") - @item.CheckOutDate.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @{
+                                string paymentMethodText = item.PaymentMethod switch
+                                {
+                                    "payment_code" => "Mã Code",
+                                    "hotel" => "Tại KS",
+                                    _ => item.PaymentMethod
+                                };
+                            }
+                            <span class="payment-method-badge">@paymentMethodText</span>
+                        </td>
+                        <td><strong>@item.TotalPrice.ToString("N0") VNĐ</strong></td>
+                        <td>
+                            @{
+                                string statusClass = item.Status switch
+                                {
+                                    "Pending" => "status-pending",
+                                    "Confirmed" => "status-confirmed",
+                                    "Completed" => "status-completed",
+                                    "Cancelled" => "status-cancelled",
+                                    "Payment_Pending" => "status-payment-pending",
+                                    _ => "status-default"
+                                };
+                            }
+                            <span class="status-badge @statusClass">@item.Status</span>
+                        </td>
+                        <td>@item.BookingDate.ToString("dd/MM/yyyy")</td>
+                        <td class="actions-cell">
+                            <a asp-area="Admin" asp-controller="Bookings" asp-action="Details" asp-route-id="@item.Id" class="btn-action" title="Xem chi tiết"><i class="fas fa-eye"></i></a>
+                            @if (item.Status != "Cancelled" && item.Status != "Completed")
+                            {
+                                <form asp-area="Admin" asp-controller="Bookings" asp-action="Cancel" asp-route-id="@item.Id" method="post" style="display:inline">
+                                    <button type="submit" class="btn-action btn-action-danger" title="Hủy đặt phòng" onclick="return confirm('Bạn có chắc muốn hủy đặt phòng này?');"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

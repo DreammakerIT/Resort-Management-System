@@ -1,0 +1,49 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "/Areas/Identity/Pages/_Layout.cshtml"; // Sử dụng layout mới
+}
+
+<div class="login-container">
+    <div class="login-box">
+        <div class="login-header">
+            <h1>Manchester Luxury Resort</h1>
+            <p>Admin Control Panel</p>
+        </div>
+
+        <section>
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+                <div class="form-group">
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                </div>
+
+                <div class="login-options">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe" class="form-label">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <button id="login-submit" type="submit" class="login-btn">Đăng nhập</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

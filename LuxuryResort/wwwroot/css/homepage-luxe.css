@@ -1,0 +1,316 @@
+﻿:root {
+    --font-serif-display: 'Cormorant Garamond', serif;
+    --font-sans-body: 'Poppins', sans-serif;
+    --color-primary: #0A2D4D;
+    --color-secondary: #C39B6F;
+    --color-text-dark: #333;
+    --color-text-light: #666;
+    --color-bg-light: #f9f7f4;
+}
+
+/* --- HERO SECTION --- */
+.hero-luxe {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.hero-luxe .hero-overlay {
+    z-index: 2;
+    background: rgba(0,0,0,0.4);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 200px; /* Nâng nội dung lên để chừa chỗ cho thanh booking */
+}
+
+.hero-content {
+    color: #fff;
+    text-align: center;
+}
+
+    .hero-content h1 {
+        font-family: var(--font-serif-display);
+        font-size: 5rem;
+        font-weight: 700;
+        text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .hero-content p {
+        font-size: 1.3rem;
+        font-weight: 300;
+        opacity: 0.9;
+    }
+
+/* Booking Bar */
+.booking-bar-luxe {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 1100px;
+    background-color: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    z-index: 3;
+}
+
+    .booking-bar-luxe form {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .booking-bar-luxe .form-group {
+        flex: 1;
+    }
+
+    .booking-bar-luxe label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--color-text-light);
+        margin-bottom: 5px;
+    }
+
+    .booking-bar-luxe input, .booking-bar-luxe select {
+        width: 100%;
+        border: none;
+        background: transparent;
+        border-bottom: 1px solid #ccc;
+        padding: 8px 0;
+        font-size: 1rem;
+    }
+
+        .booking-bar-luxe input:focus, .booking-bar-luxe select:focus {
+            outline: none;
+            border-bottom-color: var(--color-secondary);
+        }
+
+.btn-check {
+    background-color: var(--color-primary);
+    color: #fff;
+    border: none;
+    padding: 20px 40px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .btn-check:hover {
+        background-color: var(--color-secondary);
+        color: var(--color-primary);
+    }
+
+
+/* --- CÁC SECTION NỘI DUNG --- */
+.page-content {
+    background-color: #fff;
+    position: relative;
+    z-index: 5;
+}
+
+.intro-luxe {
+    padding: 100px 0;
+    text-align: center;
+}
+
+.container-narrow {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.pre-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--color-secondary);
+}
+
+.section-title {
+    font-family: var(--font-serif-display);
+    font-size: 3rem;
+    color: var(--color-text-dark);
+    margin: 15px 0 25px;
+}
+
+.intro-luxe p {
+    color: var(--color-text-light);
+    line-height: 1.8;
+}
+
+.btn-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+    .btn-link i {
+        margin-left: 8px;
+    }
+
+/* Experiences Section */
+.experiences-luxe {
+    padding: 100px 0;
+    background-color: var(--color-bg-light);
+}
+
+.experiences-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.experience-card {
+    position: relative;
+    height: 450px;
+    border-radius: 8px;
+    overflow: hidden;
+    display: block;
+}
+
+    .experience-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .experience-card:hover img {
+        transform: scale(1.1);
+    }
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: 30px;
+}
+
+    .card-overlay h3 {
+        color: #fff;
+        font-family: var(--font-serif-display);
+        font-size: 2rem;
+        margin: 0;
+    }
+
+/* Parallax CTA */
+/* --- PARALLAX CTA - SANG TRỌNG & THU HÚT --- */
+.parallax-cta {
+    padding: 150px 0; /* Tăng padding để tạo không gian thoáng đãng */
+    text-align: center;
+    color: #fff;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Hiệu ứng Parallax */
+    position: relative;
+    overflow: hidden; /* Đảm bảo không có nội dung tràn ra ngoài */
+}
+
+    /* Lớp phủ (Overlay) tinh tế hơn */
+    .parallax-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 45, 77, 0.75); /* Màu xanh đậm hơn một chút, opacity vừa phải */
+        z-index: 1;
+    }
+
+.parallax-content {
+    position: relative;
+    z-index: 2; /* Đảm bảo nội dung nằm trên lớp phủ */
+    max-width: 800px; /* Giới hạn chiều rộng để text dễ đọc hơn */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+    .parallax-content h2 {
+        font-family: var(--font-serif); /* Sử dụng font serif cho sự sang trọng */
+        font-size: 3.8rem; /* Kích thước lớn hơn, mạnh mẽ hơn */
+        font-weight: 700; /* Đậm hơn để nổi bật */
+        margin-bottom: 25px;
+        line-height: 1.2;
+        text-shadow: 0 5px 20px rgba(0,0,0,0.3); /* Tạo chiều sâu cho text */
+    }
+
+    .parallax-content p {
+        font-family: var(--font-sans); /* Font sans-serif cho đoạn mô tả dễ đọc */
+        font-size: 1.2rem; /* Kích thước vừa phải */
+        line-height: 1.8;
+        margin-bottom: 40px; /* Khoảng cách lớn hơn với nút */
+        opacity: 0.9;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+.cta-button-outline {
+    display: inline-block;
+    padding: 16px 45px; /* Nút lớn hơn, dễ bấm hơn */
+    border: 2px solid #fff; /* Border màu trắng tinh khôi */
+    color: #fff; /* Text màu trắng */
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 5px; /* Bo tròn nhẹ các góc */
+    transition: all 0.4s ease; /* Hiệu ứng mượt mà khi hover */
+}
+
+    .cta-button-outline:hover {
+        background-color: #fff; /* Nền trắng khi hover */
+        color: var(--color-primary); /* Text màu xanh primary khi hover */
+        box-shadow: 0 8px 30px rgba(0,0,0,0.2); /* Tạo hiệu ứng nổi nhẹ */
+    }
+
+/* Responsive */
+@media(max-width: 768px) {
+    .parallax-cta {
+        padding: 80px 0;
+    }
+
+    .parallax-content h2 {
+        font-size: 2.8rem;
+    }
+
+    .parallax-content p {
+        font-size: 1rem;
+    }
+
+    .cta-button-outline {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}

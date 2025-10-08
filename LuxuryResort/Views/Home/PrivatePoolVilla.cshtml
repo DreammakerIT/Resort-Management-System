@@ -1,0 +1,88 @@
+﻿@model LuxuryResort.Models.Room
+@{
+    ViewData["Title"] = "Private Pool Villa";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/villa-details.css" asp-append-version="true" />
+}
+
+<main class="villa-page">
+    <section class="hero-video-section">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="~/lib/12971315-uhd_2560_1440_30fps.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <span class="preheading">Một Thế Giới Riêng</span>
+                <h1>Private Pool Villa</h1>
+                <p>Nơi sự riêng tư tuyệt đối và sang trọng vượt thời gian hòa quyện làm một.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="villa-intro-section">
+        <div class="container-narrow">
+            <h2 class="section-title">Ốc Đảo Bình Yên Của Riêng Bạn</h2>
+            <p class="section-lead">
+                Bước vào một không gian sống rộng 120m², nơi mỗi chi tiết đều được chăm chút để mang lại sự thoải mái tối đa. Từ phòng khách trang nhã, phòng ngủ ấm cúng đến hồ bơi riêng xanh mát, tất cả đều được thiết kế để bạn có thể tạm gác lại mọi âu lo và tận hưởng trọn vẹn từng khoảnh khắc.
+            </p>
+        </div>
+    </section>
+
+    <section class="villa-feature-section">
+        <div class="container feature-layout">
+            <div class="feature-image">
+                <img src="~/lib/villa.png" alt="Không gian sống trong villa">
+            </div>
+            <div class="feature-content">
+                <h3>Thiết Kế Đương Đại</h3>
+                <p>Nội thất được lựa chọn kỹ lưỡng từ các thương hiệu hàng đầu, kết hợp hài hòa giữa vật liệu gỗ ấm áp và đá cẩm thạch sang trọng, tạo nên một không gian vừa hiện đại vừa gần gũi.</p>
+                <ul>
+                    <li>Phòng khách với sofa lớn và Smart TV 65-inch.</li>
+                    <li>Khu vực bếp nhỏ với đầy đủ tiện nghi.</li>
+                    <li>Phòng tắm lớn với bồn tắm Jacuzzi và vòi sen nhiệt đới.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="villa-parallax-section" style="background-image: url('https://images.pexels.com/photos/1743231/pexels-photo-1743231.jpeg');">
+        <div class="parallax-content">
+            <h2>Hồ Bơi Riêng Tư</h2>
+            <p>Thư giãn trên sân hiên tắm nắng hoặc đắm mình trong làn nước trong xanh của hồ bơi riêng, được bao quanh bởi khu vườn nhiệt đới xanh mướt.</p>
+        </div>
+    </section>
+
+    <section class="villa-perks-section">
+        <div class="container text-center">
+            <h2 class="section-title">Những Đặc Quyền Dành Riêng Cho Bạn</h2>
+            <div class="perks-grid">
+                <div class="perk-item">
+                    <i class="fas fa-concierge-bell"></i>
+                    <h4>Dịch Vụ Quản Gia</h4>
+                    <p>Đội ngũ quản gia chuyên nghiệp, tận tâm sẵn sàng phục vụ mọi yêu cầu của bạn suốt 24/7.</p>
+                </div>
+                <div class="perk-item">
+                    <i class="fas fa-utensils"></i>
+                    <h4>Ẩm Thực Tại Villa</h4>
+                    <p>Yêu cầu một bữa tối BBQ riêng tư bên hồ bơi hoặc một bữa sáng thịnh soạn được phục vụ ngay tại phòng.</p>
+                </div>
+                <div class="perk-item">
+                    <i class="fas fa-spa"></i>
+                    <h4>Trị Liệu Spa</h4>
+                    <p>Tận hưởng các liệu pháp spa và massage thư giãn được thực hiện bởi chuyên gia ngay tại sự riêng tư của villa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="villa-booking-cta">
+        <div class="container text-center">
+            <h2 class="cta-title">Biến Kỳ Nghỉ Trong Mơ Thành Hiện Thực</h2>
+            <p class="cta-price">Giá từ <strong>12.500.000 VNĐ</strong> / đêm</p>
+            <a href="/Booking?roomId=@Model.Id" class="cta-button">Yêu Cầu Đặt Phòng</a>
+        </div>
+    </section>
+
+</main>

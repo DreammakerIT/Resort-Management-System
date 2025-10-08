@@ -1,0 +1,77 @@
+﻿@model LuxuryResort.Models.Room
+
+@{
+    ViewData["Title"] = Model.Type;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/deluxe-city.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+}
+
+<main class="cinematic-page">
+    <section class="hero-section-cinematic" style="background-image: url('@Model.ImageUrl');">
+        <div class="hero-content">
+            <h1>@Model.Type</h1>
+            <p>Không gian sang trọng của riêng bạn giữa lòng thành phố.</p>
+        </div>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="container">
+            <section class="intro-block">
+                <div class="intro-text">
+                    <h2>Nơi Thành Phố Trở Thành Tác Phẩm Nghệ Thuật</h2>
+                    <p>Với cửa sổ kính panorama từ trần đến sàn, phòng Deluxe City View biến đường chân trời của thành phố thành một phần trong trải nghiệm nghỉ dưỡng của bạn. Tận hưởng sự xa hoa trong từng chi tiết và ngắm nhìn thành phố lấp lánh về đêm.</p>
+                </div>
+                <div class="intro-stats">
+                    <div class="stat">
+                        <strong>@Model.Area m²</strong>
+                        <span>Không gian</span>
+                    </div>
+                    <div class="stat">
+                        <strong>@(Model.MaxOccupancy + Model.MaxChildren)</strong>
+                        <span>Sức chứa</span>
+                    </div>
+                    <div class="stat">
+                        <strong>Tầng 25+</strong>
+                        <span>Độ cao</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="horizontal-gallery">
+                <div class="gallery-track">
+                    <div class="gallery-image"><img src="~/lib/k.png" alt="Phòng ngủ"></div>
+                    <div class="gallery-image"><img src="~/lib/k1.png" alt="Phòng tắm"></div>
+                    <div class="gallery-image"><img src="~/lib/city.png" alt="Góc làm việc"></div>
+                    <div class="gallery-image"><img src="https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg" alt="Chi tiết nội thất"></div>
+                </div>
+            </section>
+
+            <section class="booking-cta-cinematic">
+                <div class="cta-content">
+                    <h3>Trải nghiệm sự xa hoa trên tầm cao mới</h3>
+                    <span class="price">Giá từ <strong>@Model.PricePerNight.ToString("N0") VNĐ</strong> / đêm</span>
+                    <div class="room-availability-info">
+                        @if (ViewBag.AvailableRooms > 0)
+                        {
+                            <span class="availability-badge available">
+                                <i class="fas fa-check-circle"></i>
+                                Còn @ViewBag.AvailableRooms phòng trống
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="availability-badge unavailable">
+                                <i class="fas fa-times-circle"></i>
+                                Đã kín phòng
+                            </span>
+                        }
+                    </div>
+                </div>
+                <a href="/Booking?roomId=@Model.Id" class="cta-button">Đặt Phòng Ngay</a>
+            </section>
+        </div>
+    </div>
+</main>

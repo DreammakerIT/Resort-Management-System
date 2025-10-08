@@ -1,0 +1,64 @@
+@model LuxuryResort.Models.Booking
+
+@{
+    ViewData["Title"] = "QR Thanh Toán";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/payment-code.css" asp-append-version="true" />
+}
+
+<div class="payment-code-container">
+    <div class="container">
+        <div class="payment-code-header">
+            <h1>Quét QR để thanh toán</h1>
+            <p>Mã code: <strong>@Model.PaymentCode</strong> — Hết hạn: <strong>@Model.PaymentCodeExpiry?.ToString("dd/MM/yyyy HH:mm")</strong></p>
+        </div>
+
+        <div class="payment-code-card" style="text-align:center">
+            <div style="margin-bottom:20px">
+                <img id="vietqr" src="@ViewBag.VietQrUrl" alt="VietQR" style="max-width:260px;border:1px solid #e2e8f0;border-radius:12px;padding:10px;background:#fff" />
+                <div style="margin-top:10px;color:#4a5568">Quét QR bằng MoMo hoặc ứng dụng ngân hàng để thanh toán</div>
+            </div>
+
+            <div class="booking-details">
+                <h3>Chi tiết đặt phòng</h3>
+                <div class="detail-item">
+                    <span class="label">Hạng phòng:</span>
+                    <span class="value">@Model.RoomInstance.Room.Type</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Số phòng:</span>
+                    <span class="value">@Model.RoomInstance.RoomNumber</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Tổng tiền:</span>
+                    <span class="value total-amount">@Model.TotalAmount.ToString("N0") VNĐ</span>
+                </div>
+            </div>
+
+            <div class="payment-actions">
+                <form asp-action="ConfirmPayment" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn-confirm-payment">
+                        <i class="fas fa-check-circle"></i>
+                        Tôi đã thanh toán
+                    </button>
+                </form>
+
+                <form asp-action="CancelPayment" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn-cancel-payment" onclick="return confirm('Bạn có chắc chắn muốn hủy thanh toán?')">
+                        <i class="fas fa-times-circle"></i>
+                        Hủy
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts { }
+
+
+

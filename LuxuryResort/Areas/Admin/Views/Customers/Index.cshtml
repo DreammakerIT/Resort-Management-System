@@ -1,0 +1,98 @@
+﻿@model IEnumerable<LuxuryResort.Areas.Admin.Models.CustomerViewModel>
+
+@{
+    ViewData["Title"] = "Quản lý Khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+<div class="dashboard-panel">
+    <div class="panel-header">
+        <h3
+            style=" text-align: center">Danh sách khách hàng đã đăng ký</h3>
+    </div>
+    <div class="panel-body">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Họ và Tên</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Trạng thái</th>
+                    <th style="width: 150px; text-align: right;">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@(item.FullName ?? "N/A")</strong></td>
+                            <td>@item.Email</td>
+                            <td>@(item.PhoneNumber ?? "Chưa có")</td>
+                            <td>
+                                @if (item.IsLocked)
+                                {
+                                    <span class="status-badge status-locked">Đã khóa</span>
+                                }
+                                else
+                                {
+                                    <span class="status-badge status-verified">Hoạt động</span>
+                                }
+                            </td>
+                            <td class="actions-cell">
+                                @if (item.IsLocked)
+                                {
+                                    <form asp-action="Unlock" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn-action" title="Mở khóa tài khoản">
+                                            <i class="fas fa-lock-open"></i>
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="Lock" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn-action" title="Khóa tài khoản">
+                                            <i class="fas fa-lock"></i>
+                                        </button>
+                                    </form>
+                                }
+
+                            <td class="actions-cell">
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-action-danger" title="Xóa">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>                            
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px;">
+                            Chưa có tài khoản khách hàng nào được đăng ký.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .d-inline {
+        display: inline-block;
+    }
+
+    .btn-action { /* Kế thừa style từ admin-management.css */
+    }
+
+</style>

@@ -1,0 +1,304 @@
+@model LuxuryResort.Models.Booking
+@{
+    ViewData["Title"] = "Chi tiết Đặt phòng";
+    Layout = "_AdminLayout";
+}
+
+<div class="page-header">
+    <h1>@ViewData["Title"]</h1>
+    <a asp-area="Admin" asp-controller="Bookings" asp-action="Index" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Quay lại
+    </a>
+</div>
+
+<div class="booking-details-container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="dashboard-panel">
+                <div class="panel-header">
+                    <h3>Thông tin đặt phòng #@Model.Id.ToString("D6")</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="detail-grid">
+                        <div class="detail-section">
+                            <h4>Thông tin khách hàng</h4>
+                            <div class="detail-item">
+                                <span class="label">Họ tên:</span>
+                                <span class="value">@Model.User?.FullName</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Email:</span>
+                                <span class="value">@Model.User?.Email</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Số điện thoại:</span>
+                                <span class="value">@Model.User?.PhoneNumber</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4>Thông tin phòng</h4>
+                            <div class="detail-item">
+                                <span class="label">Hạng phòng:</span>
+                                <span class="value">@Model.RoomInstance?.Room?.Type</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Số phòng:</span>
+                                <span class="value"><strong>@Model.RoomInstance?.RoomNumber</strong></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Ngày nhận phòng:</span>
+                                <span class="value">@Model.CheckInDate.ToString("dddd, dd/MM/yyyy")</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Ngày trả phòng:</span>
+                                <span class="value">@Model.CheckOutDate.ToString("dddd, dd/MM/yyyy")</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Số khách:</span>
+                                <span class="value">@Model.Adults người lớn, @Model.Children trẻ em</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4>Thông tin thanh toán</h4>
+                            <div class="detail-item">
+                                <span class="label">Phương thức:</span>
+                                <span class="value">
+                                    @{
+                                        string paymentMethodText = Model.PaymentMethod switch
+                                        {
+                                            "payment_code" => "Mã Code Thanh Toán",
+                                            "hotel" => "Thanh toán tại khách sạn",
+                                            _ => Model.PaymentMethod ?? "N/A"
+                                        };
+                                    }
+                                    @paymentMethodText
+                                </span>
+                            </div>
+                            @if (!string.IsNullOrEmpty(Model.PaymentCode))
+                            {
+                                <div class="detail-item">
+                                    <span class="label">Mã thanh toán:</span>
+                                    <span class="value payment-code">@Model.PaymentCode</span>
+                                </div>
+                                @if (Model.PaymentCodeExpiry.HasValue)
+                                {
+                                    <div class="detail-item">
+                                        <span class="label">Hết hạn:</span>
+                                        <span class="value">@Model.PaymentCodeExpiry.Value.ToString("dd/MM/yyyy HH:mm")</span>
+                                    </div>
+                                }
+                            }
+                            @if (!string.IsNullOrEmpty(Model.ConfirmationCode))
+                            {
+                                <div class="detail-item">
+                                    <span class="label">Mã xác nhận:</span>
+                                    <span class="value confirmation-code">@Model.ConfirmationCode</span>
+                                </div>
+                            }
+                            <div class="detail-item">
+                                <span class="label">Tổng tiền:</span>
+                                <span class="value total-amount">@Model.TotalAmount.ToString("N0") VNĐ</span>
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.SpecialRequest))
+                        {
+                            <div class="detail-section">
+                                <h4>Yêu cầu đặc biệt</h4>
+                                <div class="special-request">
+                                    @Model.SpecialRequest
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="dashboard-panel">
+                <div class="panel-header">
+                    <h3>Trạng thái & Hành động</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="status-section">
+                        <div class="current-status">
+                            <span class="label">Trạng thái hiện tại:</span>
+                            @{
+                                string statusClass = Model.Status switch
+                                {
+                                    "Pending" => "status-pending",
+                                    "Confirmed" => "status-confirmed",
+                                    "Completed" => "status-completed",
+                                    "Cancelled" => "status-cancelled",
+                                    "Payment_Pending" => "status-payment-pending",
+                                    _ => "status-default"
+                                };
+                            }
+                            <span class="status-badge @statusClass">@Model.Status</span>
+                        </div>
+                        
+                        <div class="booking-info">
+                            <div class="info-item">
+                                <span class="label">Ngày đặt:</span>
+                                <span class="value">@Model.BookingDate.ToString("dd/MM/yyyy HH:mm")</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-section">
+                        @if (Model.Status != "Cancelled" && Model.Status != "Completed")
+                        {
+                            <form asp-area="Admin" asp-controller="Bookings" asp-action="Cancel" asp-route-id="@Model.Id" method="post">
+                                <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Bạn có chắc muốn hủy đặt phòng này?');">
+                                    <i class="fas fa-times"></i> Hủy đặt phòng
+                                </button>
+                            </form>
+                        }
+                        
+                        <a asp-area="Admin" asp-controller="Bookings" asp-action="Index" class="btn btn-secondary btn-block">
+                            <i class="fas fa-list"></i> Danh sách đặt phòng
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.booking-details-container {
+    margin-top: 20px;
+}
+
+.detail-grid {
+    display: grid;
+    gap: 30px;
+}
+
+.detail-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.detail-section h4 {
+    color: #495057;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item .label {
+    font-weight: 500;
+    color: #6c757d;
+    min-width: 120px;
+}
+
+.detail-item .value {
+    font-weight: 600;
+    color: #495057;
+    text-align: right;
+}
+
+.payment-code, .confirmation-code {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+
+.total-amount {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+.special-request {
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 4px;
+    border-left: 4px solid #ffc107;
+    font-style: italic;
+    color: #856404;
+}
+
+.status-section {
+    margin-bottom: 20px;
+}
+
+.current-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.booking-info {
+    background: #e9ecef;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-section {
+    display: grid;
+    gap: 10px;
+}
+
+.btn-block {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.panel-header {
+    background: #007bff;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+@@media (max-width: 768px) {
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .detail-item .value {
+        text-align: left;
+    }
+}
+</style>

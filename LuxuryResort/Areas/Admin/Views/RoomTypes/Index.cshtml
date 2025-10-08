@@ -1,0 +1,41 @@
+﻿@model IEnumerable<LuxuryResort.Models.Room>
+@{
+    ViewData["Title"] = "Quản lý Hạng phòng"; Layout = "_AdminLayout";
+}
+
+<div class="page-header">
+    <h1>@ViewData["Title"]</h1>
+    <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm Hạng phòng</a>
+</div>
+<div class="dashboard-panel">
+    <div class="panel-body">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Tên Hạng phòng</th>
+                    <th>Giá / đêm</th>
+                    <th>Sức chứa (Người lớn)</th>
+                    <th>Trẻ em (Tối đa)</th>
+                    <th>Diện tích</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>@item.Type</strong></td>
+                        <td>@item.PricePerNight.ToString("N0") VNĐ</td>
+                        <td>@item.MaxOccupancy người</td>
+                        <td>@item.MaxChildren trẻ</td>
+                        <td>@item.Area m²</td>
+                        <td class="actions-cell">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-action-danger" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

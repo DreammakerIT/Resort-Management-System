@@ -1,0 +1,377 @@
+﻿/* ======================================= */
+/* === CSS CHO TRANG TIỆN ÍCH (FACILITIES) === */
+/* ======================================= */
+
+/* --- PAGE HERO (Banner đầu trang) --- */
+.page-hero {
+    height: 60vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 45, 77, 0.65); /* Overlay đậm hơn */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 4.5rem;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 300;
+}
+
+/* --- INTRO SECTION --- */
+.intro-section {
+    padding: 80px 0 60px;
+    background-color: #fcfcfc; /* Nền trắng nhẹ */
+}
+
+.section-heading {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+    .section-heading::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: var(--secondary-color);
+        border-radius: 2px;
+    }
+
+.section-description {
+    font-family: var(--font-body);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-color-light);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* --- INDIVIDUAL FACILITY SECTION --- */
+.individual-facility-section {
+    padding: 80px 0;
+}
+
+.facility-item {
+    display: flex;
+    align-items: center;
+    gap: 70px;
+    padding: 80px 0;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #eee; /* Đường phân cách tinh tế */
+}
+
+    .facility-item:last-child {
+        border-bottom: none; /* Không có đường kẻ ở item cuối */
+    }
+
+    .facility-item.reverse {
+        flex-direction: row-reverse;
+    }
+
+.facility-content {
+    flex: 1;
+    padding: 0 20px;
+}
+
+.facility-subtitle {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.facility-title {
+    font-family: var(--font-heading);
+    font-size: 3.2rem;
+    color: var(--primary-color);
+    margin: 15px 0 25px 0;
+    line-height: 1.2;
+}
+
+.facility-content p {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-color-light);
+    margin-bottom: 40px;
+}
+
+.facility-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 40px;
+}
+
+    .facility-features li {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        color: var(--text-color-dark);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+    }
+
+    .facility-features i {
+        color: var(--secondary-color);
+        margin-right: 15px;
+        font-size: 1.1rem;
+    }
+
+.facility-image {
+    flex: 1.2;
+    margin: 0;
+    position: relative;
+    max-height: 500px; /* Giới hạn chiều cao của ảnh */
+}
+
+    .facility-image img {
+        width: 100%;
+        height: 100%; /* Chiều cao cố định */
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+        .facility-image img:hover {
+            transform: translateY(-5px);
+        }
+
+/* --- CTA SECTION (Cuối trang) --- */
+.cta-section {
+    background-color: var(--bg-light); /* Nền sáng hơn cho CTA */
+    padding: 100px 0;
+    text-align: center;
+}
+
+.cta-title {
+    font-family: var(--font-heading);
+    font-size: 3.2rem;
+    color: var(--primary-color); /* Màu chữ chính */
+    margin-bottom: 20px;
+}
+
+.cta-description {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    color: var(--text-color-light);
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 18px 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+    .cta-button:hover {
+        background-color: #b58c5c; /* Màu vàng đậm hơn một chút */
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    }
+
+/* Nút mới trong content */
+.btn-primary-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 14px 40px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary-outline:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(10, 45, 77, 0.2);
+    }
+
+
+/* --- Responsive design --- */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+
+    .section-heading {
+        font-size: 2.5rem;
+    }
+
+    .facility-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 60px 0;
+        gap: 40px;
+    }
+
+        .facility-item.reverse {
+            flex-direction: column;
+        }
+
+    .facility-content {
+        padding: 0;
+    }
+
+    .facility-title {
+        font-size: 2.5rem;
+    }
+
+    .facility-features {
+        text-align: left; /* Giữ các icon và text không bị lệch */
+        max-width: 450px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cta-title {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .section-heading {
+        font-size: 2rem;
+    }
+
+    .section-description {
+        font-size: 1rem;
+    }
+
+    .facility-item {
+        padding: 40px 0;
+    }
+
+    .facility-image {
+        max-height: 350px;
+    }
+
+    .facility-title {
+        font-size: 2rem;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .section-heading {
+        font-size: 1.8rem;
+    }
+
+    .intro-section, .individual-facility-section, .cta-section {
+        padding: 40px 0;
+    }
+
+    .facility-item {
+        padding: 30px 0;
+        gap: 30px;
+    }
+
+    .facility-image {
+        max-height: 280px;
+    }
+
+    .facility-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .facility-title {
+        font-size: 1.8rem;
+    }
+
+    .facility-features li {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary-outline {
+        padding: 10px 30px;
+        font-size: 1rem;
+    }
+
+    .cta-title {
+        font-size: 2rem;
+    }
+
+    .cta-description {
+        font-size: 1rem;
+    }
+
+    .cta-button {
+        padding: 14px 40px;
+        font-size: 1.1rem;
+    }
+}

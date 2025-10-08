@@ -1,0 +1,108 @@
+﻿/* ======================================= */
+/* ===    CSS CHO TRANG LOGIN ADMIN    === */
+/* ======================================= */
+
+body {
+    font-family: var(--font-body);
+    /* Nền gradient xanh navy tinh tế */
+    background: radial-gradient(circle, #1a3c5d, #0a2d4d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+}
+
+.login-box {
+    background-color: #ffffff;
+    padding: 40px 50px;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+    .login-header h1 {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        font-weight: 700;
+        margin: 0;
+        /* Thay bằng logo của bạn nếu có */
+        /* content: url('/path/to/your/logo.png'); */
+    }
+
+    .login-header p {
+        color: var(--text-color-light);
+        margin-top: 5px;
+    }
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-color-dark);
+    }
+
+    .form-group .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+        .form-group .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(195, 155, 111, 0.2);
+        }
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+    .login-btn:hover {
+        background-color: #07223a;
+        transform: translateY(-2px);
+    }
+
+.validation-summary-errors {
+    margin-bottom: 20px;
+    color: #e74c3c;
+}
+
+    .validation-summary-errors ul {
+        padding-left: 20px;
+    }

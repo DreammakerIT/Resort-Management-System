@@ -1,0 +1,68 @@
+﻿@model IEnumerable<LuxuryResort.Areas.Admin.Models.StaffViewModel>
+
+@{
+    ViewData["Title"] = "Quản lý Nhân viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h1>@ViewData["Title"]</h1>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Thêm Nhân viên mới
+    </a>
+</div>
+
+<div class="dashboard-panel">
+    <div class="panel-body">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Họ và Tên</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Vai trò</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.FullName</td>
+                        <td>@item.Email</td>
+                        <td>@(item.PhoneNumber ?? "Chưa có")</td>
+                        <td>
+                            @foreach (var role in item.Roles)
+                            {
+                                <span class="role-badge">@role</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.LockoutEnd != null && item.LockoutEnd > DateTimeOffset.UtcNow)
+                            {
+                                <span class="status-badge status-locked">Đang bị khóa</span>
+                            }
+                            else if (item.EmailConfirmed)
+                            {
+                                <span class="status-badge status-verified">Đã xác thực</span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-pending">Chưa xác thực</span>
+                            }
+                        </td>
+                        <td class="actions-cell">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action" title="Sửa">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-action-danger" title="Xóa">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

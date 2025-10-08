@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["Title"] = "Ẩm Thực - Manchester Luxury Resort";
+}
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/dining.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<partial name ="_Header" />
+
+<section class="page-hero" style="background-image: url('https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg');">
+    <div class="hero-overlay">
+        <h1 class="hero-title">Hành Trình Vị Giác</h1>
+        <p class="hero-subtitle">Khám phá thế giới ẩm thực tinh hoa tại Manchester Luxury Resort</p>
+    </div>
+</section>
+
+<main class="dining-page">
+    <section class="intro-section">
+        <div class="container-narrow text-center">
+            <h2 style="text-align: center" class="section-heading">Trải Nghiệm Ẩm Thực Đỉnh Cao</h2>
+            <p class="section-description">Tại Manchester Luxury Resort, chúng tôi biến mỗi bữa ăn thành một kỷ niệm khó quên. Từ những món ăn được chế biến tỉ mỉ, nguyên liệu tươi ngon chọn lọc đến không gian sang trọng và dịch vụ chu đáo, tất cả hòa quyện tạo nên bản giao hưởng của vị giác.</p>
+        </div>
+    </section>
+
+    <section class="restaurants-section">
+        <div class="container">
+
+            <article class="restaurant-card">
+                <figure class="restaurant-card-image">
+                    <img src="https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg" alt="Nhà hàng The Cove Fine Dining">
+                </figure>
+                <div class="restaurant-card-content">
+                    <span class="restaurant-card-subtitle">FINE DINING</span>
+                    <h3 class="restaurant-card-title">The Moon</h3>
+                    <p>Thưởng thức những tuyệt tác ẩm thực Âu - Á đương đại trong một không gian sang trọng và ấm cúng. Với tầm nhìn toàn cảnh ra đại dương, The Cove là lựa chọn hoàn hảo cho những bữa tối lãng mạn và những dịp kỷ niệm đặc biệt.</p>
+                    <ul class="restaurant-card-features">
+                        <li><i class="fas fa-clock"></i> Mở cửa: 18:00 - 22:00</li>
+                        <li><i class="fas fa-tshirt"></i> Trang phục: Lịch sự</li>
+                        <li><i class="fas fa-utensils"></i> Ẩm thực: Âu - Á Đương Đại</li>
+                    </ul>
+                    <a href="#" class="btn-primary-outline">Xem Thực Đơn</a>
+                </div>
+            </article>
+
+            <article class="restaurant-card reverse">
+                <figure class="restaurant-card-image">
+                    <img src="https://images.pexels.com/photos/67468/pexels-photo-67468.jpeg" alt="Nhà hàng hải sản The Shore">
+                </figure>
+                <div class="restaurant-card-content">
+                    <span class="restaurant-card-subtitle">BEACHFRONT RESTAURANT</span>
+                    <h3 class="restaurant-card-title">The Shore</h3>
+                    <p>Tận hưởng hương vị biển cả đích thực với những món hải sản tươi sống được đánh bắt ngay tại địa phương. Tại The Shore, bạn có thể tự tay lựa chọn hải sản và yêu cầu chế biến theo khẩu vị riêng.</p>
+                    <ul class="restaurant-card-features">
+                        <li><i class="fas fa-clock"></i> Mở cửa: 11:00 - 21:00</li>
+                        <li><i class="fas fa-tshirt"></i> Trang phục: Tự do</li>
+                        <li><i class="fas fa-fish"></i> Ẩm thực: Hải Sản Tươi Sống</li>
+                    </ul>
+                    <a href="#" class="btn-primary-outline">Xem Thực Đơn</a>
+                </div>
+            </article>
+
+            <article class="restaurant-card">
+                <figure class="restaurant-card-image">
+                    <img src="~/lib/Bar.png" alt="The Manchester Bar">
+                </figure>
+                <div class="restaurant-card-content">
+                    <span class="restaurant-card-subtitle">ROOFTOP BAR</span>
+                    <h3 class="restaurant-card-title">The Manchester</h3>
+                    <p>Nằm trên tầng thượng của resort, The Manchester là nơi ngắm hoàng hôn đẹp nhất Vịnh Cam Ranh. Thưởng thức những ly cocktail sáng tạo, rượu vang hảo hạng và các món ăn nhẹ tinh tế trong tiếng nhạc du dương.</p>
+                    <ul class="restaurant-card-features">
+                        <li><i class="fas fa-clock"></i> Mở cửa: 16:00 - 24:00</li>
+                        <li><i class="fas fa-tshirt"></i> Trang phục: Tự do, lịch sự</li>
+                        <li><i class="fas fa-cocktail"></i> Đồ uống: Cocktail & Rượu Vang</li>
+                    </ul>
+                    <a href="#" class="btn-primary-outline">Xem Thực Đơn</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="special-dining-section bg-light">
+        <div class="container text-center">
+            <h2 style="text-align: center" class="section-heading">Trải Nghiệm Ẩm Thực Đặc Biệt</h2>
+            <p class="section-description">Nâng tầm kỳ nghỉ của bạn với những trải nghiệm ẩm thực độc đáo, được thiết kế riêng.</p>
+            <div class="special-offer-grid">
+                <div class="offer-card">
+                    <img src="~/lib/private.png" alt="Bữa tối lãng mạn trên biển">
+                    <h4>Bữa Tối Riêng Tư Bên Bãi Biển</h4>
+                    <p>Tận hưởng bữa tối lãng mạn dưới ánh nến và ngàn sao, với thực đơn được thiết kế riêng.</p>
+                </div>
+                    <div class="offer-card">
+                        <img src="~/lib/chill.png" alt="Tiệc trà chiều sang trọng">
+                        <h4>Tiệc Trà Chiều Sang Trọng</h4>
+                        <p>Thưởng thức bộ sưu tập trà hảo hạng cùng các loại bánh ngọt tinh tế được làm thủ công bởi bếp trưởng của chúng tôi.</p>
+                    </div>
+                <div class="offer-card">
+                    <img src="~/lib/BBQ.png" alt="Tiệc BBQ cạnh hồ bơi">
+                    <h4>Tiệc BBQ Bên Hồ Bơi</h4>
+                    <p>Thư giãn với tiệc nướng BBQ ngoài trời, cùng bạn bè và gia đình.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+
+</body>
+</html>

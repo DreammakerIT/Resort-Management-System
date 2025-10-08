@@ -1,0 +1,98 @@
+﻿@model LuxuryResort.Models.Room
+@{
+    ViewData["Title"] = "Presidential Suite";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/presidential-suite.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+}
+
+<main class="suite-page">
+    <section class="suite-hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="preheading">Đỉnh Cao Của Sự Sang Trọng</span>
+                <h1>Presidential Suite</h1>
+                <p>Một không gian sống hoàng gia rộng 250m², nơi mỗi chi tiết là một tuyệt tác, mang đến tầm nhìn panorama bao trọn đại dương và đường chân trời.</p>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg" alt="Không gian sống trong Presidential Suite">
+            </div>
+        </div>
+    </section>
+
+    <section class="suite-gallery">
+        <div class="container">
+            <div class="gallery-grid">
+                <img src="https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg" alt="Phòng ăn sang trọng" class="gallery-item-1">
+                <img src="https://images.pexels.com/photos/3634741/pexels-photo-3634741.jpeg" alt="Ban công hướng biển" class="gallery-item-2">
+                <img src="https://images.pexels.com/photos/6585764/pexels-photo-6585764.jpeg" alt="Phòng tắm cẩm thạch" class="gallery-item-3">
+            </div>
+        </div>
+    </section>
+
+    <section class="suite-amenities">
+        <div class="container-narrow">
+            <h2 class="section-title">Tiện Nghi Độc Quyền</h2>
+            <div class="tabs-container">
+                <div class="tab-links">
+                    <button class="tab-link active" data-tab="tab-1">Tổng quan</button>
+                    <button class="tab-link" data-tab="tab-2">Không gian</button>
+                    <button class="tab-link" data-tab="tab-3">Dịch vụ</button>
+                </div>
+                <div class="tab-content active" id="tab-1">
+                    <p>Trải nghiệm dịch vụ đẳng cấp 5 sao với những tiện nghi được cá nhân hóa đến từng chi tiết nhỏ nhất, đảm bảo một kỳ nghỉ vượt trên cả sự mong đợi.</p>
+                </div>
+                <div class="tab-content" id="tab-2">
+                    <ul>
+                        <li>Phòng khách và phòng ăn riêng biệt</li>
+                        <li>Ban công panorama rộng lớn</li>
+                        <li>Phòng tắm master với bồn sục Jacuzzi</li>
+                        <li>Hệ thống âm thanh vòm Bang & Olufsen</li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="tab-3">
+                    <ul>
+                        <li>Dịch vụ quản gia và đầu bếp riêng 24/7</li>
+                        <li>Ưu tiên đặt chỗ tại tất cả nhà hàng</li>
+                        <li>Dịch vụ đưa đón sân bay bằng xe hạng sang</li>
+                        <li>Quầy bar được cá nhân hóa theo yêu cầu</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="suite-booking-cta">
+        <div class="container text-center">
+            <h2 class="cta-title">Đặt Trải Nghiệm Đẳng Cấp Nhất</h2>
+            <p class="cta-price">Bắt đầu hành trình của bạn với giá từ <strong>55.000.000 VNĐ</strong> / đêm</p>
+            <a href="/Booking?roomId=@Model.Id" class="cta-button">Liên Hệ Đặt Phòng</a>
+        </div>
+    </section>
+
+</main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const tabId = link.getAttribute('data-tab');
+
+                    tabLinks.forEach(item => item.classList.remove('active'));
+                    tabContents.forEach(item => item.classList.remove('active'));
+
+                    link.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+}

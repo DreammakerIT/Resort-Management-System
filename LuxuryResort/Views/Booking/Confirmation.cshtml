@@ -1,0 +1,73 @@
+﻿@model LuxuryResort.Models.Booking
+
+@{
+    ViewData["Title"] = "Đặt phòng thành công!";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/confirmation.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+}
+
+<div class="confirmation-container">
+    <div class="confirmation-box">
+        <div class="success-icon">
+            <span>✓</span>
+        </div>
+        <h1 class="success-title">Đặt phòng của bạn đã được xác nhận!</h1>
+        <p class="success-subtitle">
+            Cảm ơn bạn, <strong>@Model.User?.FullName</strong>. Một email xác nhận chi tiết đã được gửi đến địa chỉ email của bạn.
+        </p>
+
+        <div class="booking-code">
+            Mã đặt phòng của bạn: <strong>@("MLR-" + Model.Id.ToString("D6"))</strong>
+        </div>
+
+        <div class="confirmation-details">
+            <div class="detail-section">
+                <h4>Thông tin kỳ nghỉ</h4>
+                <p><strong>Loại phòng:</strong> @Model.RoomInstance?.Room?.Type (@Model.RoomInstance?.RoomNumber)</p>
+                <p><strong>Nhận phòng:</strong> @Model.CheckInDate.ToString("dddd, dd/MM/yyyy") (Sau 14:00)</p>
+                <p><strong>Trả phòng:</strong> @Model.CheckOutDate.ToString("dddd, dd/MM/yyyy") (Trước 12:00)</p>
+                <p><strong>Số khách:</strong> @Model.Adults người lớn, @Model.Children trẻ em</p>
+            </div>
+            <div class="detail-section">
+                <h4>Thông tin resort</h4>
+                <p><strong>Manchester Luxury Resort</strong></p>
+                <p>123 Đường ABC, Quận 1, TP. Hồ Chí Minh</p>
+                <p><strong>Điện thoại:</strong> (+84) 28 1234 5678</p>
+                <a href="#">Xem trên bản đồ &rarr;</a>
+            </div>
+            <div class="detail-section cost-summary">
+                <h4>Tóm tắt chi phí</h4>
+                <p><strong>Tổng cộng:</strong> @Model.TotalAmount.ToString("N0") ₫</p>
+                <p><em>(Đã bao gồm thuế và phí)</em></p>
+                <p><strong>Tình trạng thanh toán:</strong> <span class="status-paid">@Model.Status</span></p>
+            </div>
+        </div>
+
+        @if (Model.Status == "Confirmed")
+        {
+            <div class="complete-booking-section">
+                <div class="complete-notice">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Đặt phòng đã được xác nhận! Bạn có thể hoàn tất đặt phòng ngay bây giờ.</span>
+                </div>
+                
+                <form asp-action="CompleteBooking" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn-complete-booking">
+                        <i class="fas fa-check-double"></i>
+                        Hoàn Tất Đặt Phòng
+                    </button>
+                </form>
+            </div>
+        }
+
+        <div class="actions">
+            <a href="javascript:window.print()" class="action-button">🖨️ In xác nhận</a>
+            <a href="#" class="action-button">📅 Thêm vào lịch</a>
+            <a href="/my-bookings" class="action-button primary">Quản lý đặt phòng</a>
+        </div>
+    </div>
+</div>

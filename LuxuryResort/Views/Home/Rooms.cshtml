@@ -1,0 +1,61 @@
+﻿@model IEnumerable<LuxuryResort.Models.RoomWithAvailabilityViewModel>
+
+@{
+    ViewData["Title"] = "Các Hạng Phòng";
+    var i = 0; // Biến đếm để xen kẽ layout
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/rooms-showcase.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+}
+
+<main class="showcase-page">
+    @foreach (var room in Model)
+    {
+        // --- Thêm logic để tạo URL động ---
+        var layoutClass = (i++ % 2 == 0) ? "" : "layout-right";
+        var detailUrl = "#"; // Link mặc định nếu không khớp
+
+        // Logic kiểm tra tên phòng và gán đúng URL
+        if (room.Type.Contains("Deluxe Ocean View")) { detailUrl = "/Home/RoomDetails"; }
+        else if (room.Type.Contains("Private Pool Villa")) { detailUrl = "/Home/PrivatePoolVilla"; }
+        else if (room.Type.Contains("Presidential Suite")) { detailUrl = "/Home/PresidentialSuite"; }
+        else if (room.Type.Contains("Garden View Bungalow")) { detailUrl = "/Home/BungalowGarden"; }
+        else if (room.Type.Contains("Superior Garden View")) { detailUrl = "/Home/SuperiorGardenView"; }
+        else if (room.Type.Contains("Deluxe City View")) { detailUrl = "/Home/DeluxeCityView"; } 
+        else if (room.Type.Contains("Oceanfront Residence Villa")) { detailUrl = "/Home/OceanfrontVilla"; }// <-- ĐÃ THÊM ĐIỀU KIỆN CHO PHÒNG NÀY
+
+        <section class="room-showcase-section @layoutClass" style="background-image: url('@room.ImageUrl')">
+            <div class="showcase-overlay">
+                <div class="container">
+                    <div class="showcase-content">
+                        <span class="room-category">Hạng Phòng</span>
+                        <h2 class="room-title">@room.Type</h2>
+                        <p class="room-description">@room.Description</p>
+                        <div class="room-price">
+                            Giá từ <strong>@room.PricePerNight.ToString("N0") VNĐ</strong> / đêm
+                        </div>
+                        <div class="room-availability">
+                            @if (room.AvailableRooms > 0)
+                            {
+                                <span class="availability-text available">
+                                    <i class="fas fa-check-circle"></i>
+                                    Còn @room.AvailableRooms phòng trống
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="availability-text unavailable">
+                                    <i class="fas fa-times-circle"></i>
+                                    Đã kín phòng
+                                </span>
+                            }
+                        </div>
+                        <a href="@detailUrl" class="btn-explore">Khám Phá Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</main>
