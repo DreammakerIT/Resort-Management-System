@@ -42,12 +42,11 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "dbo.Bookings [Data]",
+              "Title": "dbo.Bookings.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/LuxuryResort/True/SqlTable/dbo.Bookings.sql",
-              "ToolTip": "dbo.Bookings [Data]",
+              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/LuxuryResort/True/SqlTable/dbo.Bookings.sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-10-07T06:33:24.946Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-07T06:33:24.946Z"
             },
             {
               "$type": "Document",
@@ -59,8 +58,7 @@
               "RelativeToolTip": "LuxuryResort\\Services\\MomoService.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAYwD0AAABgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T17:05:58.467Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T17:05:58.467Z"
             },
             {
               "$type": "Document",
@@ -72,8 +70,7 @@
               "RelativeToolTip": "LuxuryResort\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-05T17:05:12.539Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T17:05:12.539Z"
             },
             {
               "$type": "Document",
