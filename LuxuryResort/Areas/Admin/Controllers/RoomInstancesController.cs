@@ -20,10 +20,63 @@ namespace LuxuryResort.Areas.Admin.Controllers
         }
 
         // GET: Admin/RoomInstances
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string filter = null)
         {
-            var roomInstances = _context.RoomInstances.Include(r => r.Room);
-            return View(await roomInstances.ToListAsync());
+            var roomInstances = await _context.RoomInstances.Include(r => r.Room).ToListAsync();
+
+            // Tính số phòng đã thuê theo NGÀY (today): đếm room instances có booking chồng lấp hôm nay
+            var today = DateTime.Today;
+            var occupiedTodayIds = await _context.Bookings
+                .Where(b => b.CheckInDate.Date <= today && b.CheckOutDate.Date > today &&
+                            (b.Status == "Confirmed" || b.Status == "Payment_Pending" || b.Status == "Completed"))
+                .Select(b => b.RoomInstanceId)
+                .Distinct()
+                .ToListAsync();
+
+            // Apply filter if requested
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                switch (filter.ToLowerInvariant())
+                {
+                    case "occupied_today":
+                        roomInstances = roomInstances.Where(ri => occupiedTodayIds.Contains(ri.Id)).ToList();
+                        ViewBag.ActiveFilter = "occupied_today";
+                        ViewBag.FilterLabel = "Phòng Đã Thuê (Hôm nay)";
+                        break;
+                    case "available_today":
+                        roomInstances = roomInstances
+                            .Where(ri => !occupiedTodayIds.Contains(ri.Id) && ri.Status != "Cleaning" && ri.Status != "OutOfOrder")
+                            .ToList();
+                        ViewBag.ActiveFilter = "available_today";
+                        ViewBag.FilterLabel = "Phòng Có Sẵn (Hôm nay)";
+                        break;
+                    case "cleaning":
+                        roomInstances = roomInstances.Where(ri => ri.Status == "Cleaning").ToList();
+                        ViewBag.ActiveFilter = "cleaning";
+                        ViewBag.FilterLabel = "Đang Dọn Dẹp";
+                        break;
+                    case "outoforder":
+                        roomInstances = roomInstances.Where(ri => ri.Status == "OutOfOrder").ToList();
+                        ViewBag.ActiveFilter = "outoforder";
+                        ViewBag.FilterLabel = "Cần Sửa Chữa";
+                        break;
+                }
+            }
+
+            var totalRoomInstances = (await _context.RoomInstances.CountAsync());
+            var occupiedTodayCount = occupiedTodayIds.Count;
+            var availableTodayCount = totalRoomInstances - occupiedTodayCount;
+
+            // Các trạng thái tĩnh khác (hiện vẫn theo Status của RoomInstance)
+            ViewBag.AvailableTodayCount = availableTodayCount;
+            ViewBag.OccupiedTodayCount = occupiedTodayCount;
+            ViewBag.CleaningCount = roomInstances.Count(r => r.Status == "Cleaning");
+            ViewBag.OutOfOrderCount = roomInstances.Count(r => r.Status == "OutOfOrder");
+
+            // Pass set to view to mark rows as occupied today
+            ViewBag.OccupiedTodayIds = new HashSet<int>(occupiedTodayIds);
+
+            return View(roomInstances);
         }
 
         // GET: Admin/RoomInstances/Details/5

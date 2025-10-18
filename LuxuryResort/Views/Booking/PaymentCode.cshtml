@@ -60,7 +60,7 @@
                         Đã Thanh Toán
                     </button>
                 </form>
-                
+
                 <form asp-action="CancelPayment" method="post" style="display: inline;">
                     <input type="hidden" name="id" value="@Model.Id" />
                     <button type="submit" class="btn-cancel-payment" onclick="return confirm('Bạn có chắc chắn muốn hủy thanh toán?')">
@@ -69,24 +69,6 @@
                     </button>
                 </form>
             </div>
-
-            @if (Model.Status == "Confirmed")
-            {
-                <div class="complete-booking-section">
-                    <div class="complete-notice">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Thanh toán đã được xác nhận! Bạn có thể hoàn tất đặt phòng ngay bây giờ.</span>
-                    </div>
-                    
-                    <form asp-action="CompleteBooking" method="post" style="display: inline;">
-                        <input type="hidden" name="id" value="@Model.Id" />
-                        <button type="submit" class="btn-complete-booking">
-                            <i class="fas fa-check-double"></i>
-                            Hoàn Tất Đặt Phòng
-                        </button>
-                    </form>
-                </div>
-            }
 
             <div class="payment-instructions">
                 <h4>Cách sử dụng mã code:</h4>
@@ -123,12 +105,12 @@
             const expiryTime = new Date('@Model.PaymentCodeExpiry?.ToString("yyyy-MM-ddTHH:mm:ss")');
             const now = new Date();
             const timeLeft = expiryTime - now;
-            
+
             if (timeLeft > 0) {
                 const hours = Math.floor(timeLeft / (1000 * 60 * 60));
                 const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                
+
                 const countdownElement = document.querySelector('.code-instructions');
                 if (countdownElement) {
                     countdownElement.innerHTML = `
@@ -143,7 +125,7 @@
                 }
             }
         }
-        
+
         // Update countdown every second
         setInterval(updateCountdown, 1000);
         updateCountdown(); // Initial call

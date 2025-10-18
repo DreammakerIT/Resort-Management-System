@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using LuxuryResort.Areas.Identity.Data;
 using LuxuryResort.Data;
 using LuxuryResort.Models;
+using LuxuryResort.Services.Vnpay;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,16 @@ namespace LuxuryResort.Controllers
     {
         private readonly LuxuryResortContext _context;
         private readonly UserManager<LuxuryResortUser> _userManager;
+        private readonly IVnPayService _vnPayService;
         private readonly Random _random = new Random();
             private readonly IConfiguration _configuration;
 
-        public BookingController(LuxuryResortContext context, UserManager<LuxuryResortUser> userManager, IConfiguration configuration)
+        public BookingController(LuxuryResortContext context, UserManager<LuxuryResortUser> userManager, IConfiguration configuration, IVnPayService vnPayService)
         {
             _context = context;
             _userManager = userManager;
             _configuration = configuration;
+            _vnPayService = vnPayService;
         }
 
         // [HttpGet] để hiển thị trang đặt phòng
@@ -138,22 +141,23 @@ namespace LuxuryResort.Controllers
                     BookingDate = DateTime.Now
                 };
 
-                if (model.PaymentMethod == "payment_code") // Payment Code
+                if (model.PaymentMethod == "vnpay")
                 {
-                    // Tạo mã code thanh toán 6 chữ số
-                    var paymentCode = GeneratePaymentCode();
-                    booking.PaymentCode = paymentCode;
-                    booking.PaymentCodeExpiry = DateTime.Now.AddHours(24); // Hết hạn sau 24 giờ
                     booking.Status = "Payment_Pending";
-                    
                     _context.Bookings.Add(booking);
                     await _context.SaveChangesAsync();
-                    
-                    // Lưu mã code vào session để hiển thị
-                    HttpContext.Session.SetString("PaymentCode", paymentCode);
-                    HttpContext.Session.SetInt32("PaymentBookingId", booking.Id);
-                    
-                    return RedirectToAction("PaymentQr", new { id = booking.Id });
+
+                    var payModel = new Models.Vnpay.PaymentInformationModel
+                    {
+                        BookingId = booking.Id,
+                        Amount = (double)booking.TotalAmount,
+                        OrderDescription = $"Booking {booking.Id}",
+                        OrderType = "room",
+                        Name = user.FullName
+                    };
+
+                    var url = _vnPayService.CreatePaymentUrl(payModel, HttpContext);
+                    return Redirect(url);
                 }
                 else // Pay at hotel
                 {
@@ -210,54 +214,58 @@ namespace LuxuryResort.Controllers
         }
 
         // Hiển thị trang mã code thanh toán
+        // VNPay returns here via appsettings ReturnUrl
         [HttpGet]
-        public async Task<IActionResult> PaymentCode(int id)
+        [AllowAnonymous]
+        public async Task<IActionResult> PaymentCallbackVnpay()
         {
-            var user = await _userManager.GetUserAsync(User);
-            var booking = await _context.Bookings
-                .Include(b => b.User)
-                .Include(b => b.RoomInstance)
-                    .ThenInclude(ri => ri.Room)
-                .FirstOrDefaultAsync(b => b.Id == id);
+            var response = _vnPayService.PaymentExecute(Request.Query);
 
-            if (booking == null || (user != null && booking.UserId != user.Id))
+            // Use vnp_TxnRef (parsed in library) as our booking id
+            int bookingId = 0;
+            if (!string.IsNullOrEmpty(response?.OrderId))
             {
-                return NotFound();
+                int.TryParse(response.OrderId, out bookingId);
             }
 
-            if (booking.PaymentMethod != "payment_code" || booking.Status != "Payment_Pending")
+            if (bookingId == 0)
             {
+                TempData["PaymentError"] = "Không xác định được đơn thanh toán.";
+                return RedirectToAction("MyBookings");
+            }
+
+            var booking = await _context.Bookings.FindAsync(bookingId);
+            if (booking == null)
+            {
+                TempData["PaymentError"] = "Đơn đặt phòng không tồn tại.";
+                return RedirectToAction("MyBookings");
+            }
+
+            if (response.Success && response.VnPayResponseCode == "00")
+            {
+                booking.Status = "Completed";
+                booking.ConfirmationCode = "MLR-" + booking.Id.ToString("D6");
+                await _context.SaveChangesAsync();
+                TempData["InfoMessage"] = "Thanh toán VNPay thành công. Đặt phòng đã được xác nhận.";
+                if (User?.Identity?.IsAuthenticated == true)
+                {
+                    return RedirectToAction("MyBookings");
+                }
                 return RedirectToAction("Confirmation", new { id = booking.Id });
             }
 
-            return View(booking);
+            // failed/cancelled -> keep pending so khách có thể thanh toán lại
+            booking.Status = "Payment_Pending";
+            await _context.SaveChangesAsync();
+            TempData["PaymentError"] = "VNPay chưa thanh toán hoặc giao dịch thất bại. Bạn có thể thanh toán lại.";
+            if (User?.Identity?.IsAuthenticated == true)
+            {
+                return RedirectToAction("MyBookings");
+            }
+            return RedirectToAction("Confirmation", new { id = booking.Id });
         }
 
-        // Hiển thị trang QR từ mã code thanh toán
-        [HttpGet]
-        public async Task<IActionResult> PaymentQr(int id)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            var booking = await _context.Bookings
-                .Include(b => b.User)
-                .Include(b => b.RoomInstance)
-                    .ThenInclude(ri => ri.Room)
-                .FirstOrDefaultAsync(b => b.Id == id);
-
-            if (booking == null || (user != null && booking.UserId != user.Id))
-            {
-                return NotFound();
-            }
-
-            if (booking.PaymentMethod != "payment_code" || booking.Status != "Payment_Pending")
-            {
-                return RedirectToAction("Confirmation", new { id = booking.Id });
-            }
-
-            return View(booking);
-        }
-
-        // Xử lý thanh toán thành công
+        // Người dùng khai báo đã chuyển khoản -> chờ admin xác nhận
         [HttpPost]
         public async Task<IActionResult> ConfirmPayment(int id)
         {
@@ -267,10 +275,11 @@ namespace LuxuryResort.Controllers
                 return NotFound();
             }
 
-            booking.Status = "Confirmed";
+            // Đánh dấu là đang chờ admin xác nhận đối soát
+            booking.Status = "Awaiting_Admin";
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Thanh toán thành công! Đặt phòng đã được xác nhận.";
+            TempData["InfoMessage"] = "Bạn đã báo đã thanh toán. Vui lòng đợi quản trị viên xác nhận.";
             return RedirectToAction("Confirmation", new { id = booking.Id });
         }
 
@@ -351,7 +360,63 @@ namespace LuxuryResort.Controllers
                 return Forbid();
             }
 
+            // Only show success page when booking is actually completed
+            if (booking.Status != "Completed")
+            {
+                return RedirectToAction("Confirmation", new { id = booking.Id });
+            }
+
             return View(booking);
         }
+
+        // Danh sách đặt phòng của người dùng hiện tại
+        [HttpGet]
+        public async Task<IActionResult> MyBookings()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Challenge();
+            }
+
+            var bookings = await _context.Bookings
+                .Where(b => b.UserId == user.Id)
+                .Include(b => b.RoomInstance)
+                    .ThenInclude(ri => ri.Room)
+                .OrderByDescending(b => b.BookingDate)
+                .ToListAsync();
+
+            // Pass payment pending timeout to view for countdown display
+            ViewBag.PendingTimeoutMinutes = _configuration.GetValue<int>("Payment:PendingTimeoutMinutes", 30);
+
+            return View(bookings);
+        }
+
+        // Người dùng hủy đặt phòng (khi chưa completed và chưa quá hạn)
+        [HttpPost]
+        public async Task<IActionResult> CancelBooking(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var booking = await _context.Bookings
+                .Include(b => b.User)
+                .FirstOrDefaultAsync(b => b.Id == id);
+
+            if (user == null || booking == null || booking.UserId != user.Id)
+            {
+                return NotFound();
+            }
+
+            if (booking.Status == "Completed" || booking.Status == "Cancelled")
+            {
+                return RedirectToAction("MyBookings");
+            }
+
+            booking.Status = "Cancelled";
+            await _context.SaveChangesAsync();
+            TempData["InfoMessage"] = "Bạn đã hủy đặt phòng này.";
+            return RedirectToAction("MyBookings");
+        }
+
+        
     }
 }

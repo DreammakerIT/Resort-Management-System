@@ -1,0 +1,133 @@
+@model LuxuryResort.Models.ProfileViewModel
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="profile-info">
+            <h1>@Model.User.FullName</h1>
+            <p class="profile-email">@Model.User.Email</p>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-number">@Model.TotalBookings</span>
+                    <span class="stat-label">Lần đặt phòng</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">@Model.TotalNights</span>
+                    <span class="stat-label">Đêm nghỉ</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">@Model.TotalSpent.ToString("N0") VNĐ</span>
+                    <span class="stat-label">Tổng chi tiêu</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <div class="profile-sidebar">
+            <nav class="profile-nav">
+                <a href="@Url.Action("Index", "Profile")" class="nav-item active">
+                    <i class="fas fa-user"></i>
+                    <span>Thông tin cá nhân</span>
+                </a>
+                <a href="@Url.Action("Edit", "Profile")" class="nav-item">
+                    <i class="fas fa-edit"></i>
+                    <span>Chỉnh sửa thông tin</span>
+                </a>
+                <a href="@Url.Action("BookingHistory", "Profile")" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>Lịch sử đặt phòng</span>
+                </a>
+                <a href="@Url.Action("Preferences", "Profile")" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Tùy chọn</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="profile-main">
+            <div class="profile-section">
+                <h2>Thông tin cá nhân</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Họ và tên:</label>
+                        <span>@Model.User.FullName</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <span>@Model.User.Email</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Số điện thoại:</label>
+                        <span>@(Model.User.PhoneNumber ?? "Chưa cập nhật")</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Ngày sinh:</label>
+                        <span>@(Model.User.DateOfBirth?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Địa chỉ:</label>
+                        <span>@(Model.User.Address ?? "Chưa cập nhật")</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Quốc tịch:</label>
+                        <span>@(Model.User.Nationality ?? "Chưa cập nhật")</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Số hộ chiếu:</label>
+                        <span>@(Model.User.PassportNumber ?? "Chưa cập nhật")</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h2>Lịch sử đặt phòng gần đây</h2>
+                @if (Model.Bookings.Any())
+                {
+                    <div class="booking-list">
+                        @foreach (var booking in Model.Bookings.Take(5))
+                        {
+                            <div class="booking-item">
+                                <div class="booking-info">
+                                    <h4>@booking.RoomInstance?.Room?.Type</h4>
+                                    <p>Phòng @booking.RoomInstance?.RoomNumber</p>
+                                    <p>@booking.CheckInDate.ToString("dd/MM/yyyy") - @booking.CheckOutDate.ToString("dd/MM/yyyy")</p>
+                                </div>
+                                <div class="booking-status">
+                                    <span class="status-badge status-@booking.Status.ToLower().Replace("_", "-")">@booking.Status</span>
+                                    <p class="booking-amount">@booking.TotalAmount.ToString("N0") VNĐ</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="view-all">
+                        <a href="@Url.Action("BookingHistory", "Profile")" class="btn btn-outline">Xem tất cả</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-times"></i>
+                        <p>Bạn chưa có lịch sử đặt phòng nào</p>
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Đặt phòng ngay</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+}

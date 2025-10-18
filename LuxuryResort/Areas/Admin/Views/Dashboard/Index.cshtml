@@ -72,6 +72,15 @@
                 </table>
             </div>
         </div>
+
+        <div class="dashboard-panel">
+            <div class="panel-header">
+                <h3>Doanh thu 7 ngày gần nhất</h3>
+            </div>
+            <div class="panel-body">
+                <canvas id="revenueBar" style="height:220px; max-height:220px; width:100%"></canvas>
+            </div>
+        </div>
     </div>
 
     <div class="sidebar-column">
@@ -92,5 +101,60 @@
                 </ul>
             </div>
         </div>
+
+        <div class="dashboard-panel">
+            <div class="panel-header">
+                <h3>Đặt phòng theo trạng thái</h3>
+            </div>
+            <div class="panel-body">
+                <canvas id="statusPie" style="height:220px; max-height:220px; width:100%"></canvas>
+            </div>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const statusLabels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.BookingsByStatus.Keys));
+        const statusData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.BookingsByStatus.Values));
+        const ctxPie = document.getElementById('statusPie').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: statusLabels,
+                datasets: [{
+                    data: statusData,
+                    backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c', '#3498db', '#9b59b6']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        const barLabels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Last7DaysLabels));
+        const barData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Last7DaysRevenue));
+        const ctxBar = document.getElementById('revenueBar').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: barLabels,
+                datasets: [{
+                    label: 'Doanh thu (₫)',
+                    data: barData,
+                    backgroundColor: '#3498db'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+}

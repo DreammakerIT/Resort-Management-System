@@ -14,5 +14,30 @@ public class LuxuryResortUser : IdentityUser
     [Column(TypeName = "nvarchar(100)")]
     public string? FullName { get; set; }
 
+    [PersonalData]
+    [Column(TypeName = "date")]
+    public DateTime? DateOfBirth { get; set; }
+
+    [PersonalData]
+    [Column(TypeName = "nvarchar(500)")]
+    public string? Address { get; set; }
+
+    [PersonalData]
+    [Column(TypeName = "nvarchar(100)")]
+    public string? Nationality { get; set; }
+
+    [PersonalData]
+    [Column(TypeName = "nvarchar(50)")]
+    public string? PassportNumber { get; set; }
+
+    [Column(TypeName = "nvarchar(100)")]
+    public string? PreferredRoomType { get; set; }
+
+    [Column(TypeName = "nvarchar(1000)")]
+    public string? SpecialRequests { get; set; }
+
+    public bool MarketingConsent { get; set; } = false;
+
+    public bool NewsletterSubscription { get; set; } = false;
 }
 

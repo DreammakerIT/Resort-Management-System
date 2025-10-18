@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -97,7 +98,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            
+
         });
     </script>
 
@@ -114,7 +115,7 @@
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
         const notificationArea = document.getElementById('notification');
-        const loginNotificationArea = document.getElementById('loginNotification');      
+        const loginNotificationArea = document.getElementById('loginNotification');
 
         if(accountBtn) {
             accountBtn.addEventListener('click', (e) => {
@@ -159,28 +160,45 @@
             });
         }
 
-        // Xử lý form Đăng nhập
-        if(loginForm) {
-            loginForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                const formData = new FormData(loginForm);
-                const verificationToken = loginForm.querySelector('input[name="__RequestVerificationToken"]').value;
-                fetch('/Identity/Account/Login', {
-                    method: 'POST', credentials: 'same-origin',
-                    headers: { "RequestVerificationToken": verificationToken, "X-Requested-With": "XMLHttpRequest" },
-                    body: formData
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        showLoginNotification('Đăng nhập thành công! Đang tải lại trang...', true);
-                        setTimeout(() => window.location.reload(), 1500);
-                    } else {
-                        showLoginNotification(data.message, false);
-                    }
-                });
+
+            if (loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(loginForm);
+            const verificationToken = loginForm.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            fetch('/Identity/Account/Login', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    "RequestVerificationToken": verificationToken,
+                    "X-Requested-With": "XMLHttpRequest"
+                },
+                body: formData
+            })
+            .then(res => {
+                if (!res.ok) {                    
+                    return res.text().then(text => {
+                        throw new Error(text || 'Server returned an error.');
+                    });
+                }
+                
+                return res.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    showLoginNotification('Đăng Nhập Thành Công! Đang Tải Lại Trang...', true);
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    showLoginNotification(data.message || 'Đăng Nhập Thất Bại!', false);
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi khi đăng nhập:', error.message);
+                showLoginNotification('Tài khoản hoặc mật khẩu không đúng.', false);
             });
-        }
+        });
+    }
 
         function showNotification(message, isSuccess) {
             notificationArea.innerHTML = message;

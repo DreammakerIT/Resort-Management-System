@@ -76,7 +76,7 @@
                     </span>
                 }
             </div>
-            <form action="/Booking" method="get" class="simple-booking-form">
+            <form asp-controller="Availability" asp-action="Results" method="get">
                 <input type="hidden" name="roomId" value="@Model.Id" />
                 <div class="form-group">
                     <label>Ngày nhận phòng</label>

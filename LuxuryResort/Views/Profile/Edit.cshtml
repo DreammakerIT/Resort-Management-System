@@ -1,0 +1,104 @@
+@model LuxuryResort.Models.ProfileEditViewModel
+@{
+    ViewData["Title"] = "Chỉnh sửa thông tin cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="profile-container">
+    <div class="profile-content">
+        <div class="profile-sidebar">
+            <nav class="profile-nav">
+                <a href="@Url.Action("Index", "Profile")" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Thông tin cá nhân</span>
+                </a>
+                <a href="@Url.Action("Edit", "Profile")" class="nav-item active">
+                    <i class="fas fa-edit"></i>
+                    <span>Chỉnh sửa thông tin</span>
+                </a>
+                <a href="@Url.Action("BookingHistory", "Profile")" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>Lịch sử đặt phòng</span>
+                </a>
+                <a href="@Url.Action("Preferences", "Profile")" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Tùy chọn</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="profile-main">
+            <div class="profile-section">
+                <h2>Chỉnh sửa thông tin cá nhân</h2>
+                
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                <form asp-action="Edit" method="post" class="profile-form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <input asp-for="Id" type="hidden" />
+
+                    <div class="form-group">
+                        <label asp-for="FullName" class="form-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" readonly />
+                        <small class="form-text text-muted">Email không thể thay đổi</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber" class="form-label"></label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DateOfBirth" class="form-label"></label>
+                        <input asp-for="DateOfBirth" type="date" class="form-control" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Address" class="form-label"></label>
+                        <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Nationality" class="form-label"></label>
+                        <input asp-for="Nationality" class="form-control" />
+                        <span asp-validation-for="Nationality" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PassportNumber" class="form-label"></label>
+                        <input asp-for="PassportNumber" class="form-control" />
+                        <span asp-validation-for="PassportNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
+                        <a href="@Url.Action("Index", "Profile")" class="btn btn-secondary">Hủy</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

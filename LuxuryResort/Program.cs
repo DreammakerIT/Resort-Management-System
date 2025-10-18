@@ -1,7 +1,12 @@
 ﻿using LuxuryResort.Areas.Identity.Data;
 using LuxuryResort.Data;
+using LuxuryResort.Models;
+using LuxuryResort.Services.Vnpay;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("LuxuryResortContextConnection") ?? throw new InvalidOperationException("Connection string 'LuxuryResortContextConnection' not found.");
 
@@ -24,9 +29,12 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+//connect vnpayapi
+builder.Services.AddScoped<IVnPayService, VnPayService>();
+builder.Services.AddHostedService<LuxuryResort.Services.PaymentPendingCleanupService>();
+
 var app = builder.Build();
 
-//?O?N CODE NÀY ?? T? ??NG T?O TÀI KHO?N ADMIN
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

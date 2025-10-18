@@ -1,0 +1,94 @@
+@model List<LuxuryResort.Models.Booking>
+@{
+    ViewData["Title"] = "Lịch sử đặt phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="profile-container">
+    <div class="profile-content">
+        @* Sidebar giữ nguyên *@
+        <div class="profile-sidebar">
+            <nav class="profile-nav">
+                <a href="@Url.Action("Index", "Profile")" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Thông tin cá nhân</span>
+                </a>
+                <a href="@Url.Action("Edit", "Profile")" class="nav-item">
+                    <i class="fas fa-edit"></i>
+                    <span>Chỉnh sửa thông tin</span>
+                </a>
+                <a href="@Url.Action("BookingHistory", "Profile")" class="nav-item active">
+                    <i class="fas fa-history"></i>
+                    <span>Lịch sử đặt phòng</span>
+                </a>
+                <a href="@Url.Action("Preferences", "Profile")" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Tùy chọn</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="profile-main">
+            <div class="profile-section">
+                <h2>Lịch sử đặt phòng</h2>
+
+                @if (Model.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="booking-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã Đặt Phòng</th>
+                                    <th>Loại Phòng</th>
+                                    <th>Ngày Nhận/Trả Phòng</th>
+                                    <th class="text-right">Tổng Tiền</th>
+                                    <th class="text-center">Trạng Thái</th>
+                                    <th class="text-center">Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var booking in Model)
+                                {
+                                    <tr>
+                                        <td><strong>@booking.ConfirmationCode</strong></td>
+                                        <td>
+                                            @booking.RoomInstance?.Room?.Type
+                                            <small class="room-number d-block">Phòng @booking.RoomInstance?.RoomNumber</small>
+                                        </td>
+                                        <td>@booking.CheckInDate.ToString("dd/MM/yy") - @booking.CheckOutDate.ToString("dd/MM/yy")</td>
+                                        <td class="text-right">@booking.TotalAmount.ToString("N0") VNĐ</td>
+                                        <td class="text-center">
+                                            <span class="status-badge status-@booking.Status.ToLower().Replace("_", "-")">@booking.Status</span>
+                                        </td>
+                                        <td class="text-center">
+                                            @if (booking.Status == "Confirmed" && booking.CheckInDate > DateTime.Now)
+                                            {
+                                                <button class="btn btn-outline btn-sm">Hủy</button>
+                                            }
+                                            <a href="#" class="btn btn-icon btn-sm" title="Xem chi tiết">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-times"></i>
+                        <h3>Chưa có lịch sử đặt phòng</h3>
+                        <p>Bạn chưa có lịch sử đặt phòng nào tại resort.</p>
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Đặt phòng ngay</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+}

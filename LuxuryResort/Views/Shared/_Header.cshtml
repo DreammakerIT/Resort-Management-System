@@ -3,48 +3,47 @@
 @inject SignInManager<LuxuryResortUser> SignInManager
 @inject UserManager<LuxuryResortUser> UserManager
 
-<header class="main-header">
-    <nav class="navbar">
-        <a href="/" class="nav-logo">Manchester Luxury Resort</a>
-        <ul class="nav-menu">
-            <li class="nav-item"><a href="/">Trang Chủ</a></li>
-            <li class="nav-item"><a href="/Home/TimHieuThem">Về Chúng Tôi</a></li>
-            <li class="nav-item"><a href="/Home/Dining">Ẩm Thực</a></li>
-            <li class="nav-item"><a href="/Home/Facilities">Tiện Ích</a></li>
-            <li class="nav-item"><a href="/Home/Offers">Ưu Đãi</a></li>
-            <li class="nav-item"><a href="/Home/Contact">Liên Hệ</a></li>
-        </ul>
+<header class="main-header glass-header">
+    <div class="header-container">
+        <a href="/" class="header-logo">
+            Manchester Luxury
+        </a>
 
-        <div class="nav-actions">
+        <nav class="main-nav">
+            <a href="/">Trang Chủ</a>
+            <a href="/Home/TimHieuThem">Về Chúng Tôi</a>
+            <a href="/Home/Dining">Ẩm Thực</a>
+            <a href="/Home/Facilities">Tiện Ích</a>
+            <a href="/Home/Offers">Ưu Đãi</a>
+            <a href="/Home/Contact">Liên Hệ</a>
+        </nav>
+
+        <div class="user-actions">
             @if (SignInManager.IsSignedIn(User))
             {
                 var currentUser = await UserManager.GetUserAsync(User);
                 var userDisplayName = currentUser?.FullName ?? currentUser?.UserName;
 
-                <div id="user-logged-in" style="display: flex; align-items: center; gap: 5px;">
-                    <a href="/Identity/Account/Manage" class="nav-account-btn">
-                        <i class="fas fa-user-check"></i>
-                        <span>Chào, @userDisplayName</span>
-                    </a>
-                    <form action="/Identity/Account/Logout" method="post">
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="nav-booking-btn">Đăng Xuất</button>
-                    </form>
+                <a href="/Booking/MyBookings" class="action-btn glass-btn">
+                    <i class="fas fa-suitcase-rolling" style="font-size: 0.9rem;"></i>
+                    <span style="margin-left: 2px;">Quản lý đặt phòng</span>
+                </a>
+                <div class="user-welcome">
+                    <a href="/Profile" title="Hồ sơ cá nhân">@userDisplayName</a>
                 </div>
+                <form asp-area="Identity" asp-page="/Account/Logout" method="post" style="margin:0;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="action-btn logout-glass-btn">Đăng Xuất</button>
+                </form>
             }
             else
             {
-                <div id="user-logged-out" style="display: flex; align-items: center; gap: 5px;">
-                    <a href="/Home/Rooms" class="nav-account-btn">Hạng Phòng</a>
-                    <a href="#" class="nav-booking-btn" id="accountBtn">
-                        <i class="fas fa-user-circle"></i>
-                        <span>Tài Khoản</span>
-                    </a>
-                </div>
+                <a href="/Home/Rooms" class="action-btn glass-btn">Hạng Phòng</a>
+                <a href="/Identity/Account/Login" class="action-btn logout-glass-btn" id="accountBtn">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Tài Khoản</span>
+                </a>
             }
         </div>
-    </nav>
-
-
+    </div>
 </header>
-

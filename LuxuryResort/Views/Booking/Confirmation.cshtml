@@ -6,68 +6,138 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/confirmation.css" asp-append-version="true" />
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 }
 
-<div class="confirmation-container">
-    <div class="confirmation-box">
-        <div class="success-icon">
-            <span>✓</span>
-        </div>
-        <h1 class="success-title">Đặt phòng của bạn đã được xác nhận!</h1>
-        <p class="success-subtitle">
-            Cảm ơn bạn, <strong>@Model.User?.FullName</strong>. Một email xác nhận chi tiết đã được gửi đến địa chỉ email của bạn.
-        </p>
-
-        <div class="booking-code">
-            Mã đặt phòng của bạn: <strong>@("MLR-" + Model.Id.ToString("D6"))</strong>
-        </div>
-
-        <div class="confirmation-details">
-            <div class="detail-section">
-                <h4>Thông tin kỳ nghỉ</h4>
-                <p><strong>Loại phòng:</strong> @Model.RoomInstance?.Room?.Type (@Model.RoomInstance?.RoomNumber)</p>
-                <p><strong>Nhận phòng:</strong> @Model.CheckInDate.ToString("dddd, dd/MM/yyyy") (Sau 14:00)</p>
-                <p><strong>Trả phòng:</strong> @Model.CheckOutDate.ToString("dddd, dd/MM/yyyy") (Trước 12:00)</p>
-                <p><strong>Số khách:</strong> @Model.Adults người lớn, @Model.Children trẻ em</p>
+<div class="confirmation-page">
+    <div class="confirmation-card">
+        <div class="card-header">
+            <div class="success-icon">
+                <i class="fas @(Model.Status == "Cancelled" ? "fa-times" : Model.Status == "Payment_Pending" ? "fa-hourglass-half" : "fa-check")"></i>
             </div>
-            <div class="detail-section">
-                <h4>Thông tin resort</h4>
-                <p><strong>Manchester Luxury Resort</strong></p>
-                <p>123 Đường ABC, Quận 1, TP. Hồ Chí Minh</p>
-                <p><strong>Điện thoại:</strong> (+84) 28 1234 5678</p>
-                <a href="#">Xem trên bản đồ &rarr;</a>
-            </div>
-            <div class="detail-section cost-summary">
-                <h4>Tóm tắt chi phí</h4>
-                <p><strong>Tổng cộng:</strong> @Model.TotalAmount.ToString("N0") ₫</p>
-                <p><em>(Đã bao gồm thuế và phí)</em></p>
-                <p><strong>Tình trạng thanh toán:</strong> <span class="status-paid">@Model.Status</span></p>
-            </div>
+            <h1 class="success-title">
+                @if (Model.Status == "Awaiting_Admin")
+                {
+                    @:Yêu Cầu Đã Được Ghi Nhận
+                }
+                else if (Model.Status == "Payment_Pending")
+                {
+                    @:Chờ Thanh Toán
+                }
+                else if (Model.Status == "Cancelled")
+                {
+                    @:Đã Hủy Phòng
+                }
+                else
+                {
+                    @:Đặt Phòng Thành Công!
+                }
+            </h1>
+            <p class="success-subtitle">
+                @if (Model.Status == "Payment_Pending")
+                {
+                    @:Đơn đặt phòng của bạn đang chờ thanh toán. Vui lòng hoàn tất thanh toán để chúng tôi giữ chỗ.
+                }
+                else if (Model.Status == "Cancelled")
+                {
+                    @:Đơn đặt phòng đã bị hủy. Nếu đây là nhầm lẫn, vui lòng đặt lại.
+                }
+                else
+                {
+                    @:Cảm ơn <strong>@Model.User?.FullName</strong>. Một email xác nhận chi tiết đã được gửi đến bạn.
+                }
+            </p>
         </div>
 
-        @if (Model.Status == "Confirmed")
-        {
-            <div class="complete-booking-section">
-                <div class="complete-notice">
-                    <i class="fas fa-info-circle"></i>
-                    <span>Đặt phòng đã được xác nhận! Bạn có thể hoàn tất đặt phòng ngay bây giờ.</span>
+        <div class="card-body">
+            <div class="booking-code">
+                <span>Mã đặt phòng</span>
+                <strong>@("MLR-" + Model.Id.ToString("D6"))</strong>
+            </div>
+
+            <div class="confirmation-details">
+                <div class="detail-section">
+                    <h4>Thông Tin Kỳ Nghỉ</h4>
+                    <p><strong>Loại phòng:</strong> @Model.RoomInstance?.Room?.Type (@Model.RoomInstance?.RoomNumber)</p>
+                    <p><strong>Nhận phòng:</strong> @Model.CheckInDate.ToString("dddd, dd/MM/yyyy") (Sau 14:00)</p>
+                    <p><strong>Trả phòng:</strong> @Model.CheckOutDate.ToString("dddd, dd/MM/yyyy") (Trước 12:00)</p>
+                    <p><strong>Số khách:</strong> @Model.Adults người lớn, @Model.Children trẻ em</p>
                 </div>
-                
-                <form asp-action="CompleteBooking" method="post" style="display: inline;">
+                <div class="detail-section">
+                    <h4>Thông Tin Resort</h4>
+                    <p><strong>Manchester Luxury Resort</strong></p>
+                    <p>123 Đường ABC, Quận 1, TP. Hồ Chí Minh</p>
+                    <p><strong>Điện thoại:</strong> (+84) 28 1234 5678</p>
+                </div>
+            </div>
+
+            <div class="map-section">
+                <h4>Vị Trí Resort</h4>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d152659.9262934098!2d106.4980627602682!3d10.893943643203144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752b088de30f3b%3A0xd2140740d360f705!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBOZ2_huqFpIG5n4buvIC0gVGluIGjhu41jIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCAoSFVGTElUKSBDxqEgc-G7nyBIw7NjIE3DtG4!5e0!3m2!1svi!2s!4v1758782490352!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <div class="cost-summary">
+                <h4>Tóm Tắt Chi Phí</h4>
+                <div class="cost-line">
+                    <span>Tổng cộng (Đã bao gồm thuế và phí)</span>
+                    <span class="total-amount">@Model.TotalAmount.ToString("N0") ₫</span>
+                </div>
+                <div class="cost-line">
+                    <span>Tình trạng thanh toán</span>
+                    <span class="status-tag status-@Model.Status.ToLower()">
+                        @if (Model.Status == "Payment_Pending")
+                        {
+                            @:Chờ thanh toán
+                        }
+                        else if (Model.Status == "Cancelled")
+                        {
+                            @:Đã hủy phòng
+                        }
+                        else
+                        {
+                            @Model.Status.Replace("_", " ")
+                        }
+                    </span>
+                </div>
+            </div>
+
+            @if (Model.Status == "Awaiting_Admin")
+            {
+                <div class="status-notice notice-awaiting">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span>Chúng tôi đang kiểm tra giao dịch của bạn và sẽ xác nhận trong thời gian sớm nhất.</span>
+                </div>
+            }
+            else if (Model.Status == "Confirmed")
+            {
+                <div class="status-notice notice-confirmed">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Đặt phòng đã được xác nhận! Bạn có thể hoàn tất để chúng tôi chuẩn bị tốt nhất.</span>
+                </div>
+            }
+        </div>
+
+        <div class="card-footer">
+            @if (Model.Status == "Confirmed")
+            {
+                <form asp-action="CompleteBooking" method="post">
                     <input type="hidden" name="id" value="@Model.Id" />
-                    <button type="submit" class="btn-complete-booking">
-                        <i class="fas fa-check-double"></i>
-                        Hoàn Tất Đặt Phòng
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check-double"></i> Hoàn Tất Đặt Phòng
                     </button>
                 </form>
-            </div>
-        }
+            }
 
-        <div class="actions">
-            <a href="javascript:window.print()" class="action-button">🖨️ In xác nhận</a>
-            <a href="#" class="action-button">📅 Thêm vào lịch</a>
-            <a href="/my-bookings" class="action-button primary">Quản lý đặt phòng</a>
+            <div class="actions">
+                <a href="javascript:window.print()" class="btn btn-secondary"><i class="fas fa-print"></i> In xác nhận</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-calendar-alt"></i> Thêm vào lịch</a>
+                <a asp-action="MyBookings" asp-controller="Booking" class="btn btn-secondary"><i class="fas fa-user-cog"></i> Quản Lý Đặt Phòng</a>
+            </div>
         </div>
     </div>
 </div>

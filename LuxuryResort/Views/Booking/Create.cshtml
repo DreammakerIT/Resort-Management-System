@@ -11,9 +11,9 @@
     <div class="booking-header">
         <h1>Xác nhận & Đặt phòng</h1>
         <div class="stepper">
-            <div class="step active"><span>1</span> Chi tiết</div>
-            <div class="step"><span>2</span> Thông tin</div>
-            <div class="step"><span>3</span> Hoàn tất</div>
+            <div class="step active" data-target="#section-details"><span>1</span> Chi tiết</div>
+            <div class="step" data-target="#section-info"><span>2</span> Thông tin</div>
+            <div class="step" data-target="#section-payment"><span>3</span> Hoàn tất</div>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
         <div class="booking-grid">
             <div class="left-column">
 
-                <div class="form-section">
+                <div class="form-section" id="section-details">
                     <h3>Chi tiết kỳ nghỉ của bạn</h3>
                     <div class="form-group">
                         <label>Loại phòng</label>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                <div class="form-section">
+                <div class="form-section" id="section-info">
                     <h3>Thông tin của bạn</h3>
                     <div class="form-group">
                         <label asp-for="FullName">Họ và Tên</label>
@@ -93,41 +93,27 @@
                     </div>
                 </div>
 
-                <div class="form-section">
+                <div class="form-section" id="section-payment">
                     <h3>Phương thức thanh toán</h3>
                     <div class="payment-options">
                         <label>
-                            <input asp-for="PaymentMethod" type="radio" value="payment_code" checked> 
+                            <input asp-for="PaymentMethod" type="radio" value="vnpay" checked>
                             <span class="payment-option">
-                                <strong>Mã code thanh toán</strong>
-                                <small>Nhận mã code 6 chữ số để thanh toán sau</small>
+                                <strong>VNPay</strong>
+                                <small>Thanh toán online qua cổng VNPay</small>
                             </span>
                         </label>
                         <label>
-                            <input asp-for="PaymentMethod" type="radio" value="hotel"> 
+                            <input asp-for="PaymentMethod" type="radio" value="hotel">
                             <span class="payment-option">
                                 <strong>Thanh toán tại nơi nghỉ</strong>
                                 <small>Thanh toán khi nhận phòng</small>
                             </span>
                         </label>
                     </div>
-                    <div id="payment-code-info" class="payment-info">
+                    <div id="vnpay-info" class="payment-info">
                         <div class="form-group">
-                            <p>Bạn sẽ nhận được mã code 6 chữ số để thanh toán sau. Mã code có hiệu lực trong 24 giờ.</p>
-                            <div class="payment-code-features">
-                                <div class="feature-item">
-                                    <i class="fas fa-shield-alt"></i>
-                                    <span>Bảo mật cao</span>
-                                </div>
-                                <div class="feature-item">
-                                    <i class="fas fa-clock"></i>
-                                    <span>Hết hạn sau 24h</span>
-                                </div>
-                                <div class="feature-item">
-                                    <i class="fas fa-credit-card"></i>
-                                    <span>Thanh toán linh hoạt</span>
-                                </div>
-                            </div>
+                            <p>Thanh toán nhanh chóng và an toàn qua VNPay. Thẻ ATM nội địa, thẻ tín dụng/ghi nợ hoặc QR.</p>
                         </div>
                     </div>
                     <div id="hotel-info" class="payment-info" style="display: none;">
@@ -204,19 +190,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const paymentRadios = document.querySelectorAll('input[name="PaymentMethod"]');
-            const paymentCodeInfo = document.getElementById('payment-code-info');
+            const vnpayInfo = document.getElementById('vnpay-info');
             const hotelInfo = document.getElementById('hotel-info');
+            const steps = document.querySelectorAll('.stepper .step');
 
             function togglePaymentInfo() {
                 const selectedValue = document.querySelector('input[name="PaymentMethod"]:checked').value;
                 
                 // Ẩn tất cả thông tin thanh toán
-                paymentCodeInfo.style.display = 'none';
+                vnpayInfo.style.display = 'none';
                 hotelInfo.style.display = 'none';
                 
                 // Hiển thị thông tin tương ứng
-                if (selectedValue === 'payment_code') {
-                    paymentCodeInfo.style.display = 'block';
+                if (selectedValue === 'vnpay') {
+                    vnpayInfo.style.display = 'block';
                 } else if (selectedValue === 'hotel') {
                     hotelInfo.style.display = 'block';
                 }
@@ -228,6 +215,20 @@
 
             // Initial check on page load
             togglePaymentInfo();
+
+            // Smooth scroll to sections when clicking stepper
+            steps.forEach(step => {
+                step.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    if (!target) return;
+                    const el = document.querySelector(target);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        steps.forEach(s => s.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
         });
     </script>
 }

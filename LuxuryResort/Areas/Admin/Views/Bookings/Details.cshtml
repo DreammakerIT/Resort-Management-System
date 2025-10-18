@@ -68,7 +68,7 @@
                                     @{
                                         string paymentMethodText = Model.PaymentMethod switch
                                         {
-                                            "payment_code" => "Mã Code Thanh Toán",
+                                            "vnpay" => "VNPay",
                                             "hotel" => "Thanh toán tại khách sạn",
                                             _ => Model.PaymentMethod ?? "N/A"
                                         };
@@ -149,16 +149,32 @@
                     </div>
 
                     <div class="action-section">
-                        @if (Model.Status != "Cancelled" && Model.Status != "Completed")
-                        {
-                            <form asp-area="Admin" asp-controller="Bookings" asp-action="Cancel" asp-route-id="@Model.Id" method="post">
-                                <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Bạn có chắc muốn hủy đặt phòng này?');">
-                                    <i class="fas fa-times"></i> Hủy đặt phòng
-                                </button>
-                            </form>
-                        }
+                        <div class="admin-actions-row">
+                            @if (Model.Status == "Awaiting_Admin")
+                            {
+                                <form asp-area="Admin" asp-controller="Bookings" asp-action="ApprovePayment" asp-route-id="@Model.Id" method="post">
+                                    <button type="submit" class="admin-btn admin-approve" onclick="return confirm('Xác nhận đã nhận tiền và duyệt đặt phòng?');">
+                                        <i class="fas fa-check"></i> Duyệt
+                                    </button>
+                                </form>
+                                <form asp-area="Admin" asp-controller="Bookings" asp-action="RejectPayment" asp-route-id="@Model.Id" method="post">
+                                    <button type="submit" class="admin-btn admin-reject" onclick="return confirm('Từ chối thanh toán này?');">
+                                        <i class="fas fa-undo"></i> Trả về chờ
+                                    </button>
+                                </form>
+                            }
+
+                            @if (Model.Status != "Cancelled" && Model.Status != "Completed")
+                            {
+                                <form asp-area="Admin" asp-controller="Bookings" asp-action="Cancel" asp-route-id="@Model.Id" method="post">
+                                    <button type="submit" class="admin-btn admin-cancel" onclick="return confirm('Bạn có chắc muốn hủy đặt phòng này?');">
+                                        <i class="fas fa-times"></i> Hủy
+                                    </button>
+                                </form>
+                            }
+                        </div>
                         
-                        <a asp-area="Admin" asp-controller="Bookings" asp-action="Index" class="btn btn-secondary btn-block">
+                        <a asp-area="Admin" asp-controller="Bookings" asp-action="Index" class="admin-btn admin-list btn-wide">
                             <i class="fas fa-list"></i> Danh sách đặt phòng
                         </a>
                     </div>
@@ -301,4 +317,36 @@
         text-align: left;
     }
 }
+
+/* Admin action buttons styling */
+.admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    color: #fff;
+    text-decoration: none;
+    transition: transform .06s ease, filter .18s ease;
+}
+.admin-btn:active { transform: translateY(1px); }
+
+.btn-wide { width: 100%; }
+
+.admin-actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.admin-approve { background: linear-gradient(135deg,#22c55e,#16a34a); }
+.admin-approve:hover { filter: brightness(0.95); }
+
+.admin-reject { background: linear-gradient(135deg,#f59e0b,#d97706); }
+.admin-reject:hover { filter: brightness(0.96); }
+
+.admin-cancel { background: linear-gradient(135deg,#ef4444,#dc2626); }
+.admin-cancel:hover { filter: brightness(0.96); }
+
+.admin-list { background: #475569; }
+.admin-list:hover { filter: brightness(1.05); }
 </style>

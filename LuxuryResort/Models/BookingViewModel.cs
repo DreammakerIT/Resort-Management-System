@@ -44,9 +44,9 @@ namespace LuxuryResort.Models
         public string? SpecialRequest { get; set; }
         
         [Required(ErrorMessage = "Vui lòng chọn phương thức thanh toán")]
-        public string PaymentMethod { get; set; } = "card"; // "card", "hotel", "payment_code"
+        public string PaymentMethod { get; set; } = "vnpay"; // "vnpay", "hotel"
         
-        // Thông tin cho mã code thanh toán
+        // Trường cũ cho mã code thanh toán (không còn dùng)
         public string? PaymentCode { get; set; }
         public DateTime? PaymentCodeExpiry { get; set; }
     }

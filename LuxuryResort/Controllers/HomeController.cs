@@ -52,6 +52,10 @@ namespace LuxuryResort.Controllers
         {
             return View();
         }
+        public IActionResult Pool()
+        {
+            return View();
+        }
 
         public IActionResult Offers()
         {

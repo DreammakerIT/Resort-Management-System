@@ -1,0 +1,328 @@
+﻿/* ================================== */
+/* ===   GLOBAL & ROOT STYLES     === */
+/* ================================== */
+:root {
+    --font-serif-display: 'Playfair Display', serif;
+    --font-sans-body: 'Poppins', sans-serif;
+    --color-primary: #0A2342; /* Xanh đậm */
+    --color-secondary: #2C5D63; /* Xanh rêu đậm */
+    --color-text: #333;
+    --color-text-light: #f1f1f1;
+    --color-accent: #D4AF37; /* Vàng Gold */
+    --color-background: #FFFFFF;
+    --color-light-gray: #f8f9fa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans-body);
+    line-height: 1.7;
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-serif-display);
+    color: var(--color-primary);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: var(--color-secondary);
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+section {
+    padding: 80px 0;
+}
+
+.subtitle {
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+/* ================================== */
+/* ===        HERO SECTION        === */
+/* ================================== */
+.hero {
+    position: relative;
+    width: 100%; /* Đảm bảo hero chiếm toàn bộ chiều rộng */
+    height: 100vh; /* Chiếm toàn bộ chiều cao màn hình đầu tiên */
+    display: flex;
+    flex-direction: column; /* Sắp xếp nội dung theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    text-align: center;
+    color: var(--color-text-light);
+    overflow: hidden;
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* QUAN TRỌNG: Giúp ảnh phủ đầy mà không méo */
+    z-index: 1; /* Nằm dưới lớp phủ và chữ */
+}
+
+/* === ĐÂY LÀ PHẦN QUAN TRỌNG NHẤT === */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Tạo một lớp chuyển màu tinh tế từ trên xuống */
+    background: linear-gradient( to bottom, rgba(0, 0, 0, 0.7) 0%, /* Bắt đầu: Đen mờ 70% */
+    rgba(0, 0, 0, 0.2) 50%, /* Ở giữa: Đen mờ 20% */
+    rgba(0, 0, 0, 0.7) 100% /* Kết thúc: Đen mờ 70% */
+    );
+    z-index: 2; /* Nằm trên ảnh */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3; /* Nằm trên cùng, trên cả lớp phủ */
+    max-width: 900px;
+    padding: 20px;
+}
+
+/* Nâng cấp hiệu ứng cho chữ để nổi bật hơn */
+.hero .subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Tăng khoảng cách ký tự cho sang */
+    color: var(--color-accent, #D4AF37); /* Dùng màu nhấn */
+    opacity: 0.9;
+}
+
+.hero h1 {
+    color: #fff;
+    font-size: 5rem; /* Có thể tăng/giảm tùy ý */
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    /* Hiệu ứng đổ bóng mạnh hơn để tách chữ ra khỏi nền */
+    text-shadow: 0px 5px 20px rgba(0, 0, 0, 0.8);
+}
+
+.hero p {
+    font-size: 1.25rem;
+    font-weight: 300;
+    opacity: 0.95;
+    text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 3.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+}
+
+/* ================================== */
+/* ===       OTHER SECTIONS       === */
+/* ================================== */
+.intro {
+    text-align: center;
+    max-width: 800px;
+}
+
+.features {
+    background-color: var(--color-light-gray);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    text-align: center;
+}
+
+.feature-item i {
+    font-size: 2.5rem;
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+}
+
+.bar-section {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.bar-image {
+    flex: 1;
+}
+
+    .bar-image img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+.bar-content {
+    flex: 1;
+}
+
+.info-section {
+    margin-block-start: 20px;
+    margin-block-end: 20px;
+    background-color: lightslategray;
+    color: var(--color-text-light);
+}
+
+    .info-section h2, .info-section h3 {
+        color: #fff;
+    }
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.info-list {
+    list-style: none;
+}
+
+    .info-list li {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .info-list i {
+        color: var(--color-accent);
+        width: 20px;
+    }
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .gallery-item img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+.cta-section {
+    background-color: var(--color-light-gray);
+    text-align: center;
+}
+
+/* ================================== */
+/* ===    BUTTONS & COMPONENTS    === */
+/* ================================== */
+.btn-primary, .btn-secondary {
+    display: inline-block;
+    padding: 14px 35px;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    margin-top: 1rem;
+}
+
+.btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    border-color: var(--color-accent);
+}
+
+    .btn-primary:hover {
+        background-color: transparent;
+        color: var(--color-accent);
+    }
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+    .btn-secondary:hover {
+        background-color: var(--color-secondary);
+        color: #fff;
+    }
+
+/* ================================== */
+/* ===       RESPONSIVENESS       === */
+/* ================================== */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bar-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}

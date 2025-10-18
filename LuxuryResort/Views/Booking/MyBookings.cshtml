@@ -1,0 +1,366 @@
+@model IEnumerable<LuxuryResort.Models.Booking>
+
+@{
+    ViewData["Title"] = "Lịch Sử Đặt phòng";
+
+    // Helper function để chuyển đổi trạng thái (giữ nguyên, đã rất tốt)
+    Func<string, (string Text, string CssClass)> GetStatusDisplay = (status) =>
+    {
+        return status switch
+        {
+            "Confirmed" => ("Đã xác nhận", "status-confirmed"),
+            "Payment_Pending" => ("Chờ thanh toán", "status-pending"),
+            "Completed" => ("Đã hoàn thành", "status-completed"),
+            "Cancelled" => ("Đã hủy", "status-cancelled"),
+            _ => (status.Replace("_", " "), "status-default"),
+        };
+    };
+}
+
+<style>
+    /* --- 1. BIẾN MÀU SẮC CHO GIAO DIỆN SÁNG --- */
+    :root {
+        --color-primary: #AD8B5A;      /* Vàng Gold làm điểm nhấn */
+        --color-background: #f4f5f7;  /* Nền xám rất nhạt, sạch sẽ */
+        --color-card-bg: #ffffff;     /* Card màu trắng */
+        --color-text-dark: #2c3e50;    /* Chữ chính màu than đậm */
+        --color-text-secondary: #7f8c8d; /* Chữ phụ màu xám */
+        --color-border: #e9ecef;      /* Viền/kẻ phân cách */
+        --color-success: #27ae60;      /* Xanh lá cho thành công */
+        --color-warning: #f39c12;      /* Vàng cho chờ duyệt */
+        --color-danger: #e74c3c;        /* Đỏ cho hủy/lỗi */
+        --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.08); /* Đổ bóng mềm mại */
+    }
+
+    /* --- 2. TỔNG THỂ TRANG --- */
+    .booking-history-container {
+        font-family: 'Montserrat', sans-serif;
+        background-color: var(--color-background);
+        /* Sử dụng một texture sáng, tinh tế */
+        background-image: url('https://www.transparenttextures.com/patterns/whispy-lines.png');
+        color: var(--color-text-secondary);
+        padding: 5rem 1rem;
+        min-height: 100vh;
+    }
+
+    .page-content {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .page-title {
+        margin-block-start: 50px;
+        font-weight: 600;
+        color: var(--color-text-dark);
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3.5rem;
+    }
+
+    /* --- 3. THẺ ĐẶT PHÒNG --- */
+    .booking-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .booking-card {
+        background: var(--color-card-bg); /* Nền trắng */
+        border-radius: 16px; /* Bo góc ít hơn một chút cho cảm giác thanh lịch */
+        border: 1px solid var(--color-border); /* Viền mảnh */
+        box-shadow: var(--shadow-soft);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeIn 0.6s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @for (var i = 1; i <= 20; i++) {
+        <text>
+        .booking-card:nth-child(@i) {
+            animation-delay: calc(@i * 0.1s);
+        }
+        </text>
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .booking-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Header Card */
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.75rem;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .card-header h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: var(--color-text-dark);
+        font-weight: 600;
+    }
+
+    /* Body Card */
+    .card-body {
+        padding: 1.75rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .main-info {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .date-icon {
+        font-size: 2rem;
+        color: var(--color-primary);
+    }
+    
+    .date-info strong {
+        display: block;
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: var(--color-text-dark);
+        margin-bottom: 0.25rem;
+    }
+    
+    .date-info span {
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+    }
+
+    .sub-details {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        border-left: 1px solid var(--color-border);
+        padding-left: 2rem;
+    }
+    
+    .detail-item {
+         display: flex;
+         flex-direction: column;
+    }
+
+    .detail-item strong {
+        font-weight: 500;
+        color: var(--color-text-secondary);
+        margin-bottom: 5px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+
+    .detail-item span {
+        font-size: 1rem;
+        color: var(--color-text-dark);
+        font-weight: 600;
+    }
+    
+    .card-footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        padding: 1rem 1.75rem;
+        background: #fcfcfc; /* Nền footer hơi xám nhẹ */
+        border-top: 1px solid var(--color-border);
+    }
+
+    /* --- 4. HUY HIỆU TRẠNG THÁI --- */
+    .status-badge {
+         padding: 7px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
+    }
+    .status-confirmed { background-color: #eaf5ff; color: #2997ff; }
+    .status-pending { background-color: #fff8e1; color: #f39c12; }
+    .status-completed { background-color: #e8f5e9; color: var(--color-success); }
+    .status-cancelled { background-color: #fbecec; color: var(--color-danger); }
+    .status-default { background-color: #f0f0f0; color: #707070; }
+    
+    /* --- 5. NÚT BẤM --- */
+    .action-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; border: 1px solid transparent; font-weight: 600; font-size: 0.9rem; transition: all .2s ease; text-decoration: none; cursor: pointer; }
+    .btn-detail { background-color: var(--color-card-bg); color: var(--color-text-dark); border-color: var(--color-border); }
+    .btn-detail:hover { background-color: #f8f9fa; border-color: #d3d9df; transform: translateY(-2px); }
+    .btn-pay { background: var(--color-primary); color: #ffffff; }
+    .btn-pay:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(173, 139, 90, 0.3); }
+    .btn-cancel { background-color: transparent; color: var(--color-danger); }
+    .btn-cancel:hover { background-color: #fbecec; }
+    
+    /* --- 6. TRẠNG THÁI TRỐNG --- */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background-color: var(--color-card-bg);
+        border: 1px dashed var(--color-border);
+        border-radius: 16px;
+    }
+    .empty-state i {
+        font-size: 3.5rem;
+        color: var(--color-primary);
+        margin-bottom: 1.5rem;
+    }
+    .empty-state h3 {
+        font-size: 1.5rem;
+        color: var(--color-text-dark);
+        margin-bottom: 0.75rem;
+    }
+    .empty-state p {
+        color: var(--color-text-secondary);
+        margin-bottom: 2rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* --- 7. TỐI ƯU CHO DI ĐỘNG --- */
+    @@media (max-width: 768px) {
+        .booking-history-container { padding: 3rem 1rem; }
+        .page-title { font-size: 2rem; }
+        .card-body, .sub-details { flex-direction: column; gap: 1.5rem; border-left: none; padding-left: 0;}
+        .main-info { flex-direction: column; align-items: flex-start; text-align: left; }
+        .card-footer { justify-content: center; flex-wrap: wrap; }
+    }
+</style>
+
+    <div class="booking-history-container">
+
+        <div class="page-content">
+            <h1 class="page-title">Lịch Sử Đặt Phòng</h1>
+
+            @if (!Model.Any())
+            {
+                <div class="empty-state">
+                    <i class="fas fa-suitcase-rolling"></i>
+                    <h3>Chưa có chuyến đi nào</h3>
+                    <p>Những kỳ nghỉ sang trọng đang chờ đợi. Hãy khám phá và đặt phòng ngay hôm nay!</p>
+                    <a asp-action="Index" asp-controller="Rooms" class="action-btn btn-pay">
+                        <i class="fas fa-search"></i> Khám phá phòng
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="booking-list">
+                    @foreach (var b in Model)
+                    {
+                        var statusInfo = GetStatusDisplay(b.Status);
+                        <div class="booking-card">
+                            <div class="card-header">
+                                <h2>@b.RoomInstance?.Room?.Type - Phòng @b.RoomInstance?.RoomNumber</h2>
+                                <span class="status-badge @statusInfo.CssClass">
+                                    @statusInfo.Text
+                                    @if (b.Status == "Payment_Pending")
+                                    {
+                                        var timeoutMins = (int)ViewBag.PendingTimeoutMinutes;
+                                        var expiresAt = b.BookingDate.AddMinutes(timeoutMins);
+                                        <span style="margin-left:8px; font-weight:600;" data-countdown-expire="@expiresAt.ToString("o")"></span>
+                                    }
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <div class="main-info">
+                                    <i class="fas fa-calendar-alt date-icon"></i>
+                                    <div class="date-info">
+                                        <strong>@b.CheckInDate.ToString("dd MMM yyyy") &rarr; @b.CheckOutDate.ToString("dd MMM yyyy")</strong>
+                                        <span>Thời gian đặt: @b.BookingDate.ToString("HH:mm, dd/MM/yyyy")</span>
+    </div>
+</div>
+
+<form id="auto-cancel-form" method="post" asp-action="CancelBooking" asp-controller="Booking" style="display:none;">
+    <input type="hidden" name="id" value="" />
+    @Html.AntiForgeryToken()
+</form>
+
+<script>
+    (function() {
+        function pad(n){ return n < 10 ? '0' + n : n; }
+        const spans = document.querySelectorAll('[data-countdown-expire]');
+        function tick() {
+            const now = new Date();
+            spans.forEach(function(el) {
+                const expireIso = el.getAttribute('data-countdown-expire');
+                const expireAt = new Date(expireIso);
+                let diff = Math.floor((expireAt - now) / 1000);
+                if (diff <= 0) {
+                    el.textContent = '00:00:00';
+                    const card = el.closest('.booking-card');
+                    const code = card?.querySelector('.detail-item span')?.innerText || '';
+                    const m = code.match(/MLR-(\d+)/);
+                    const id = m ? parseInt(m[1], 10) : null;
+                    if (id) {
+                        const form = document.getElementById('auto-cancel-form');
+                        form.querySelector('input[name="id"]').value = id;
+                        if (!el.dataset.submitted) {
+                            el.dataset.submitted = '1';
+                            form.submit();
+                        }
+                    }
+                } else {
+                    const h = Math.floor(diff / 3600);
+                    diff %= 3600;
+                    const m = Math.floor(diff / 60);
+                    const s = diff % 60;
+                    el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+                }
+            });
+        }
+        setInterval(tick, 1000);
+        tick();
+    })();
+</script>
+                                <div class="sub-details">
+                                    <div class="detail-item">
+                                        <strong>Mã đặt phòng</strong>
+                                        <span>@("MLR-" + b.Id.ToString("D6"))</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>Tổng chi phí</strong>
+                                        <span>@b.TotalAmount.ToString("N0") ₫</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a asp-action="Confirmation" asp-route-id="@b.Id" class="action-btn btn-detail">
+                                    <i class="fas fa-eye"></i> Xem chi tiết
+                                </a>
+                                @if (b.PaymentMethod == "payment_code" && b.Status == "Payment_Pending")
+                                {
+                                    <a asp-action="PaymentQr" asp-route-id="@b.Id" class="action-btn btn-pay">
+                                        <i class="fas fa-qrcode"></i> Thanh toán ngay
+                                    </a>
+                                }
+                                @if (b.Status != "Completed" && b.Status != "Cancelled")
+                                {
+                                    <form asp-action="CancelBooking" method="post" style="display:inline; margin:0;">
+                                        <input type="hidden" name="id" value="@b.Id" />
+                                        <button type="submit" class="action-btn btn-cancel" onclick="return confirm('Bạn có chắc chắn muốn hủy đặt phòng này?')">
+                                            <i class="fas fa-times-circle"></i> Hủy phòng
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>

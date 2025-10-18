@@ -8,6 +8,9 @@
         public int CheckOutsCount { get; set; }
         public List<BookingInfoViewModel> RecentBookings { get; set; }
         public Dictionary<string, int> RoomStatusCounts { get; set; }
+        public Dictionary<string, int> BookingsByStatus { get; set; }
+        public List<string> Last7DaysLabels { get; set; }
+        public List<decimal> Last7DaysRevenue { get; set; }
     }
 
     public class BookingInfoViewModel

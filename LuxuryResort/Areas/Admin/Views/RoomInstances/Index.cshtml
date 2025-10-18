@@ -354,16 +354,18 @@
     }
 
     <div class="stats-grid">
-        @{
-            var availableCount = Model.Count(r => r.Status == "Available");
-            var occupiedCount = Model.Count(r => r.Status == "Occupied");
-            var cleaningCount = Model.Count(r => r.Status == "Cleaning");
-            var outOfOrderCount = Model.Count(r => r.Status == "OutOfOrder");
-        }
-        <div class="stat-card-v2 available"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-info"><h3 class="stat-number">@availableCount</h3><p class="stat-label">Phòng Có Sẵn</p></div></div>
-        <div class="stat-card-v2 occupied"><div class="stat-icon"><i class="fas fa-bed"></i></div><div class="stat-info"><h3 class="stat-number">@occupiedCount</h3><p class="stat-label">Phòng Đã Thuê</p></div></div>
-        <div class="stat-card-v2 cleaning"><div class="stat-icon"><i class="fas fa-broom"></i></div><div class="stat-info"><h3 class="stat-number">@cleaningCount</h3><p class="stat-label">Đang Dọn Dẹp</p></div></div>
-        <div class="stat-card-v2 outoforder"><div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-info"><h3 class="stat-number">@outOfOrderCount</h3><p class="stat-label">Cần Sửa Chữa</p></div></div>
+        <a class="stat-card-v2 available" href="@Url.Action("Index", new { filter = "available_today" })" style="text-decoration:none;">
+            <div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-info"><h3 class="stat-number">@ViewBag.AvailableTodayCount</h3><p class="stat-label">Phòng Có Sẵn (Hôm nay)</p></div>
+        </a>
+        <a class="stat-card-v2 occupied" href="@Url.Action("Index", new { filter = "occupied_today" })" style="text-decoration:none;">
+            <div class="stat-icon"><i class="fas fa-bed"></i></div><div class="stat-info"><h3 class="stat-number">@ViewBag.OccupiedTodayCount</h3><p class="stat-label">Phòng Đã Thuê (Hôm nay)</p></div>
+        </a>
+        <a class="stat-card-v2 cleaning" href="@Url.Action("Index", new { filter = "cleaning" })" style="text-decoration:none;">
+            <div class="stat-icon"><i class="fas fa-broom"></i></div><div class="stat-info"><h3 class="stat-number">@ViewBag.CleaningCount</h3><p class="stat-label">Đang Dọn Dẹp</p></div>
+        </a>
+        <a class="stat-card-v2 outoforder" href="@Url.Action("Index", new { filter = "outoforder" })" style="text-decoration:none;">
+            <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-info"><h3 class="stat-number">@ViewBag.OutOfOrderCount</h3><p class="stat-label">Cần Sửa Chữa</p></div>
+        </a>
     </div>
 
     <div class="main-card-v2">
@@ -377,6 +379,12 @@
             </div>
 
             <div class="table-responsive">
+                @if (!string.IsNullOrEmpty(ViewBag.ActiveFilter))
+                {
+                    <div class="alert alert-info" role="alert" style="margin-bottom:16px;">
+                        Đang lọc: <strong>@(ViewBag.FilterLabel ?? "")</strong> • <a href="@Url.Action("Index")">Bỏ lọc</a>
+                    </div>
+                }
                 <table class="table table-hover table-modern-v2" id="roomsTable">
                     <thead>
                         <tr>
@@ -394,12 +402,12 @@
                                 <td><div class="room-type-v2">@Html.DisplayFor(modelItem => item.Room.Type)</div></td>
                                 <td>
                                     @{
-                                        var statusClass = "available";
-                                        var statusText = "Có sẵn";
-                                        var statusIcon = "fas fa-check-circle";
-                                        if (item.Status == "Occupied") { statusClass = "occupied"; statusText = "Đã thuê"; statusIcon = "fas fa-bed"; }
-                                        else if (item.Status == "Cleaning") { statusClass = "cleaning"; statusText = "Đang dọn"; statusIcon = "fas fa-broom"; }
-                                        else if (item.Status == "OutOfOrder") { statusClass = "outoforder"; statusText = "Hỏng"; statusIcon = "fas fa-exclamation-triangle"; }
+                                        var occupiedToday = ((HashSet<int>)ViewBag.OccupiedTodayIds)?.Contains(item.Id) == true;
+                                        var statusClass = occupiedToday ? "occupied" : "available";
+                                        var statusText = occupiedToday ? "Đã thuê" : "Có sẵn";
+                                        var statusIcon = occupiedToday ? "fas fa-bed" : "fas fa-check-circle";
+                                        if (!occupiedToday && item.Status == "Cleaning") { statusClass = "cleaning"; statusText = "Đang dọn"; statusIcon = "fas fa-broom"; }
+                                        if (!occupiedToday && item.Status == "OutOfOrder") { statusClass = "outoforder"; statusText = "Hỏng"; statusIcon = "fas fa-exclamation-triangle"; }
                                     }
                                     <span class="status-badge @statusClass"><i class="@statusIcon"></i> @statusText</span>
                                 </td>

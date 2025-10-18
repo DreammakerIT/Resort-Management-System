@@ -1,0 +1,24 @@
+# Visual Studio building files
+obj/
+bin/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# User-specific files
+*.DS_Store
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+build/
+Build/
+build_output/
+
+# Secrets
+appsettings.Development.json

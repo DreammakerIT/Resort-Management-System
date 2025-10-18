@@ -63,6 +63,46 @@ namespace LuxuryResort.Areas.Admin.Controllers
             return View(booking);
         }
 
+        // Admin xác nhận khách đã thanh toán và đối soát thành công
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApprovePayment(int id)
+        {
+            var booking = await _context.Bookings.FindAsync(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            if (booking.Status == "Awaiting_Admin")
+            {
+                booking.Status = "Confirmed";
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        // Admin từ chối (không nhận được tiền, sai nội dung...)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RejectPayment(int id)
+        {
+            var booking = await _context.Bookings.FindAsync(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            if (booking.Status == "Awaiting_Admin")
+            {
+                booking.Status = "Payment_Pending"; // trả về chờ thanh toán lại
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Cancel(int id)

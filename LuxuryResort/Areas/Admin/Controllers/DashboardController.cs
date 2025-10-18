@@ -26,17 +26,20 @@ namespace LuxuryResort.Areas.Admin.Controllers
 
             // --- Các truy vấn thống kê (giữ nguyên, đã đúng) ---
             var todaysRevenue = await _context.Bookings
-                .Where(b => b.BookingDate >= today && b.BookingDate < tomorrow && b.Status == "Confirmed")
+                .Where(b => b.BookingDate >= today && b.BookingDate < tomorrow && 
+                           (b.Status == "Confirmed" || b.Status == "Payment_Pending" || b.Status == "Completed"))
                 .SumAsync(b => b.TotalAmount);
 
             var newBookingsCount = await _context.Bookings
                 .CountAsync(b => b.BookingDate >= today && b.BookingDate < tomorrow);
 
             var checkInsCount = await _context.Bookings
-                .CountAsync(b => b.CheckInDate.Date == today && b.Status == "Confirmed");
+                .CountAsync(b => b.CheckInDate.Date == today && 
+                               (b.Status == "Confirmed" || b.Status == "Payment_Pending" || b.Status == "Completed"));
 
             var checkOutsCount = await _context.Bookings
-                .CountAsync(b => b.CheckOutDate.Date == today && b.Status == "Confirmed");
+                .CountAsync(b => b.CheckOutDate.Date == today && 
+                               (b.Status == "Confirmed" || b.Status == "Payment_Pending" || b.Status == "Completed"));
 
             // --- SỬA LỖI TRUY VẤN CÁC ĐẶT PHÒNG GẦN ĐÂY ---
             var recentBookings = await _context.Bookings
@@ -59,7 +62,8 @@ namespace LuxuryResort.Areas.Admin.Controllers
             // --- Phần tính toán tình trạng phòng (ví dụ) ---
             var totalRoomInstances = await _context.RoomInstances.CountAsync();
             var occupiedRoomInstances = await _context.Bookings
-                .Where(b => b.CheckInDate.Date <= today && b.CheckOutDate.Date > today && b.Status == "Confirmed")
+                .Where(b => b.CheckInDate.Date <= today && b.CheckOutDate.Date > today && 
+                           (b.Status == "Confirmed" || b.Status == "Payment_Pending" || b.Status == "Completed"))
                 .CountAsync();
 
             var roomStatusCounts = new Dictionary<string, int>
@@ -69,6 +73,27 @@ namespace LuxuryResort.Areas.Admin.Controllers
                 // Bạn có thể thêm các trạng thái khác như "Đang dọn dẹp", "Bảo trì" nếu có trong CSDL
             };
 
+            // --- Dữ liệu biểu đồ: phân bổ theo trạng thái ---
+            var bookingsByStatus = await _context.Bookings
+                .GroupBy(b => b.Status)
+                .Select(g => new { Status = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.Status, x => x.Count);
+
+            // --- Dữ liệu biểu đồ: doanh thu 7 ngày gần nhất ---
+            var last7DaysLabels = new List<string>();
+            var last7DaysRevenue = new List<decimal>();
+            for (int i = 6; i >= 0; i--)
+            {
+                var day = today.AddDays(-i);
+                var next = day.AddDays(1);
+                var revenue = await _context.Bookings
+                    .Where(b => b.BookingDate >= day && b.BookingDate < next &&
+                                (b.Status == "Confirmed" || b.Status == "Payment_Pending" || b.Status == "Completed"))
+                    .SumAsync(b => b.TotalAmount);
+                last7DaysLabels.Add(day.ToString("dd/MM"));
+                last7DaysRevenue.Add(revenue);
+            }
+
             // Tạo ViewModel và gán dữ liệu
             var viewModel = new DashboardViewModel // ViewModel này bạn cần tạo nếu chưa có
             {
@@ -77,7 +102,10 @@ namespace LuxuryResort.Areas.Admin.Controllers
                 CheckInsCount = checkInsCount,
                 CheckOutsCount = checkOutsCount,
                 RecentBookings = recentBookings,
-                RoomStatusCounts = roomStatusCounts
+                RoomStatusCounts = roomStatusCounts,
+                BookingsByStatus = bookingsByStatus,
+                Last7DaysLabels = last7DaysLabels,
+                Last7DaysRevenue = last7DaysRevenue
             };
 
             return View(viewModel);

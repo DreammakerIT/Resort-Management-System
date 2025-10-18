@@ -1,0 +1,110 @@
+@model LuxuryResort.Models.PreferencesViewModel
+@{
+    ViewData["Title"] = "Tùy chọn cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="profile-container">
+    <div class="profile-content">
+        <div class="profile-sidebar">
+            <nav class="profile-nav">
+                <a href="@Url.Action("Index", "Profile")" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Thông tin cá nhân</span>
+                </a>
+                <a href="@Url.Action("Edit", "Profile")" class="nav-item">
+                    <i class="fas fa-edit"></i>
+                    <span>Chỉnh sửa thông tin</span>
+                </a>
+                <a href="@Url.Action("BookingHistory", "Profile")" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>Lịch sử đặt phòng</span>
+                </a>
+                <a href="@Url.Action("Preferences", "Profile")" class="nav-item active">
+                    <i class="fas fa-cog"></i>
+                    <span>Tùy chọn</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="profile-main">
+            <div class="profile-section">
+                <h2>Tùy chọn cá nhân</h2>
+                
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                <form asp-action="Preferences" method="post" class="preferences-form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <input asp-for="UserId" type="hidden" />
+
+                    <div class="preferences-section">
+                        <h3>Thông tin ưa thích</h3>
+                        
+                        <div class="form-group">
+                            <label asp-for="PreferredRoomType" class="form-label"></label>
+                            <select asp-for="PreferredRoomType" class="form-control">
+                                <option value="">Chọn loại phòng ưa thích</option>
+                                <option value="Deluxe City View">Deluxe City View</option>
+                                <option value="Superior Garden View">Superior Garden View</option>
+                                <option value="Oceanfront Villa">Oceanfront Villa</option>
+                                <option value="Presidential Suite">Presidential Suite</option>
+                                <option value="Private Pool Villa">Private Pool Villa</option>
+                                <option value="Bungalow Garden">Bungalow Garden</option>
+                            </select>
+                            <span asp-validation-for="PreferredRoomType" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="SpecialRequests" class="form-label"></label>
+                            <textarea asp-for="SpecialRequests" class="form-control" rows="4" placeholder="Nhập các yêu cầu đặc biệt của bạn..."></textarea>
+                            <span asp-validation-for="SpecialRequests" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="preferences-section">
+                        <h3>Tùy chọn thông báo</h3>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input asp-for="MarketingConsent" type="checkbox" />
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">Đồng ý nhận thông tin khuyến mãi và ưu đãi đặc biệt qua email</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input asp-for="NewsletterSubscription" type="checkbox" />
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">Đăng ký nhận bản tin định kỳ về dịch vụ và tiện ích của resort</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Lưu tùy chọn</button>
+                        <a href="@Url.Action("Index", "Profile")" class="btn btn-secondary">Hủy</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
