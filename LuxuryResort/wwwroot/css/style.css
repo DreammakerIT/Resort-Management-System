@@ -1,0 +1,199 @@
+﻿/* Thiết lập cơ bản và font chữ */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif; /* Font chữ hiện đại, dễ đọc */
+    color: #fff;
+    line-height: 1.6;
+}
+
+/* -----------------------------------------------------
+   PHẦN QUAN TRỌNG: HÌNH NỀN SANG TRỌNG
+   -----------------------------------------------------
+*/
+body {
+    /* THAY THẾ URL NÀY BẰNG HÌNH ẢNH ĐẸP NHẤT CỦA RESORT BẠN 
+       (ví dụ: ảnh sảnh, hồ bơi, bãi biển lúc hoàng hôn)
+    */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1561501900-3701fa6a0864?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* -----------------------------------------------------
+   KHUNG ĐĂNG NHẬP (HIỆU ỨNG KÍNH MỜ - GLASSMORPHISM)
+   -----------------------------------------------------
+*/
+.login-container {
+    padding: 2rem;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 450px; /* Giới hạn chiều rộng để dễ đọc trên màn hình lớn */
+    padding: 3rem;
+    /* Hiệu ứng kính mờ (Glassmorphism) */
+    background: rgba(10, 10, 10, 0.7); /* Nền đen mờ */
+    backdrop-filter: blur(10px); /* Hiệu ứng mờ cho nền phía sau */
+    -webkit-backdrop-filter: blur(10px); /* Hỗ trợ Safari */
+
+    border-radius: 15px; /* Bo góc mềm mại */
+    /* Đường viền mỏng màu vàng đồng tạo sự tinh tế */
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Đổ bóng nhẹ */
+}
+
+/* -----------------------------------------------------
+   CÁC THÀNH PHẦN TRONG KHUNG
+   -----------------------------------------------------
+*/
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+    .logo-container img {
+        max-width: 150px; /* Điều chỉnh kích thước logo */
+        filter: brightness(0) invert(1); /* Chuyển logo thành màu trắng (nếu cần) */
+    }
+
+/* Tiêu đề chính (Font chữ quý phái) */
+h2 {
+    font-family: 'Playfair Display', serif; /* Font chữ Serif sang trọng */
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    /* Màu vàng đồng cho tiêu đề */
+    color: #D4AF37;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 2rem;
+}
+
+/* Các ô nhập liệu (Input) */
+.input-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+    .input-group label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #ccc;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 0.75rem 0.5rem;
+        background: transparent;
+        border: none;
+        /* Chỉ giữ lại đường viền dưới (underline) màu vàng đồng */
+        border-bottom: 2px solid #D4AF37;
+        color: #fff;
+        font-size: 1rem;
+        font-family: 'Montserrat', sans-serif;
+        transition: border-color 0.3s ease;
+    }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #fff; /* Đổi màu viền khi focus */
+        }
+
+.options {
+    text-align: right;
+    margin-bottom: 1.5rem;
+}
+
+.forgot-password {
+    font-size: 0.9rem;
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+    .forgot-password:hover {
+        color: #D4AF37;
+    }
+
+/* Nút bấm (Button) */
+.login-button {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    /* Nút màu vàng đồng nổi bật */
+    background-color: #D4AF37;
+    color: #111; /* Chữ màu đen/tối để tương phản */
+
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .login-button:hover {
+        background-color: #E5C100; /* Màu vàng sáng hơn khi hover */
+        transform: translateY(-2px); /* Hiệu ứng nhấc lên */
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    }
+
+/* Đăng nhập mạng xã hội & Đăng ký */
+.social-login, .register-link {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.social-icons {
+    margin-top: 1rem;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 0 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+    .social-icon:hover {
+        background: #D4AF37;
+        color: #111;
+        border-color: #D4AF37;
+    }
+
+.register-link a {
+    color: #D4AF37; /* Màu vàng đồng */
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .register-link a:hover {
+        text-decoration: underline;
+    }
